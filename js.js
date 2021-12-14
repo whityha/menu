@@ -293,7 +293,31 @@ plus.addEventListener('click', () => {
 
 const btnForAddMenu = document.querySelector('.new-menu-add-menu');
 btnForAddMenu.addEventListener('click', () => {
-    const newMenu = {};
-    const countItems = document.querySelectorAll('.new-menu-list-input');
-    const products = document.querySelector('.new-menu-box-list-item');
+    let newMenu = {};
+    const countItems = document.querySelectorAll('.new-menu-list-input'); // колическтво продуктов
+    const products = document.querySelectorAll('.new-menu-box-list-item'); // английское называние
+    for( let i = 0; i < products.length; i++) {
+        newMenu[products[i].dataset.name] = countItems[i].value;
+    }
+
+    let lastId;
+    new Promise(() => {fetch('http://localhost:3000/menu')
+        .then(menu => menu.json())
+        .then(res => {
+            lastId = res[res.length-1].id;
+            console.log(lastId);
+        })
+        .then(() => {
+            newMenu.id = lastId + 1;
+            newMenu.menu = newMenu.id;
+            newMenu = JSON.stringify(newMenu);
+            fetch('http://localhost:3000/menu', {
+                method: 'POST',
+                body: newMenu,
+                headers: {
+                    'Content-type':'application/json'
+                }
+            });
+        });
+    });
 });
