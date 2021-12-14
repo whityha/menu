@@ -1,0 +1,71 @@
+*
+    box-sizing: border-box
+    padding: 0
+    margin: 0
+    list-style: none
+
+.relative
+    position: relative
+.wrapper
+    margin: 0 auto
+    width: 80%
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+.menu_day
+    margin: 20px 0 20px 0
+    width: 30%
+    list-style: none
+    .list-item
+        padding: 5px 5px
+        box-sizing: border-box
+        border: 1px solid black
+        margin: 2px 2px
+
+
+.new-menu
+    position: absolute
+    height: 100vh
+    width: 25vw
+    right: 0
+    top: 0
+    background-color: pink
+    &-form
+        width: 70%
+        margin: 50px auto 0 auto
+        display: flex
+        flex-direction: column
+    &-list
+        width: 100%
+        display: flex
+        flex-direction: column
+        &-item
+            display: flex            
+            justify-content: space-between
+            width: 100%                
+            margin: 5px 0 2px 0
+        .new-menu-box
+            display: flex            
+            width: 50%      
+            &-list
+                width: 100%
+                max-height: 20px
+                // position: relative
+                &-item
+                    background-color: #FFF
+                    border: 1px solid black
+                    height: 20px
+                    cursor: pointer
+                    &:hover
+                        background-color: #acabab
+        .btn-box-menu
+            .fas
+                width: 100%
+                height: 100%
+                cursor: pointer
+        &-input
+            width: 30%
+    &-add-item
+        cursor: pointer
+    &-add-menu
+        cursor: pointer

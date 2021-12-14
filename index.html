@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type='text/css' href="./styles/style.css">
+    
+    <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+
+    <title>Menu</title>
+</head>
+<body>
+    <div class="wrapper">
+          
+    </div>
+    <button type='button'>Отправить</button>
+    <div class='new-menu'>
+        <form class='new-menu-form'>
+            <h3>Новое меню:</h3>
+            <ul class='new-menu-list'>
+                <li class='new-menu-list-item'>
+                    <div class='new-menu-box'>
+                        <ul class='new-menu-box-list'>
+                            <li class='new-menu-box-list-item'></li>
+                        </ul>
+                        <button data-id='1' class='btn-box-menu active'>
+                            <i data-id='1' class="fas fa-angle-down"></i>
+                        </button>
+                    </div>
+                    <input class='new-menu-list-input' placeholder="кол">
+                </li>
+                <li class='new-menu-list-item'>
+                    <div class='new-menu-box'>
+                        <ul class='new-menu-box-list'>
+                            <li  class='new-menu-box-list-item'></li>
+                        </ul>
+                        <button data-id='2' class='btn-box-menu active'>
+                            <i data-id='2' class="fas fa-angle-down"></i>
+                        </button>
+                    </div>
+                    <input class='new-menu-list-input' placeholder="кол">
+                </li>
+            </ul>     
+            <input type="checkbox"/>
+            <button class='new-menu-add-item' type="button">+</button>
+            <button class='new-menu-add-menu' type="submit">Добавить меню!</button>
+        </form>
+    </div>
+<script src="js.js"></script>
+</body>
+</html>
