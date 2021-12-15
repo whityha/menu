@@ -3,9 +3,163 @@
 
 //создаем класс меню
 class DayMenu {
-    constructor({menu, egg=0, indeika=0, chicken=0, tomato=0, onion =0, carrot =0, cucumber=0, zucchini=0, redis=0, limon=0, freshGreen=0, apple=0,
-        tvorog= 0, cream= 0, rise= 0, riseCow= 0, olive= 0, sweetener= 0, spices= 0}) {
+    constructor({
+        menu, 
+        egg=0, 
+        indeika=0, 
+        chicken=0, 
+        tomato=0, 
+        onion =0, 
+        carrot =0, 
+        cucumber=0, 
+        zucchini=0, 
+        redis=0, 
+        limon=0, 
+        freshGreen=0, 
+        apple=0,
+        cottageСheese= 0, 
+        sourCream= 0, 
+        rise= 0, 
+        riseCow= 0, 
+        olive= 0, 
+        sweetener= 0, 
+        spices= 0,
+        beef = 0,
+        fishKeta = 0,
+        fishTreska = 0,
+        butter = 0,
+        milk = 0,
+        kefir = 0,
+        yogurt = 0,
+        fetax = 0,
+        cheese = 0,
+        cream = 0,
+        sweetPepper = 0,
+        spinach = 0,
+        salat = 0,
+        сhineseСabbage = 0,
+        potato = 0,
+        garlic = 0,
+        olives = 0,
+        grapefruit = 0,
+        strawberry = 0,
+        oatFlakes = 0,
+        buckwheat = 0,
+        cacao = 0,
+        bulgur = 0,        
+        bakingPowder = 0,
+        mindal = 0,
+        lavash = 0,
+        mustard = 0,
+        honey = 0,
+        breadBuckwheat = 0,
+        beefLiver = 0,
+        shrimps = 0,
+        squid = 0,
+        mozarella = 0,
+        sorrel = 0,
+        champignon = 0,
+        banan = 0,
+        avacado = 0,
+        pear = 0,        
+        balsamic = 0,
+        makarone = 0,
+        chickenLeg = 0,
+        cambala = 0,
+        semga = 0,
+        orange = 0,
+        vanilin = 0,
+        chickenHeart = 0,
+        sudak = 0,
+        easeCheese = 0,
+        brokkoli = 0,
+        sous = 0
+    }) {    
         this.day = menu;
+        this.chickenHeart = {
+            name: 'Куринные сердечки',
+            count: chickenHeart
+        };
+        this.sudak = {
+            name: 'Судак',
+            count: sudak
+        };
+        this.easeCheese = {
+            name: 'Мягкий творожок 5%',
+            count: easeCheese
+        };
+        this.brokkoli = {
+            name: 'Брокколи',
+            count: brokkoli
+        };
+        this.sous = {
+            name: 'Соевый соус',
+            count: sous
+        };
+        this.chickenLeg = {
+            name: 'Филе бедра курицы',
+            count: chickenLeg
+        };
+        this.cambala = {
+            name: 'Камбала',
+            count: cambala
+        };
+        this.semga = {
+            name: 'Семга',
+            count: semga
+        };
+        this.orange = {
+            name: 'Апельсин',
+            count: orange
+        };
+        this.vanilin = {
+            name: 'Ванилин',
+            count: vanilin
+        };
+        this.beefLiver = {
+            name: 'Говяжья печень',
+            count: beefLiver
+        };
+        this.shrimps = {
+            name: 'Креветки',
+            count: shrimps
+        };
+        this.squid = {
+            name: 'Кальмар',
+            count: squid
+        };
+        this.mozarella = {
+            name: 'Моцарелла',
+            count: mozarella
+        };
+        this.sorrel = {
+            name: 'Щавель',
+            count: sorrel
+        };
+        this.champignon = {
+            name: 'Шампиньоны',
+            count: champignon
+        };
+        this.banan = {
+            name: 'Бананы',
+            count: banan
+        };
+        this.avacado = {
+            name: 'Авакадо',
+            count: avacado
+        };
+        this.pear = {
+            name: 'Груши',
+            count: pear
+        };        
+        this.balsamic = {
+            name: 'Бальзамический уксус',
+            count: balsamic
+        };
+        this.makarone = {
+            name: 'Цельнозерновые макароны',
+            count: makarone
+        };
         this.chicken = {
             name: 'Куринное филе',
             count: chicken
@@ -54,13 +208,13 @@ class DayMenu {
             name: 'Яблоки',
             count: apple
         };
-        this.tvorog = {
+        this.cottageСheese = {
             name: 'Творог 5%',
-            count: tvorog
+            count: cottageСheese
         };
-        this.cream = {
+        this.sourCream = {
             name: 'Сметана ',
-            count: cream
+            count: sourCream
         };
         this.rise= {
             name: 'Рис',
@@ -82,6 +236,122 @@ class DayMenu {
             name: 'Специи',
             count: spices
         };
+        this.beef = {
+            name: 'Говядина постная',
+            count: beef
+        };
+        this.fishKeta = {
+            name: 'Филе кеты',
+            count: fishKeta
+        };
+        this.fishTreska = {
+            name: 'Филе трески',
+            count: fishTreska
+        };
+        this.butter = {
+            name: 'Масло сливочное',
+            count: butter
+        };
+        this.milk = {
+            name: 'Молоко 1,5%',
+            count: milk
+        };
+        this.kefir = {
+            name: 'Кефир',
+            count: kefir
+        };
+        this.yogurt = {
+            name: 'Йогурт 4%',
+            count: yogurt
+        };
+        this.fetax = {
+            name: 'Фетакса',
+            count: fetax
+        };
+        this.cheese = {
+            name: 'Сыр российский',
+            count: cheese
+        };
+        this.cream = {
+            name: 'Сливки 10%',
+            count: cream
+        };
+        this.sweetPepper = {
+            name: 'Сладкий перец',
+            count: sweetPepper
+        };
+        this.spinach = {
+            name: 'Шпинат',
+            count: spinach
+        };
+        this.salat = {
+            name: 'Зеленый салат',
+            count: salat
+        };
+        this.сhineseСabbage = {
+            name: 'Пекинская капуста',
+            count: сhineseСabbage
+        };
+        this.potato = {
+            name: 'Картофель',
+            count: potato
+        };
+        this.garlic = {
+            name: 'Чеснок',
+            count: garlic
+        };
+        this.olives = {
+            name: 'Оливки',
+            count: olives
+        };
+        this.grapefruit = {
+            name: 'Грейпфрут',
+            count: grapefruit
+        };
+        this.strawberry = {
+            name: 'Замороженная клубника',
+            count: strawberry
+        };
+        this.oatFlakes = {
+            name: 'Овсяные хлопья',
+            count: oatFlakes
+        };
+        this.buckwheat = {
+            name: 'Гречка',
+            count: buckwheat
+        };
+        this.cacao = {
+            name: 'Какао-порошок',
+            count: cacao
+        };
+        this.bulgur = {
+            name: 'Булгур',
+            count: bulgur
+        };        
+        this.bakingPowder = {
+            name: 'Разрыхлитель',
+            count: bakingPowder
+        };
+        this.mindal = {
+            name: 'Миндаль',
+            count: mindal
+        };
+        this.lavash = {
+            name: 'Лаваш',
+            count: lavash
+        };
+        this.mustard = {
+            name: 'Горчица',
+            count: mustard
+        };
+        this.honey = {
+            name: 'Мед',
+            count: honey
+        };
+        this.breadBuckwheat = {
+            name: 'Хлебцы гречневые',
+            count: breadBuckwheat
+        };
     }
 
     currentMenu () {
@@ -93,6 +363,30 @@ class DayMenu {
         }
         return currentMenu;
     }
+
+    // метод, чтобы запостить все продукты, что есть в конструкторе в bd
+    post() {
+        let products = [];
+
+        for( let key in this) {
+            if(key !== 'day') {
+            let obj = {};
+            obj.eng = key;
+            obj.rus = this[key].name;
+            products.push(obj);
+            }
+        }
+        console.log(products);
+        products = JSON.stringify(products);
+        fetch('http://localhost:3000/products', {
+            method: 'POST',
+            body: products,
+            headers: 
+                {'Content-type' : 'application/json'}
+            
+        });
+    }
+
     //метод для отображения нового класса на странице
     render() {        
         let currentMenu = {};
@@ -162,40 +456,13 @@ window.addEventListener('load', () => {fetch('http://localhost:3000/menu')
 // console.log(sumObjectsByKey(obj1, obj2, obj3));
 
 // Делегирование событий на кнопки списка нового меню
-let arrayWithProducts = [
-    {
-        eng: 'milk',
-        rus: 'Молоко'
-    },
-    {
-        eng: 'egg',
-        rus: 'Яйца'
-    },
-    {
-        eng: 'chicken',
-        rus: 'Курица'
-    },
-    {
-        eng: 'onion',
-        rus: 'Лук'
-    },
-    {
-        eng: 'olive',
-        rus: 'Оливковое масло'
-    },
-    {
-        eng: 'spices',
-        rus: 'Специи'
-    },
-    {
-        eng: 'fish',
-        rus: 'Рыба'
-    },
-    {
-        eng: 'bread',
-        rus: 'Хлеб'
-    },
-];
+
+let arrayWithProducts = [];
+fetch('http://localhost:3000/products')
+.then(res => res.json())
+.then(res => {
+    arrayWithProducts = res;
+});
 let newMenu = document.querySelector('.new-menu-list');
 newMenu.addEventListener('click',(e) => {
     //если мы нажимаем на кнопку открытия списка и она не активна (список не активен)
