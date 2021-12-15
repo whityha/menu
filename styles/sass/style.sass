@@ -6,6 +6,8 @@
 
 .relative
     position: relative
+.activeForm
+    transform: translateX(0%) !important
 .wrapper
     margin: 0 auto
     width: 80%
@@ -30,6 +32,10 @@
     right: 0
     top: 0
     background-color: pink
+    transform: translateX(100%)
+    transition: 0.5s
+    transition-timing-function: ease
+    
     &-form
         width: 70%
         margin: 50px auto 0 auto

@@ -1,21 +1,7 @@
 'use strict';
 
-let MENU =  [
-    {id: 11, menu: 1, milk:4, fish:10, egg: 1},
-    {id: 71, menu: 2, egg: 4, indeika: 200, chicken: 200, tomato: 400, onion : 50, carrot : 50, cucumber: 200, zucchini: 300, 
-    redis: 100, limon: 1, freshGreen: 1, apple: 300, tvorog: 180, cream: 110, rise: 50, riseCow: 25, olive: 29, sweetener: 1, spices: 1},
-    {id: 31, menu: 3, egg: 4, indeika: 200, chicken: 200, tomato: 400, onion : 50, carrot : 50, cucumber: 200, zucchini: 300, 
-    redis: 100, limon: 1, freshGreen: 1, apple: 300, tvorog: 180, cream: 110, rise: 50, riseCow: 25, olive: 29, sweetener: 1, spices: 1},
-    {id:41 , menu: 4, egg: 4, indeika: 200, chicken: 200, tomato: 400, onion : 50, carrot : 50, cucumber: 200, zucchini: 300, 
-    redis: 100, limon: 1, freshGreen: 1, apple: 300, tvorog: 180, cream: 110, rise: 50, riseCow: 25, olive: 29, sweetener: 1, spices: 1},
-    {id: 51, menu: 5, egg: 4, indeika: 200, chicken: 200, tomato: 400, onion : 50, carrot : 50, cucumber: 200, zucchini: 300, 
-    redis: 100, limon: 1, freshGreen: 1, apple: 300, tvorog: 180, cream: 110, rise: 50, riseCow: 25, olive: 29, sweetener: 1, spices: 1}
-    ];
 
-
-
-
-
+//создаем класс меню
 class DayMenu {
     constructor({menu, egg=0, indeika=0, chicken=0, tomato=0, onion =0, carrot =0, cucumber=0, zucchini=0, redis=0, limon=0, freshGreen=0, apple=0,
         tvorog= 0, cream= 0, rise= 0, riseCow= 0, olive= 0, sweetener= 0, spices= 0}) {
@@ -107,7 +93,7 @@ class DayMenu {
         }
         return currentMenu;
     }
-
+    //метод для отображения нового класса на странице
     render() {        
         let currentMenu = {};
         for (let key in this) {
@@ -125,7 +111,7 @@ class DayMenu {
                 <div class='menu_day_list menu_day_list_${this.day}'></div>
                 <div class='menu_day_vote'>
                     <input type='checkbox'/>
-                    <button type='button'>Показать граммовку</button>
+                    <button type='button' class='deleteBlock'>Показать граммовку</button>
                 </div>
         </div>`;
         
@@ -136,17 +122,9 @@ class DayMenu {
     }
 }
 
-//Изначально было так
-// MENU.forEach( item => {
-//arrWithMenu.push(new DayMenu(item));
-//});
-
-//arrWithMenu.forEach(item => {
-//item.render();
-//});
 //при запуске скрипта мы отстраиваем наши меню взятую с баззы данных
 let arrWithMenu = [];
-fetch('http://localhost:3000/menu')
+window.addEventListener('load', () => {fetch('http://localhost:3000/menu')
     .then(menu => menu.json())
     .then(res => {
         console.log(res);
@@ -158,24 +136,12 @@ fetch('http://localhost:3000/menu')
     )
     .then(() => {
         arrWithMenu.forEach(item => {
-            console.log(item);
         item.render();
         });
         }
     );
-
-const sameMenu = JSON.stringify(MENU);
-// добавляем новое меню в базу данных
-document.querySelector('button').addEventListener('click', () => { 
-        fetch('http://localhost:3000/menu', {
-            method: 'POST',
-            body: sameMenu,
-            headers: {
-                'Content-type':'application/json'
-            }
-        });
-    }
-);
+});
+//Это скрипт для будущего подсчета суммы нужных продуктов
 // const obj1 = arrWithMenu[0];
   
 // const obj2 = arrWithMenu[1];
@@ -232,44 +198,68 @@ let arrayWithProducts = [
 ];
 let newMenu = document.querySelector('.new-menu-list');
 newMenu.addEventListener('click',(e) => {
+    //если мы нажимаем на кнопку открытия списка и она не активна (список не активен)
     if(e.target && e.target.tagName === 'I' && !e.target.classList.contains('active')) {        
         const i = e.target.dataset.id;
-        const btns = document.querySelectorAll('.fas');
-        e.target.classList.toggle('active');
-        e.target.classList.toggle('fa-angle-down');
-        e.target.classList.toggle('fa-angle-up');
+        const btns = newMenu.querySelectorAll('.fas');  
         const list = document.querySelectorAll('.new-menu-box-list');
-        list[i-1].classList.toggle('relative');
-        list[i-1].innerHTML = 
+
+         //Закрываем другой открытый список, если он открыт (активен, но ничего не выбрано)
+         list.forEach((item, index) => {
+            if(item.classList.contains('active')) {
+                item.innerHTML = "<li class='new-menu-box-list-item'></li>";
+                item.classList.toggle('active');
+                item.classList.toggle('relative');
+                btns[index].classList.toggle('active');
+                btns[index].classList.toggle('fa-angle-down');
+                btns[index].classList.toggle('fa-angle-up');
+            }
+        });
+
+        // добавляем классы активности на список выпадающего меню и на кнопку стрелочки
+        e.target.classList.toggle('active');    
+        e.target.classList.toggle('fa-angle-down');
+        e.target.classList.toggle('fa-angle-up');        
+        list[i].classList.toggle('relative');
+        list[i].classList.toggle('active');
+
+        //формируем сам список
+        list[i].innerHTML = 
         arrayWithProducts.map((item) => {
             return `<li data-name='${item.eng}' class='new-menu-box-list-item'>${item.rus}</li>`;
         }).join('');        
         
-        const items = list[i-1].querySelectorAll('.new-menu-box-list-item');
+       
+        //навешиваем на каждый элемент списка обработчик клика. При клике мы заполняем поле выбранным элементом
+        const items = list[i].querySelectorAll('.new-menu-box-list-item');
         items.forEach(item => {
             item.addEventListener('click', (e) => {
-                list[i-1].innerHTML = e.target.outerHTML;
-                list[i-1].classList.toggle('relative');
-                btns[i-1].classList.toggle('active');
-                btns[i-1].classList.toggle('fa-angle-down');
-                btns[i-1].classList.toggle('fa-angle-up');
+                list[i].innerHTML = e.target.outerHTML;
+                list[i].classList.toggle('relative');                
+                list[i].classList.toggle('active');  
+                btns[i].classList.toggle('active');            
+                btns[i].classList.toggle('fa-angle-down');
+                btns[i].classList.toggle('fa-angle-up');
             });
         });
+        
+    // иначе если уже активная кнопка со стрелочкой, мы закрываем список и очищаем поле
     } else if (e.target && e.target.tagName === 'I' && e.target.classList.contains('active')) {
-        const items = document.querySelectorAll('.new-menu-box-list');
-        const i = e.target.dataset.id;
-        e.target.classList.toggle('active');
+        const list = document.querySelectorAll('.new-menu-box-list');
+        const i = e.target.dataset.id;       
         e.target.classList.toggle('fa-angle-down');
+        e.target.classList.toggle('active');
         e.target.classList.toggle('fa-angle-up');
-        items[i-1].classList.toggle('relative');
-        items[i-1].innerHTML = `<li class='new-menu-box-list-item'></li>`;
+        list[i].classList.toggle('relative');        
+        list[i].classList.toggle('active');
+        list[i].innerHTML = `<li class='new-menu-box-list-item'></li>`;
     }
 });
 
 
 
 // Создаем функционал для того, чтобы добавлять на кнопку "+" новый продукт из меню
-let counter = 3; // каунтер нужен для того, чтобы кнопке повесить уникальный id.
+let counter = 2; // каунтер нужен для того, чтобы кнопке повесить уникальный id.
 let plus = document.querySelector('.new-menu-add-item');
 plus.addEventListener('click', () => {
     const newItem = document.createElement('li');
@@ -279,7 +269,7 @@ plus.addEventListener('click', () => {
             <ul class='new-menu-box-list'>
                 <li  class='new-menu-box-list-item'></li>
             </ul>
-            <button data-id=${counter} class='btn-box-menu active'>
+            <button type='button' data-id=${counter} class='btn-box-menu active'>
                 <i data-id=${counter} class="fas fa-angle-down"></i>
             </button>
         </div>
@@ -290,7 +280,7 @@ plus.addEventListener('click', () => {
     counter++;
 });
 
-
+//добавляем новое меню в базу 
 const btnForAddMenu = document.querySelector('.new-menu-add-menu');
 btnForAddMenu.addEventListener('click', () => {
     let newMenu = {};
@@ -320,4 +310,12 @@ btnForAddMenu.addEventListener('click', () => {
             });
         });
     });
+});
+
+//открываем меню с формой с помощью делегирования событий
+let form = document.querySelector('.new-menu');
+document.querySelector('.wrapper').addEventListener('click', (e) => {
+    if(e.target.classList.contains('open-form')) {
+        form.classList.toggle('activeForm');
+    }
 });
