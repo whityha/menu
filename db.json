@@ -123,6 +123,25 @@
       "spices": "4",
       "id": 9,
       "menu": 9
+    },
+    {
+      "olive": "800",
+      "chicken": "700",
+      "fish": "400",
+      "bread": "500",
+      "milk": "4600",
+      "spices": "150",
+      "egg": "2",
+      "onion": "2",
+      "id": 10,
+      "menu": 10
+    },
+    {
+      "onion": "",
+      "milk": "",
+      "undefined": "",
+      "id": 11,
+      "menu": 11
     }
   ]
 }

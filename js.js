@@ -223,10 +223,14 @@ newMenu.addEventListener('click',(e) => {
         list[i].classList.toggle('relative');
         list[i].classList.toggle('active');
 
-        //формируем сам список
+        //формируем сам список из невыбранных продуктов        
         list[i].innerHTML = 
         arrayWithProducts.map((item) => {
-            return `<li data-name='${item.eng}' class='new-menu-box-list-item'>${item.rus}</li>`;
+            let added = newMenu.querySelectorAll('.add');
+            let arrayWithProductsNew = [];
+            added.forEach(item => arrayWithProductsNew.push(item.innerText));
+            if(!arrayWithProductsNew.includes(item.rus)) {
+            return `<li data-name='${item.eng}' class='new-menu-box-list-item'>${item.rus}</li>`;}                 
         }).join('');        
         
        
@@ -234,6 +238,7 @@ newMenu.addEventListener('click',(e) => {
         const items = list[i].querySelectorAll('.new-menu-box-list-item');
         items.forEach(item => {
             item.addEventListener('click', (e) => {
+                e.target.classList.add('add');
                 list[i].innerHTML = e.target.outerHTML;
                 list[i].classList.toggle('relative');                
                 list[i].classList.toggle('active');  
