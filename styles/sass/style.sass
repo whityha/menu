@@ -8,12 +8,60 @@
     position: relative
 .activeForm
     transform: translateX(0%) !important
-.wrapper
+
+
+.content
     margin: 0 auto
     width: 80%
     display: flex
     flex-wrap: wrap
     justify-content: space-between
+    .open-form
+        margin: 15px
+        display: block
+        padding: 1rem 5rem
+        cursor: pointer
+    &-list
+        width: 100%      
+        &-item
+            display: flex
+            flex-direction: column         
+            margin-top: 10px
+            overflow: hidden
+            &-description
+                width: 100%
+                display: flex
+                justify-content: flex-end
+                align-items: center
+                background-color: #b4bb8d
+                padding: 5px 15px 5px 15px
+                border: 1px solid #3b3b20
+                .num-day
+                    flex-grow: 1
+                .check
+                    margin-left: 10px
+                .open-btn
+                    display: block
+                    width: 25px
+                    height: 100%
+                    cursor: pointer
+            &-more
+                // transform: translateY(-100%)
+                overflow-y: scroll
+                height: 0px
+                padding: 0px 15px 0px 15px
+                background-color: #e2f3c1
+                border-left: 1px solid black
+                border-bottom: 1px solid black
+                border-right: 1px solid black
+                transition: 0.5s
+            .open
+                // transform: translateY(0%)
+                // animation: ease 0.5s open forwards  
+                height: 150px         
+    
+        
+
 .menu_day
     margin: 20px 0 20px 0
     width: 30%
@@ -23,6 +71,7 @@
         box-sizing: border-box
         border: 1px solid black
         margin: 2px 2px
+
 
 
 .new-menu
@@ -35,7 +84,8 @@
     transform: translateX(100%)
     transition: 0.5s
     transition-timing-function: ease
-    
+    border: 1px solid #801e62
+    overflow-y: scroll
     &-form
         width: 70%
         margin: 50px auto 0 auto
@@ -45,36 +95,54 @@
         width: 100%
         display: flex
         flex-direction: column
+        &-day
+            display: flex
+            justify-content: space-between
+        &-dayName
+            display: flex
+            justify-content: space-between
+        &-weak
+            margin-bottom: 20px
+            display: flex
+            justify-content: space-between
         &-item
             display: flex            
             justify-content: space-between
             width: 100%                
-            margin: 5px 0 2px 0
+            margin: 5px 0 2px 0   
         .new-menu-box
             display: flex            
-            width: 50%      
+            width: 60%    
             &-list
                 width: 100%
-                max-height: 100px
+                max-height: 200px
                 overflow-y: scroll
                 // position: relative
                 &-item
+                    padding-top: 3px
                     background-color: #FFF
                     border: 1px solid black
-                    min-height: 20px
+                    min-height: 30px
+                    text-align: center
                     cursor: pointer
                     &:hover
                         background-color: #acabab
         .btn-box-menu
-            max-height: 20px
+            max-height: 30px
+            width: 30px
             .fas
                 width: 100%
                 height: 100%
                 cursor: pointer
         &-input
-            max-height: 20px
+            max-height: 30px
             width: 30%
     &-add-item
+        margin-top: 10px
         cursor: pointer
+        height: 40px
     &-add-menu
+        margin-top: 10px
+        height: 20px
         cursor: pointer
+        margin-bottom: 120px
