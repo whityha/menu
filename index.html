@@ -15,8 +15,18 @@
 <body>
 
     <div class="content">
-        <ul class='content-list'>
-            
+        <h2>Весенний ГУРМАН</h2>
+        <ul class='content-list content-list-gurman'>
+
+        </ul>
+        <h2>Торопыжка бюджет</h2>
+        <ul class='content-list content-list-torop'>
+        </ul>
+        <h2>Осеннее меню</h2>
+        <ul class='content-list content-list-autumn'>
+        </ul>
+        <h2>Вкусный бюджет</h2>
+        <ul class='content-list content-list-tasty'>
         </ul>
     <button type='button' class='open-form'>Добавить еще меню</button>
 
@@ -28,36 +38,60 @@
                 <i class="fas fa-angle-double-right"></i>
             </div>
             <h3>Новое меню:</h3>
-            <ul class='new-menu-list'>
-                <li class='new-menu-list-day'>Меню №<input class='day' type='text'/></д>
-                <li class='new-menu-list-dayName'>День недели<input class='dayName' type='text'/></li>
-                <li class='new-menu-list-weak'>Неделя<input class='weak' type='text'/></li>
-                <li class='new-menu-list-item'>                    
-                    <div class='new-menu-box'>
-                        <ul class='new-menu-box-list'>
-                            <li class='new-menu-box-list-item'></li>
-                        </ul>
-                        <button type='button' data-id='0' class='btn-box-menu'>
-                            <i data-id='0' class="fas fa-angle-down"></i>
-                        </button>
-                    </div>
-                    <input class='new-menu-list-input' placeholder="кол">
-                </li>
-                <li class='new-menu-list-item'>
-                    <div class='new-menu-box'>
-                        <ul class='new-menu-box-list'>
-                            <li  class='new-menu-box-list-item'></li>
-                        </ul>
-                        <button type='button' data-id='1' class='btn-box-menu'>
-                            <i data-id='1' class="fas fa-angle-down"></i>
-                        </button>
-                    </div>
-                    <input class='new-menu-list-input' placeholder="кол">
-                </li>
-            </ul>     
-            <input type="checkbox"/>
-            <button class='new-menu-add-item' type="button">+</button>
-            <button class='new-menu-add-menu' type="button">Добавить меню!</button>
+            <div class='new-menu-form-menus'>
+                <div>    
+                    <input type="radio" id="menu-choice-1"
+                    name="contact" value="Весенний ГУРМАН" class='checkedMenu'>
+                    <label for="menu-choice-1">Весенний ГУРМАН</label> 
+                </div>
+                <div> 
+                    <input type="radio" id="menu-choice-2"
+                    name="contact" value="Торопыжка бюджет" class='checkedMenu'>
+                    <label for="menu-choice-2">Торопыжка бюджет</label>
+                </div>
+                <div> 
+                    <input type="radio" id="menu-choice-3"
+                    name="contact" value="Осеннее меню" class='checkedMenu'>
+                    <label for="menu-choice-3">Осеннее меню</label>
+                </div>
+                <div> 
+                    <input type="radio" id="menu-choice-4"
+                    name="contact" value="Вкусный бюджет" class='checkedMenu'>
+                    <label for="menu-choice-4">Вкусный бюджет</label>
+                </div>
+            </div>
+            <div class='new-menu-block'>
+                <ul class='new-menu-list'>
+                    <li class='new-menu-list-dayName'>День недели<input class='dayName' type='text'/></li>
+                    <li class='new-menu-list-weak'>Неделя №<input class='weak' type='number'/></li>
+                    <li class='new-menu-list-item'>                    
+                        <div class='new-menu-box'>
+                            <ul class='new-menu-box-list'>
+                                <li class='new-menu-box-list-item'></li>
+                            </ul>
+                            <button type='button' data-id='0' class='btn-box-menu'>
+                                <i data-id='0' data-loaded='' class="fas fa-angle-down"></i>
+                            </button>
+                        </div>
+                        <input class='new-menu-list-input' type='number' placeholder="кол">
+                    </li>
+                    <li class='new-menu-list-item'>
+                        <div class='new-menu-box'>
+                            <ul class='new-menu-box-list'>
+                                <li  class='new-menu-box-list-item'></li>
+                            </ul>
+                            <button type='button' data-id='1' class='btn-box-menu'>
+                                <i data-id='1' data-loaded='' class="fas fa-angle-down"></i>
+                            </button>
+                        </div>
+                        <input class='new-menu-list-input' type='number' placeholder="кол">
+                    </li>
+                </ul>            
+                Введите рецепты:
+                <textarea class='new-menu-list-recept' type='text'></textarea>
+                <button class='new-menu-add-item' type="button">+</button>
+                <button class='new-menu-add-menu' type="button">Добавить меню!</button>
+            </div>
         </form>
     </div>
 <script src="js.js"></script>

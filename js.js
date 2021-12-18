@@ -4,6 +4,13 @@
 //создаем класс меню
 class DayMenu {
     constructor({
+        img = 0,
+        sup = false,
+        recept = 0,
+        gurman = false,
+        torop = false,
+        tasty = false,
+        autumn = false,
         id,
         day,
         dayName,
@@ -77,9 +84,15 @@ class DayMenu {
         easeCheese = 0,
         brokkoli = 0,
         sous = 0
-    }) {    
+    }) {
+        this.img = img;
+        this.sup = sup;
+        this.recept = recept;
+        this.autumn = autumn;
+        this.tasty = tasty;
+        this.torop = torop;
+        this.gurman = gurman;    
         this.id = id;
-        this.day = day;
         this.dayName = dayName;
         this.weak = weak;
         this.chickenHeart = {
@@ -463,45 +476,62 @@ class DayMenu {
             
         // });
     }
-
+    
     //метод для отображения нового класса на странице
     render() {        
         let currentMenu = {};
-        for (let key in this) {
-            if(key === 'day' || key === 'weak' || key === 'dayName') {
-                continue;
+        function renderCurrentMenu(obj,menu, bgColor) {
+            for (let key in obj) {
+                if(key === 'weak' || key === 'dayName') {
+                    continue;
+                }
+                if(obj[key].count) {
+                    currentMenu[key] = obj[key];
+                }
             }
-            if(this[key].count) {
-                currentMenu[key] = this[key];
-            }
-        }
-        const parent = document.querySelector('.content-list');
-        parent.innerHTML += `
-        <li class='content-list-item'>
-            <div class='content-list-item-description'>
-                <div class='num-day'>День ${this.day}. Неделя ${this.weak}. ${this.dayName}.</div>
-                <button type='button'>
-                    <i data-id=${this.id} class='fas fa-angle-down open-btn'></i>
-                </button>
-                <input class='check' type='checkbox'/>
-            </div>
-            <div data-menu=${this.id} class='content-list-item-more'>
-                <img src='../343.jpg' alt='Меню'/>
-                    <ul class='menu-list menu_day_list_${this.day}'>
+            const parent = document.querySelector(`.content-list-${menu}`);
+            parent.innerHTML += `
+            <li class='content-list-item'>
+                <div class='content-list-item-description bg_${bgColor}'>
+                    <div class='num-day'>Неделя ${obj.weak}. ${obj.dayName}.</div>
+                    <button type='button'>
+                        <i data-id=${obj.id} class='fas fa-angle-down open-btn'></i>
+                    </button>
+                    <input class='check' type='checkbox'/>
+                </div>
+                <div data-menu=${obj.id} class='content-list-item-more'>
+                    <div class='menu-img'><img src='./images/${menu}/${obj.weak}_${obj.dayName}.JPG' alt='Меню'/>
+                    </div>
+                    <ul class='menu-list menu_day_list_${obj.id}'>
+                    <b>СПИСОК ПРОДУКТОВ:</b>
                         
                     </ul>
-            </div>
-        </li>`;
 
-        for(let k in currentMenu) {      
-            document.querySelector(`.menu_day_list_${this.day}`).innerHTML += `<li class='menu-item'>${currentMenu[k].name} - ${currentMenu[k].count} ${currentMenu[k].sizes}</li>`;
+                    <div class='recept recept-${obj.id}'>
+                        
+                    </div>
+                </div>
+            </li>`;
+            parent.querySelector(`.recept-${obj.id}`).innerText = obj.recept;
+            for(let k in currentMenu) {      
+                document.querySelector(`.menu_day_list_${obj.id}`).innerHTML += `<li class='menu-item'>${currentMenu[k].name} - ${currentMenu[k].count} ${currentMenu[k].sizes}</li>`;
+            }
         }
-        
+
+        if(this.gurman) {
+            renderCurrentMenu(this, 'gurman', 'green');
+        } else if (this.torop) {
+            renderCurrentMenu(this, 'torop', 'pink');
+        } else if (this.tasty) {
+            renderCurrentMenu(this, 'tasty', 'blue');
+        } else if (this.autumn) {
+            renderCurrentMenu(this, 'autumn', 'orange');
+        }
     }
 }
 
 
-//
+// Открытие/закрытие описания каждого дня меню
 const content = document.querySelector('.content');
 content.addEventListener('click', (e) => {
     if(e.target && e.target.classList.contains('open-btn')) {
@@ -560,78 +590,93 @@ window.addEventListener('load', () => {fetch('http://localhost:3000/menu')
 
 // Делегирование событий на кнопки списка нового меню
 
-let arrayWithProducts = [];
-fetch('http://localhost:3000/products')
-.then(res => res.json())
-.then(res => {
-    arrayWithProducts = res.sort(function(a, b) {
-        return a[1] - b[1];
-    });
-    console.log(arrayWithProducts);
-});
+
 let newMenu = document.querySelector('.new-menu-list');
 newMenu.addEventListener('click',(e) => {
-    //если мы нажимаем на кнопку открытия списка и она не активна (список не активен)
-    if(e.target && e.target.tagName === 'I' && !e.target.classList.contains('active')) {        
-        const i = e.target.dataset.id;
-        const btns = newMenu.querySelectorAll('.fas');  
-        const list = document.querySelectorAll('.new-menu-box-list');
-
-         //Закрываем другой открытый список, если он открыт (активен, но ничего не выбрано)
-         list.forEach((item, index) => {
-            if(item.classList.contains('active')) {
-                item.innerHTML = "<li class='new-menu-box-list-item'></li>";
-                item.classList.toggle('active');
-                item.classList.toggle('relative');
-                btns[index].classList.toggle('active');
-                btns[index].classList.toggle('fa-angle-down');
-                btns[index].classList.toggle('fa-angle-up');
-            }
-        });
-
-        // добавляем классы активности на список выпадающего меню и на кнопку стрелочки
-        e.target.classList.toggle('active');    
-        e.target.classList.toggle('fa-angle-down');
-        e.target.classList.toggle('fa-angle-up');        
-        list[i].classList.toggle('relative');
-        list[i].classList.toggle('active');
-
-        //формируем сам список из невыбранных продуктов        
-        list[i].innerHTML = 
-        arrayWithProducts.map((item) => {
-            let added = newMenu.querySelectorAll('.add');
-            let arrayWithProductsNew = [];
-            added.forEach(item => arrayWithProductsNew.push(item.innerText));
-            if(!arrayWithProductsNew.includes(item.rus)) {
-            return `<li data-name='${item.eng}' class='new-menu-box-list-item'>${item.rus}</li>`;}                 
-        }).join('');        
+    let arrayWithProducts = [];
         
-       
-        //навешиваем на каждый элемент списка обработчик клика. При клике мы заполняем поле выбранным элементом
-        const items = list[i].querySelectorAll('.new-menu-box-list-item');
-        items.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.target.classList.add('add');
-                list[i].innerHTML = e.target.outerHTML;
-                list[i].classList.toggle('relative');                
-                list[i].classList.toggle('active');  
-                btns[i].classList.toggle('active');            
-                btns[i].classList.toggle('fa-angle-down');
-                btns[i].classList.toggle('fa-angle-up');
+        //если мы нажимаем на кнопку открытия списка и она не активна (список не активен)
+        if(e.target && e.target.tagName === 'I' && !e.target.classList.contains('active')) {        
+            const i = e.target.dataset.id;
+            const btns = newMenu.querySelectorAll('.fas');  
+            const list = document.querySelectorAll('.new-menu-box-list');
+            
+            const menuNumber = () => {
+                let num;
+                const checkedMenus = document.querySelectorAll('.checkedMenu');
+                checkedMenus.forEach((item, i) => {
+                    if(item.checked) {
+                        num = i;
+                    }
+                });                
+                return num;
+            };
+            
+            fetch(`http://localhost:3000/products_${menuNumber()}`)
+            .then(res => res.json())
+            .then(res => {
+                arrayWithProducts = res;
+            }).then(() => {
+                if(Object.keys(arrayWithProducts).length) { //проверка, что запрос вернет не пустой объект в случае ошибки
+            //Закрываем другой открытый список, если он открыт (активен, но ничего не выбрано)
+                    list.forEach((item, index) => {
+                        if(item.classList.contains('active')) {
+                            item.innerHTML = "<li class='new-menu-box-list-item'></li>";
+                            item.classList.toggle('active');
+                            item.classList.toggle('relative');
+                            btns[index].classList.toggle('active');
+                            btns[index].classList.toggle('fa-angle-down');
+                            btns[index].classList.toggle('fa-angle-up');
+                        }
+                    });
+
+                    // добавляем классы активности на список выпадающего меню и на кнопку стрелочки
+                    e.target.classList.toggle('active');    
+                    e.target.classList.toggle('fa-angle-down');
+                    e.target.classList.toggle('fa-angle-up');        
+                    list[i].classList.toggle('relative');
+                    list[i].classList.toggle('active');
+
+                    //формируем сам список из невыбранных продуктов        
+                    list[i].innerHTML = 
+                    arrayWithProducts.map((item) => {
+                        let added = newMenu.querySelectorAll('.add');
+                        let arrayWithProductsNew = [];
+                        added.forEach(item => arrayWithProductsNew.push(item.innerText));
+                        if(!arrayWithProductsNew.includes(item.rus)) {
+                        return `<li data-name='${item.eng}' class='new-menu-box-list-item'>${item.rus}</li>`;}                 
+                    }).join('');        
+                    
+                
+                    //навешиваем на каждый элемент списка обработчик клика. При клике мы заполняем поле выбранным элементом
+                    const items = list[i].querySelectorAll('.new-menu-box-list-item');
+                    items.forEach(item => {
+                        item.addEventListener('click', (e) => {
+                            e.target.classList.add('add');
+                            list[i].innerHTML = e.target.outerHTML;
+                            list[i].classList.toggle('relative');                
+                            list[i].classList.toggle('active');  
+                            btns[i].classList.toggle('active');            
+                            btns[i].classList.toggle('fa-angle-down');
+                            btns[i].classList.toggle('fa-angle-up');
+                        });
+                    });
+
+                    e.target.dataset.loaded = '1';
+                }
             });
-        });
-        
     // иначе если уже активная кнопка со стрелочкой, мы закрываем список и очищаем поле
-    } else if (e.target && e.target.tagName === 'I' && e.target.classList.contains('active')) {
-        const list = document.querySelectorAll('.new-menu-box-list');
-        const i = e.target.dataset.id;       
-        e.target.classList.toggle('fa-angle-down');
-        e.target.classList.toggle('active');
-        e.target.classList.toggle('fa-angle-up');
-        list[i].classList.toggle('relative');        
-        list[i].classList.toggle('active');
-        list[i].innerHTML = `<li class='new-menu-box-list-item'></li>`;
-    }
+        } else if (e.target && e.target.tagName === 'I' && e.target.classList.contains('active')) {
+            const list = document.querySelectorAll('.new-menu-box-list');
+            const i = e.target.dataset.id;       
+            e.target.classList.toggle('fa-angle-down');
+            e.target.classList.toggle('active');
+            e.target.classList.toggle('fa-angle-up');
+            list[i].classList.toggle('relative');        
+            list[i].classList.toggle('active');
+            list[i].innerHTML = `<li class='new-menu-box-list-item'></li>`;
+        }
+    
 });
 
 
@@ -665,9 +710,21 @@ btnForAddMenu.addEventListener('click', () => {
     let newMenu = {};
     const countItems = newMenuList.querySelectorAll('.new-menu-list-input'); // колическтво продуктов
     const products = newMenuList.querySelectorAll('.new-menu-box-list-item'); // английское называние
+    const checkedMenu = document.querySelectorAll('.checkedMenu');
+    const receptMenu = document.querySelector('.new-menu-list-recept').value;
+    if(checkedMenu[0].checked) {
+        newMenu.gurman = true;
+    } else if (checkedMenu[1].checked) {
+        newMenu.torop = true;
+    } else if (checkedMenu[2].checked) {
+        newMenu.autumn = true;
+    } else if (checkedMenu[3].checked) {
+        newMenu.tasty = true;
+    }
     newMenu.dayName = newMenuList.querySelector('.dayName').value;
     newMenu.weak = newMenuList.querySelector('.weak').value;
-    newMenu.day = newMenuList.querySelector('.day').value;
+    newMenu.recept = receptMenu;
+    
     // for( let i = 0; i < products.length; i++) {
     //     newMenu[products[i].dataset.name] = countItems[i].value;
     // }
@@ -706,4 +763,15 @@ document.querySelector('.open-form').addEventListener('click', (e) => {
     if(e.target.classList.contains('open-form')) {
         form.classList.toggle('activeForm');
     }
+});
+document.querySelector('.closeBtn .fas').addEventListener('click', ()=>{
+    form.classList.toggle('activeForm');
+});
+
+
+document.querySelectorAll('.checkedMenu').forEach(item => {
+    item.addEventListener('click',()=> {
+        document.querySelector('.new-menu-block').classList.add('select');
+        console.log('hh');
+    });
 });
