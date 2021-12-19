@@ -1,120 +1,175 @@
 {
-  "menu": [
+  "menus": [
     {
-      "gurman": true,
-      "dayName": "Понедельник",
-      "weak": "1",
-      "egg": "3",
-      "indeika": "200",
-      "chicken": "200",
-      "tomato": "400",
-      "onion": "50",
-      "carrot": "",
-      "cucumber": "",
-      "zucchini": "",
-      "redis": "",
-      "limon": "1",
-      "freshGreen": "1",
-      "apple": "300",
-      "cottageСheese": "180",
-      "sourCream": "110",
-      "rise": "50",
-      "riseCow": "25",
-      "olive": "29",
-      "sweetener": "1",
-      "spices": "1",
+      "name": "gurman",
       "id": 1
     },
     {
-      "gurman": true,
-      "dayName": "Вторник",
-      "weak": "1",
-      "egg": "2",
-      "chicken": "180",
-      "sweetPepper": "100",
-      "сhineseСabbage": "100",
-      "apple": "100",
-      "cottageСheese": "100",
-      "kefir": "260",
-      "cheese": "20",
-      "riseCow": "60",
-      "oatFlakes": "50",
-      "olive": "5",
-      "sweetener": "1",
-      "bakingPowder": "1",
-      "spices": "1",
-      "mustard": "1",
-      "honey": "10",
-      "mindal": "15",
+      "name": "torop",
       "id": 2
     },
     {
-      "gurman": true,
-      "dayName": "Среда",
-      "weak": "1",
-      "egg": "4",
-      "beef": "270",
-      "onion": "55",
-      "tomato": "50",
-      "carrot": "25",
-      "cucumber": "100",
-      "zucchini": "150",
-      "freshGreen": "1",
-      "garlic": "1",
-      "cottageСheese": "100",
-      "cheese": "30",
-      "sourCream": "50",
-      "buckwheat": "70",
-      "riseCow": "25",
-      "sweetener": "1",
-      "spices": "1",
+      "name": "autumn",
       "id": 3
     },
     {
-      "gurman": true,
-      "dayName": "Четверг",
-      "weak": "1",
-      "egg": "3",
-      "fishTreska": "280",
-      "sweetPepper": "200",
-      "tomato": "350",
-      "onion": "50",
-      "cucumber": "100",
-      "zucchini": "200",
-      "olives": "30",
-      "strawberry": "100",
-      "limon": "1",
-      "cottageСheese": "300",
-      "cheese": "20",
-      "fetax": "40",
-      "kefir": "100",
-      "buckwheat": "60",
-      "riseCow": "30",
-      "sweetener": "1",
-      "spices": "1",
-      "lavash": "60",
-      "olive": "16",
-      "undefined": "",
+      "name": "tasty",
       "id": 4
-    },
+    }
+  ],
+  "gurman": [
     {
+      "name": "gurman",
       "gurman": true,
-      "dayName": "Пятница",
+      "dayName": "Понедельник",
       "weak": "1",
-      "recept": "Завтрак: Взбить 2 белка с сахзамом. Довести до кипения смесь воды (100 мл) и молока 1,5% (100 г). \nНепрерывно помешивая, всыпать в молоко овсяные хлопья длинной варки (40 г). Когда каша будет почти \nготова, добавить взбитый белок. Варить около двух минут, не прекращая мешать, либо взбивать кашу \nвенчиком. Выключить огонь, накрыть кашу крышкой и дать немного постоять. Добавить 11 г сливочного \nмасла и 50 г клубники (если замороженная, то предварительно разморозить). \nВторой завтрак: Творожная запеканка с клубникой (половина порции из меню четверга).\nПолдник: 1 вареное яйцо + 1 хлебец.\nОбед и Ужин: Понадобится 150 г сливок 10%, 260 г филе кеты, 1 яичный белок, соль. Белок взбить \nвенчиком с солью в крепкую пену. Филе со сливками взбить блендером. Ввести белок в рыбный крем. \nАккуратно перелить суфле в силиконовую формочку, выпекать 30 мин. при 180 градусах. \nОбед: 1\\2 суфле + вареный булгур (70 г сухого продукта). \nУжин: 1\\2 суфле + 50 г зеленого салата. \n",
-      "egg": "4",
-      "fishKeta": "260",
-      "salat": "50",
-      "strawberry": "50",
-      "cream": "150",
-      "butter": "11",
-      "milk": "100",
-      "bulgur": "70",
-      "oatFlakes": "40",
-      "sweetener": "1",
-      "spices": "1",
-      "breadBuckwheat": "1",
-      "id": 5
+      "recept": "",
+      "avacado": {
+        "count": "213",
+        "name": "Авакадо",
+        "sizes": "грамм"
+      },
+      "balsamic": {
+        "count": "234",
+        "name": "Бальзамический уксус",
+        "sizes": "грамм"
+      },
+      "id": 1
+    }
+  ],
+  "torop": [
+    {
+      "torop": true,
+      "dayName": "Понедельник",
+      "weak": "1",
+      "recept": "Всё перемешать и захавать",
+      "name": "torop",
+      "orange": {
+        "count": "1",
+        "name": "Апельсин",
+        "sizes": "шт"
+      },
+      "butter": {
+        "count": "10",
+        "name": "Масло сливочное",
+        "sizes": "грамм"
+      },
+      "bulgur": {
+        "count": "1000",
+        "name": "Булгур",
+        "sizes": "грамм"
+      },
+      "olives": {
+        "count": "1000",
+        "name": "Оливки",
+        "sizes": "грамм"
+      },
+      "fishKeta": {
+        "count": "20",
+        "name": "Филе кеты",
+        "sizes": "грамм"
+      },
+      "cheese": {
+        "count": "200",
+        "name": "Сыр российский",
+        "sizes": "грамм"
+      },
+      "id": 1
+    }
+  ],
+  "autumn": [
+    {
+      "autumn": true,
+      "dayName": "Понедельник",
+      "weak": "1",
+      "recept": "",
+      "name": "autumn",
+      "orange": {
+        "count": "100",
+        "name": "Апельсин",
+        "sizes": "грамм"
+      },
+      "butter": {
+        "count": "500",
+        "name": "Масло сливочное",
+        "sizes": "грамм"
+      },
+      "mozarella": {
+        "count": "50",
+        "name": "Моцарелла",
+        "sizes": "грамм"
+      },
+      "limon": {
+        "count": "1",
+        "name": "Лимон",
+        "sizes": "шт"
+      },
+      "mindal": {
+        "count": "500",
+        "name": "Миндаль",
+        "sizes": "шт"
+      },
+      "milk": {
+        "count": "500",
+        "name": "Молоко 1,5%",
+        "sizes": "грамм"
+      },
+      "carrot": {
+        "count": "500",
+        "name": "Морковь",
+        "sizes": "грамм"
+      },
+      "tomato": {
+        "count": "5",
+        "name": "Помидоры",
+        "sizes": "шт"
+      },
+      "lavash": {
+        "count": "500",
+        "name": "Лаваш",
+        "sizes": "грамм"
+      },
+      "id": 1
+    }
+  ],
+  "tasty": [
+    {
+      "tasty": true,
+      "dayName": "Понедельник",
+      "weak": "1",
+      "recept": "",
+      "name": "tasty",
+      "cottageСheese": {
+        "count": "60",
+        "name": "Творог 5%",
+        "sizes": "грамм"
+      },
+      "champignon": {
+        "count": "200",
+        "name": "Шампиньоны",
+        "sizes": "грамм"
+      },
+      "milk": {
+        "count": "100",
+        "name": "Молоко 1,5%",
+        "sizes": "грамм"
+      },
+      "carrot": {
+        "count": "500",
+        "name": "Морковь",
+        "sizes": "грамм"
+      },
+      "honey": {
+        "count": "200",
+        "name": "Мед",
+        "sizes": "грамм"
+      },
+      "sorrel": {
+        "count": "100",
+        "name": "Щавель",
+        "sizes": "грамм"
+      },
+      "id": 1
     }
   ],
   "products_0": [

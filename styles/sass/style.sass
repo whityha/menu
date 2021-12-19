@@ -151,15 +151,35 @@
         &-dayName
             display: flex
             justify-content: space-between
+            .dayName
+                width: 50%
         &-weak
             margin-bottom: 20px
             display: flex
             justify-content: space-between
+            .weak
+                width: 50%
         &-item
             display: flex            
             justify-content: space-between
             width: 100%                
-            margin: 5px 0 2px 0   
+            margin: 5px 0 2px 0
+        &-select
+            max-height: 30px
+            width: 50px
+        &-remove
+            max-height: 30px
+            width: 30px
+            cursor: pointer
+            &:hover
+                background-color: #832020
+        &-recept
+            max-width: 100%
+            min-width: 100%
+            height: 200px
+        &-input
+            max-height: 30px
+            width: 20%
         .new-menu-box
             display: flex            
             width: 60%    
@@ -184,11 +204,5 @@
                 width: 100%
                 height: 100%
                 cursor: pointer
-        &-recept
-            max-width: 100%
-            min-width: 100%
-            height: 200px
-        &-input
-            max-height: 30px
-            width: 30%
+        
     
