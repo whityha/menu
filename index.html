@@ -28,7 +28,7 @@
         <h2>Вкусный бюджет</h2>
         <ul class='content-list content-list-tasty'>
         </ul>
-    <button type='button' class='open-form'>Добавить еще меню</button>
+    <button type='button' class='open-form'>Добавить день в любое меню</button>
     <button type='button' class='total-count'>Посчитать сумму продуктов выбранных меню</button>
     </div>
 
@@ -37,26 +37,26 @@
             <div class='closeBtn'>
                 <i class="fas fa-angle-double-right"></i>
             </div>
-            <h3>Новое меню:</h3>
+            <h3>Новый день будет в меню:</h3>
             <div class='new-menu-form-menus'>
                 <div>    
                     <input type="radio" id="menu-choice-1" data-name='gurman'
-                    name="contact" value="Весенний ГУРМАН" class='checkedMenu'>
+                    name="contact" value="Весенний ГУРМАН" class='checkedNewMenu'>
                     <label for="menu-choice-1">Весенний ГУРМАН</label> 
                 </div>
                 <div> 
                     <input type="radio" id="menu-choice-2" data-name='torop'
-                    name="contact" value="Торопыжка бюджет" class='checkedMenu'>
+                    name="contact" value="Торопыжка бюджет" class='checkedNewMenu'>
                     <label for="menu-choice-2">Торопыжка бюджет</label>
                 </div>
                 <div> 
                     <input type="radio" id="menu-choice-3" data-name='autumn'
-                    name="contact" value="Осеннее меню" class='checkedMenu'>
+                    name="contact" value="Осеннее меню" class='checkedNewMenu'>
                     <label for="menu-choice-3">Осеннее меню</label>
                 </div>
                 <div> 
                     <input type="radio" id="menu-choice-4" data-name='tasty'
-                    name="contact" value="Вкусный бюджет" class='checkedMenu'>
+                    name="contact" value="Вкусный бюджет" class='checkedNewMenu'>
                     <label for="menu-choice-4">Вкусный бюджет</label>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                                 <li class='new-menu-box-list-item'></li>
                             </ul>
                             <button type='button' data-id='0' class='btn-box-menu'>
-                                <i data-id='0' data-loaded='' class="fas fa-angle-down"></i>
+                                <i data-id='0' class="fas fa-angle-down"></i>
                             </button>
                         </div>
                         <input class='new-menu-list-input' type='number' placeholder="кол">
@@ -96,7 +96,7 @@
                                 <li  class='new-menu-box-list-item'></li>
                             </ul>
                             <button type='button' data-id='1' class='btn-box-menu'>
-                                <i data-id='1' data-loaded='' class="fas fa-angle-down"></i>
+                                <i data-id='1' class="fas fa-angle-down"></i>
                             </button>
                         </div>
                         <input class='new-menu-list-input' type='number' placeholder="кол">
@@ -106,14 +106,15 @@
                         </select>
                         <button type='button' class='new-menu-list-remove'>X</button>
                     </li>
-                </ul>            
+                </ul>
+                <button class='new-menu-add-item' type="button">+</button>            
                 Введите рецепты:
                 <textarea class='new-menu-list-recept' type='text'></textarea>
-                <button class='new-menu-add-item' type="button">+</button>
                 <button class='new-menu-add-menu' type="button">Добавить меню!</button>
             </div>
         </form>
     </div>
+
 <script src="js.js"></script>
 </body>
 </html>

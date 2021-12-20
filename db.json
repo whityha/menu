@@ -172,7 +172,7 @@
       "id": 1
     }
   ],
-  "products_0": [
+  "products_gurman": [
     {
       "eng": "avacado",
       "rus": "Авакадо"
@@ -450,7 +450,7 @@
       "rus": "Яйца"
     }
   ],
-  "products_1": [
+  "products_torop": [
     {
       "eng": "avacado",
       "rus": "Аватаркадо"
@@ -728,7 +728,7 @@
       "rus": "Яйца"
     }
   ],
-  "products_2": [
+  "products_autumn": [
     {
       "eng": "avacado",
       "rus": "Авагадро"
@@ -1006,7 +1006,7 @@
       "rus": "Яйца"
     }
   ],
-  "products_3": [
+  "products_tasty": [
     {
       "eng": "avacado",
       "rus": "Авадакедавра"

@@ -1,21 +1,11 @@
 'use strict';
 
-let arrWithRenderingMenu = [];
+let arrWithRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
 //создаем класс меню
 class DayMenu {
     constructor(props) {
         this.products = props;       
-    }
-
-    currentMenu () {
-        let currentMenu = {};
-        for (let key in this) {
-            if(this[key].count) {
-                currentMenu[key] = this[key];
-            }
-        }
-        return currentMenu;
-    }
+    }    
 
     // метод, чтобы запостить все продукты, что есть в конструкторе в bd
     post() {
@@ -33,13 +23,6 @@ class DayMenu {
         console.log(arrrrr);
         console.log(products);
         products = JSON.stringify(products);
-        // fetch('http://localhost:3000/products', {
-        //     method: 'POST',
-        //     body: products,
-        //     headers: 
-        //         {'Content-type' : 'application/json'}
-            
-        // });
     }
     
     //метод для отображения нового класса на странице
@@ -47,9 +30,6 @@ class DayMenu {
         let currentMenu = {};
         function renderCurrentMenu(dayMenu,menu,bgColor) {
             for (let key in dayMenu) {
-                // if(key === 'weak' || key === 'dayName') {
-                //     continue;
-                // }
                 if(dayMenu[key].count) {
                     currentMenu[key] = dayMenu[key];
                 }
@@ -59,6 +39,7 @@ class DayMenu {
             <li class='content-list-item'>
                 <div class='content-list-item-description bg_${bgColor}'>
                     <div class='num-day'>Неделя ${dayMenu.weak}. ${dayMenu.dayName}.</div>
+                    <button data-name=${menu} data-id=${dayMenu.id} type='button' class='delete-btn'>Delete rec</button>
                     <button type='button'>
                         <i data-more=${menu} data-id=${dayMenu.id} class='fas fa-angle-down open-btn'></i>
                     </button>
@@ -112,8 +93,11 @@ function showSumProducts() {
             return item.dataset.id == menu.id && item.dataset.name == menu.name;
         });
     });
-   
-    console.log(sumObjectsByKey(arrWithCheckedObj)); //выводим в консоль объект с уже посчитанными продуктами
+    if(arrWithChekedMenu.length > 0) {
+        console.log(sumObjectsByKey(arrWithCheckedObj)); //выводим в консоль объект с уже посчитанными продуктами
+    } else {
+        alert('Выберите хотябы одно меню');
+    }
 
     function sumObjectsByKey(objs) { //функция для подсчета суммы продуктов из разных меню
         return objs.reduce((c, b) => {            
@@ -134,9 +118,10 @@ function showSumProducts() {
 }
 
 
-// Открытие/закрытие описания каждого дня меню
+//Работа с кнопка контента
 const content = document.querySelector('.content');
 content.addEventListener('click', (e) => {
+    // Открытие/закрытие описания каждого дня меню
     if(e.target && e.target.classList.contains('open-btn')) {
         let i = e.target.dataset.id;
         let j = e.target.dataset.more;
@@ -149,15 +134,22 @@ content.addEventListener('click', (e) => {
             }
         });
     }
+
+    if(e.target && e.target.classList.contains('delete-btn')) {
+        let answer = confirm('Вы действиетльно хотите удалить этот рецепт?');
+        if(answer) {
+            fetch(`http://localhost:3000/${e.target.dataset.name}/${e.target.dataset.id}`, {
+                method: 'DELETE'
+            });
+        }
+    }
         
 });
-
 
 //при запуске скрипта мы отстраиваем наши меню взятую с баззы данных
 fetch('http://localhost:3000/menus')
     .then(res => res.json())
     .then(menus => {
-        let counter = 0;
         menus.forEach(item => {
             let arrWithMenu = [];
             fetch(`http://localhost:3000/${item.name}`)
@@ -171,125 +163,130 @@ fetch('http://localhost:3000/menus')
             )
             .then(() => {                
                 arrWithMenu.forEach(item => {
-                    item.render(counter);
-                    counter++;
+                    item.render();
                     });
                 }
             );
         });
-    });
-
-
+});
 
 // Делегирование событий на кнопки списка нового меню
-
-
-let newMenu = document.querySelector('.new-menu-list');
-newMenu.addEventListener('click',(e) => {
-    let arrayWithProducts = [];
-        if (e.target.classList.contains('new-menu-list-remove')) {
-            e.target.parentElement.remove();
-        } else
-        //если мы нажимаем на кнопку открытия списка и она не активна (список не активен)
-        if(e.target && e.target.tagName === 'I' && !e.target.classList.contains('active')) {        
-            const j = e.target.dataset.id;
-            const btns = newMenu.querySelectorAll('.fas');  
-            const list = document.querySelectorAll('.new-menu-box-list');
-            let i;
-            btns.forEach((item, c) => {
-                if(item.dataset.id == j) {
-                    i = c;
+function menuName(className) { //функция возвращает имя выбранного меню по списку
+    const checkedMenus = document.querySelectorAll(className);
+    let num;
+        checkedMenus.forEach(item => {
+            if(item.checked) {
+                num = item.dataset.name;
+            }
+        });
+    return num;   
+}
+let arrayWithProducts = [];
+const checkMenus = document.querySelector('.new-menu-form-menus');
+const newMenu = document.querySelector('.new-menu-list');
+function addMenu(e) {    
+    if (e.target.classList.contains('new-menu-list-remove')) {
+        e.target.parentElement.remove();
+    }
+    //если мы нажимаем на кнопку открытия списка и она не активна (список не активен)
+    if (e.target && e.target.tagName === 'I' && !e.target.classList.contains('active')) { 
+        console.log(e.target);       
+        const j = e.target.dataset.id;
+        const btns = newMenu.querySelectorAll('.fas');  
+        const list = document.querySelectorAll('.new-menu-box-list');
+        let i;
+        btns.forEach((item, c) => { // функционал для того, чтобы при удалении поля с новым продуктом не сбивался счет
+            if(item.dataset.id == j) {
+                i = c;
+            }
+        });
+        console.log(i);    
+        
+        if(Object.keys(arrayWithProducts).length) { //проверка, что запрос вернет не пустой объект в случае ошибки
+        //Закрываем другой открытый список, если он открыт (активен, но ничего не выбрано)
+            list.forEach((item, index) => {
+                if(item.classList.contains('active')) {
+                    item.innerHTML = "<li class='new-menu-box-list-item'></li>";
+                    item.classList.toggle('active');
+                    item.classList.toggle('relative');
+                    btns[index].classList.toggle('active');
+                    btns[index].classList.toggle('fa-angle-down');
+                    btns[index].classList.toggle('fa-angle-up');
                 }
             });
-            console.log(i);
 
-            const menuNumber = () => {
-                let num;
-                const checkedMenus = document.querySelectorAll('.checkedMenu');
-                checkedMenus.forEach((item, i) => {
-                    if(item.checked) {
-                        num = i;
-                    }
-                });                
-                return num;
-            };
+            // добавляем классы активности на список выпадающего меню и на кнопку стрелочки
+            e.target.classList.toggle('active');    
+            e.target.classList.toggle('fa-angle-down');
+            e.target.classList.toggle('fa-angle-up');        
+            list[i].classList.toggle('relative');
+            list[i].classList.toggle('active');
+            list[i].classList.toggle('overflow');
+
+            //формируем сам список из невыбранных продуктов        
+            list[i].innerHTML = 
+            arrayWithProducts.map((item) => {
+                let added = newMenu.querySelectorAll('.add');
+                let arrayWithProductsNew = [];
+                added.forEach(item => arrayWithProductsNew.push(item.innerText));
+                if(!arrayWithProductsNew.includes(item.rus)) {
+                return `<li data-name='${item.eng}' class='new-menu-box-list-item'>${item.rus}</li>`;}                 
+            }).join('');        
             
-            fetch(`http://localhost:3000/products_${menuNumber()}`)
+        
+            //навешиваем на каждый элемент списка обработчик клика. При клике мы заполняем поле выбранным элементом
+            const items = list[i].querySelectorAll('.new-menu-box-list-item');
+            items.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.target.classList.add('add');
+                    list[i].innerHTML = e.target.outerHTML;
+                    list[i].classList.toggle('relative');                
+                    list[i].classList.toggle('active');
+                    list[i].classList.toggle('overflow');  
+                    btns[i].classList.toggle('active');            
+                    btns[i].classList.toggle('fa-angle-down');
+                    btns[i].classList.toggle('fa-angle-up');
+                });
+            });
+        }
+        
+// иначе если уже активная кнопка со стрелочкой, мы закрываем список и очищаем поле
+    } else if (e.target && e.target.tagName === 'I' && e.target.classList.contains('active')) {
+        const list = document.querySelectorAll('.new-menu-box-list');
+        const j = e.target.dataset.id;
+        const btns = newMenu.querySelectorAll('.fas');
+        let i;
+        btns.forEach((item, c) => {
+            if(item.dataset.id == j) {
+                i = c;
+            }
+        });
+
+        e.target.classList.toggle('fa-angle-down');
+        e.target.classList.toggle('active');
+        e.target.classList.toggle('fa-angle-up');
+        list[i].classList.toggle('relative');        
+        list[i].classList.toggle('active');
+        list[i].classList.toggle('overflow');
+        list[i].innerHTML = `<li class='new-menu-box-list-item'></li>`;
+    }
+}
+
+// 
+checkMenus.addEventListener('click', (e) => {
+    if(e.target.classList.contains('checkedNewMenu')) {        
+        newMenu.removeEventListener('click', addMenu);
+        console.log(e.target);
+        fetch(`http://localhost:3000/products_${menuName('.checkedNewMenu')}`)
             .then(res => res.json())
             .then(res => {
                 arrayWithProducts = res;
             }).then(() => {
-                if(Object.keys(arrayWithProducts).length) { //проверка, что запрос вернет не пустой объект в случае ошибки
-            //Закрываем другой открытый список, если он открыт (активен, но ничего не выбрано)
-                    list.forEach((item, index) => {
-                        if(item.classList.contains('active')) {
-                            item.innerHTML = "<li class='new-menu-box-list-item'></li>";
-                            item.classList.toggle('active');
-                            item.classList.toggle('relative');
-                            btns[index].classList.toggle('active');
-                            btns[index].classList.toggle('fa-angle-down');
-                            btns[index].classList.toggle('fa-angle-up');
-                        }
-                    });
-
-                    // добавляем классы активности на список выпадающего меню и на кнопку стрелочки
-                    e.target.classList.toggle('active');    
-                    e.target.classList.toggle('fa-angle-down');
-                    e.target.classList.toggle('fa-angle-up');        
-                    list[i].classList.toggle('relative');
-                    list[i].classList.toggle('active');
-
-                    //формируем сам список из невыбранных продуктов        
-                    list[i].innerHTML = 
-                    arrayWithProducts.map((item) => {
-                        let added = newMenu.querySelectorAll('.add');
-                        let arrayWithProductsNew = [];
-                        added.forEach(item => arrayWithProductsNew.push(item.innerText));
-                        if(!arrayWithProductsNew.includes(item.rus)) {
-                        return `<li data-name='${item.eng}' class='new-menu-box-list-item'>${item.rus}</li>`;}                 
-                    }).join('');        
-                    
-                
-                    //навешиваем на каждый элемент списка обработчик клика. При клике мы заполняем поле выбранным элементом
-                    const items = list[i].querySelectorAll('.new-menu-box-list-item');
-                    items.forEach(item => {
-                        item.addEventListener('click', (e) => {
-                            e.target.classList.add('add');
-                            list[i].innerHTML = e.target.outerHTML;
-                            list[i].classList.toggle('relative');                
-                            list[i].classList.toggle('active');  
-                            btns[i].classList.toggle('active');            
-                            btns[i].classList.toggle('fa-angle-down');
-                            btns[i].classList.toggle('fa-angle-up');
-                        });
-                    });
-
-                    e.target.dataset.loaded = '1';
-                }
-            });
-    // иначе если уже активная кнопка со стрелочкой, мы закрываем список и очищаем поле
-        } else if (e.target && e.target.tagName === 'I' && e.target.classList.contains('active')) {
-            const list = document.querySelectorAll('.new-menu-box-list');
-            const j = e.target.dataset.id;
-            const btns = newMenu.querySelectorAll('.fas');
-            let i;
-            btns.forEach((item, c) => {
-                if(item.dataset.id == j) {
-                    i = c;
-                }
-            });
-
-            e.target.classList.toggle('fa-angle-down');
-            e.target.classList.toggle('active');
-            e.target.classList.toggle('fa-angle-up');
-            list[i].classList.toggle('relative');        
-            list[i].classList.toggle('active');
-            list[i].innerHTML = `<li class='new-menu-box-list-item'></li>`;
+                console.log(arrayWithProducts);                
+                newMenu.addEventListener('click', addMenu);                 
+            });          
         }
-    
 });
-
-
 
 // Создаем функционал для того, чтобы добавлять на кнопку "+" новый продукт из меню
 let counter = 2; // каунтер нужен для того, чтобы кнопке повесить уникальный id.
@@ -327,10 +324,10 @@ btnForAddMenu.addEventListener('click', () => {
     const countItems = newMenu.querySelectorAll('.new-menu-list-input'); // колическтво продуктов
     const products = newMenu.querySelectorAll('.new-menu-box-list-item'); // английское название
     const sizes = newMenu.querySelectorAll('.new-menu-list-select'); // размерность продукта
-    const checkedMenu = document.querySelectorAll('.checkedMenu');
+    const checkedNewMenu = document.querySelectorAll('.checkedNewMenu');
     let currentMenu;
 
-    checkedMenu.forEach(item => {
+    checkedNewMenu.forEach(item => {
         if(item.checked) {
             newDayMenu[item.dataset.name] = true;
             currentMenu = item.dataset.name;
@@ -386,25 +383,9 @@ document.querySelector('.closeBtn .fas').addEventListener('click', ()=>{
 });
 
 //при выборе активного меню при добавлении, выезжает форма, которую нужно заполнять
-document.querySelectorAll('.checkedMenu').forEach(item => {
+document.querySelectorAll('.checkedNewMenu').forEach(item => {
     item.addEventListener('click',()=> {
         document.querySelector('.new-menu-block').classList.add('select');
     });
 });
-
-// Это скрипт для подсчета суммы нужных продуктов
-let obj1 = {a: 10, b: 20};
-let obj2 = {a: 234, b: 34};
-let arrrrrrrrrr = [obj1, obj2];
-function sumObjectsByKey(objs) {
-    console.log(objs);
-    return objs.reduce((c, b) => {
-        console.log(b);
-        for (let k in b) {
-        if (b.hasOwnProperty(k)){
-            c[k] = (c[k] || 0) + b[k];}
-        }
-        return c;
-    }, {});
-}
 
