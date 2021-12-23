@@ -166,27 +166,28 @@ function deleteDayMenu(e) { //удаление отрендеренного дн
     if(e.target && e.target.classList.contains('delete-btn')) {
         let answer = confirm('Вы действиетльно хотите удалить этот рецепт?');
         if(answer) {
-            fetch(`http://localhost:3000/${e.target.dataset.name}/${e.target.dataset.id}`, {
+            fetch(`https://menu-db.herokuapp.com/${e.target.dataset.name}/${e.target.dataset.id}`, {
                 method: 'DELETE'
             });
         }
     }
 }
 //при запуске скрипта мы отстраиваем наши меню взятую с баззы данных
-fetch('http://localhost:3000/menus')
+fetch('https://menu-db.herokuapp.com/menus')
     .then(res => res.json())
-    .then(menus => {
-        menus.forEach(item => {
+    .then(answ => {
+        console.log(answ);
+        answ.forEach(item => {
             let contentLists = document.querySelectorAll('.content-list');
                 contentLists.forEach(contentList => {
                     clearInnerHTML(contentList);
                 });
 
             let arrWithMenu = [];
-            fetch(`http://localhost:3000/${item.name}`)
+            fetch(`https://menu-db.herokuapp.com/${item.name}`)
             .then(menu => menu.json())
-            .then(res => {                
-                    res.forEach( item => {
+            .then(res => {               
+                    res.forEach(item => {
                         arrWithMenu.push(new DayMenu(item));                        
                     });
                 }   
@@ -307,7 +308,7 @@ checkMenus.addEventListener('click', (e) => { //функция, которая �
     if(e.target.classList.contains('checkedNewMenu')) {        
         newMenu.removeEventListener('click', addMenu); //удаляем ранее навешенный обработчик события
         console.log(e.target);
-        fetch(`http://localhost:3000/products_${menuName('.checkedNewMenu')}`)
+        fetch(`https://menu-db.herokuapp.com/products_${menuName('.checkedNewMenu')}`)
             .then(res => res.json())
             .then(res => {
                 arrayWithProducts = res;
@@ -377,7 +378,7 @@ btnForAddMenu.addEventListener('click', () => {
     });
 
     let lastId;
-    new Promise(() => {fetch(`http://localhost:3000/${currentMenu}`)
+    new Promise(() => {fetch(`https://menu-db.herokuapp.com/${currentMenu}`)
         .then(menu => menu.json())
         .then(res => {
             if(res.length) {
@@ -390,7 +391,7 @@ btnForAddMenu.addEventListener('click', () => {
         .then(() => {
             newDayMenu.id = lastId + 1;
             newDayMenu = JSON.stringify(newDayMenu);
-            fetch(`http://localhost:3000/${currentMenu}`, {
+            fetch(`https://menu-db.herokuapp.com/${currentMenu}`, {
                 method: 'POST',
                 body: newDayMenu,
                 headers: {
