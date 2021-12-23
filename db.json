@@ -19,22 +19,74 @@
   ],
   "gurman": [
     {
-      "name": "gurman",
+      "bgColor": "blue",
       "gurman": true,
       "dayName": "Понедельник",
       "weak": "1",
       "recept": "",
-      "avacado": {
-        "count": "213",
-        "name": "Авакадо",
+      "name": "gurman",
+      "butter": {
+        "count": "200",
+        "name": "Масло сливочное",
         "sizes": "грамм"
       },
-      "balsamic": {
-        "count": "234",
-        "name": "Бальзамический уксус",
+      "lavash": {
+        "count": "300",
+        "name": "Лаваш",
         "sizes": "грамм"
       },
       "id": 1
+    },
+    {
+      "gurman": true,
+      "dayName": "Среда",
+      "weak": "1",
+      "recept": "Вот так вот",
+      "name": "gurman",
+      "bulgur": {
+        "count": "34",
+        "name": "Булгур",
+        "sizes": "грамм"
+      },
+      "lavash": {
+        "count": "5354",
+        "name": "Лаваш",
+        "sizes": "грамм"
+      },
+      "beef": {
+        "count": "234",
+        "name": "Говядина постная",
+        "sizes": "грамм"
+      },
+      "olives": {
+        "count": "12",
+        "name": "Оливки",
+        "sizes": "грамм"
+      },
+      "cucumber": {
+        "count": "234",
+        "name": "Огурцы",
+        "sizes": "шт"
+      },
+      "id": 3
+    },
+    {
+      "gurman": true,
+      "dayName": "Вторник",
+      "weak": "1",
+      "recept": "",
+      "name": "gurman",
+      "potato": {
+        "count": "23454",
+        "name": "Картофель",
+        "sizes": "грамм"
+      },
+      "butter": {
+        "count": "4354",
+        "name": "Масло сливочное",
+        "sizes": "грамм"
+      },
+      "id": 2
     }
   ],
   "torop": [

@@ -9,76 +9,114 @@
 .activeForm
     transform: translateX(0%) !important
 
-
-.content
-    margin: 0 auto
-    width: 80%
+.main
     display: flex
-    flex-wrap: wrap
-    justify-content: space-between
-    h2
-        margin-top: 30px
-    .open-form
-        margin: 15px
-        display: block
-        padding: 1rem 5rem
-        cursor: pointer
-    &-list
-        width: 100%      
-        &-item
-            display: flex
-            flex-direction: column         
-            margin-top: 10px
+    .sum-menu
+        display: flex
+        position: relative
+        justify-content: center
+        width: 0%
+        transition: 6s
+        overflow: hidden       
+        &-block            
+            position: fixed
+            top: 100px
+            transition: 6s
+            width: 0%
             overflow: hidden
-            .bg_green
-                background-color: #84d6a4
-            .bg_orange
-                background-color: #e6c69d
-            .bg_pink
-                background-color: #e7a8e2
-            .bg_blue
-                background-color: #9ebbf0
-            &-description
-                width: 100%
+            h3
+                text-align: center
+                display: block
+                width: 20vw
+            .sum-menu-list
+                padding-left: 3vw
+                display: flex;
+                flex-direction: column
+                &-item
+                    width: 20vw
+            
+    .active
+        width: 20vw
+
+    .content
+        margin: 0 auto
+        padding: 0 70px        
+        width: 80%
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-between
+        flex-direction: column
+        .filter_block
+            display: flex
+            justify-content: right
+            margin-top: 20px
+            span
+                flex-grow: 1
+        h2
+            margin-top: 30px
+        .open-form
+            margin: 15px
+            display: block
+            padding: 1rem 5rem
+            cursor: pointer
+        &-list
+            width: 100%      
+            &-item
                 display: flex
-                justify-content: flex-end
-                align-items: center
-                background-color: #b4bb8d
-                padding: 5px 15px 5px 15px
-                border: 1px solid #3b3b20
-                .num-day
-                    flex-grow: 1
-                .check
-                    margin-left: 10px
-                .open-btn
-                    display: block
-                    width: 25px
-                    height: 100%
-                    cursor: pointer
-            &-more
-                // transform: translateY(-100%)
-                display: flex
-                overflow-y: scroll
-                height: 0px
-                padding: 0px 15px 0px 15px
-                background-color: #e2f3c1
-                border-left: 1px solid black
-                border-bottom: 1px solid black
-                border-right: 1px solid black
-                transition: 0.5s
-                .menu-img
-                    flex-grow: 1
-                    img
-                        height: 500px
-                .menu-list
-                    flex-grow: 1   
-                .recept
-                    flex-grow: 2
-            .open
-                padding-top: 20px
-                // transform: translateY(0%)
-                // animation: ease 0.5s open forwards  
-                height: 350px         
+                flex-direction: column         
+                margin-top: 10px
+                overflow: hidden
+                .bg_gurman
+                    background-color: #84d6a4
+                .bg_torop
+                    background-color: #f5a9ff
+                .bg_autumn
+                    background-color: #d0d4a4
+                .bg_tasty
+                    background-color: #9ebbf0
+                &-description
+                    width: 100%
+                    display: flex
+                    justify-content: flex-end
+                    align-items: center
+                    background-color: #b4bb8d
+                    padding: 5px 15px 5px 15px
+                    border: 1px solid #3b3b20
+                    .num-day
+                        flex-grow: 1
+                    .check
+                        margin-left: 10px
+                    .open-btn
+                        display: block
+                        width: 25px
+                        height: 100%
+                        cursor: pointer
+                &-more
+                    // transform: translateY(-100%)
+                    display: flex
+                    overflow-y: scroll
+                    height: 0px
+                    padding: 0px 15px 0px 15px
+                    background-color: #e2f3c1
+                    border-left: 1px solid black
+                    border-bottom: 1px solid black
+                    border-right: 1px solid black
+                    transition: 0.5s
+                    .menu-img
+                        flex-grow: 1
+                        img
+                            height: 500px
+                    .menu-list
+                        flex-grow: 1
+                        position: sticky
+                        top: 0
+                    .recept
+                        flex-grow: 2
+                .open
+                    padding-top: 20px
+                    // transform: translateY(0%)
+                    // animation: ease 0.5s open forwards  
+                    height: 350px         
     
         
 
@@ -205,5 +243,6 @@
                 width: 100%
                 height: 100%
                 cursor: pointer
-        
+.filter_block
+    display: flex      
     

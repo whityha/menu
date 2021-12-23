@@ -1,10 +1,11 @@
 'use strict';
 
-let arrWithRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
+let arrWithObjRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
 //создаем класс меню
 class DayMenu {
     constructor(props) {
-        this.products = props;       
+        this.products = props;
+        this.bgColor = props.name;            
     }    
 
     // метод, чтобы запостить все продукты, что есть в конструкторе в bd
@@ -24,22 +25,35 @@ class DayMenu {
         console.log(products);
         products = JSON.stringify(products);
     }
-    
+
+    renderTotalCounts(parent) {
+        clearInnerHTML(parent);
+        for(let product in this.products) {
+            parent.innerHTML += `         
+            <li class='sum-menu-list-item'>${this.products[product].name} - ${this.products[product].count}${this.products[product].sizes}</li>
+        `;
+        }  
+        
+    }
+
     //метод для отображения нового класса на странице
-    render() {        
+    render(filter = true) {        
         let currentMenu = {};
         function renderCurrentMenu(dayMenu,menu,bgColor) {
-            for (let key in dayMenu) {
-                if(dayMenu[key].count) {
-                    currentMenu[key] = dayMenu[key];
+            function toDoCurrentMenu() {
+                for (let key in dayMenu) {
+                    if(dayMenu[key].count) {
+                        currentMenu[key] = dayMenu[key];
+                    }
                 }
-            }            
+            }
+            toDoCurrentMenu(dayMenu);            
             const parent = document.querySelector(`.content-list-${menu}`);
             parent.innerHTML += `
             <li class='content-list-item'>
                 <div class='content-list-item-description bg_${bgColor}'>
                     <div class='num-day'>Неделя ${dayMenu.weak}. ${dayMenu.dayName}.</div>
-                    <button data-name=${menu} data-id=${dayMenu.id} type='button' class='delete-btn'>Delete rec</button>
+                    <button data-name=${menu} data-id=${dayMenu.id} type='button' class='delete-btn'>Delete</button>
                     <button type='button'>
                         <i data-more=${menu} data-id=${dayMenu.id} class='fas fa-angle-down open-btn'></i>
                     </button>
@@ -63,22 +77,21 @@ class DayMenu {
             }
         }
 
-        if(this.products.gurman) {
-            renderCurrentMenu(this.products, 'gurman', 'green');
-        } else if (this.products.torop) {
-            renderCurrentMenu(this.products, 'torop', 'pink');
-        } else if (this.products.tasty) {
-            renderCurrentMenu(this.products, 'tasty', 'blue');
-        } else if (this.products.autumn) {
-            renderCurrentMenu(this.products, 'autumn', 'orange');
-        }
-
-        arrWithRenderingMenu.push(this.products);
+        renderCurrentMenu(this.products, this.products.name, this.bgColor);
+        if(filter) {arrWithObjRenderingMenu.push(this.products);} // в filter передаем false, чтобы в массив со всеми объектами меню не пушились повторно
     }
 }
-// Создаем функцию для подсчета продуктов в выбранных меню и навешиваем обработчик события на кнопку для инициации
-document.querySelector('.total-count').addEventListener('click', showSumProducts);
+//навешиваем обработчик события на кнопку для инициации счета продуктов
+document.querySelector('.total-count').addEventListener('click', () => { toAddActiveClass(showSumProducts());});
 
+function toAddActiveClass(a = true) {
+    if(a) {
+    document.querySelector('.sum-menu').classList.add('active');
+    document.querySelector('.sum-menu-block').classList.add('active');
+    }
+}
+
+// Создаем функцию для подсчета продуктов в выбранных меню 
 function showSumProducts() {
     let allCheckMenu = document.querySelectorAll('.content .check'); //выбираем все инпуты с чеком
     let arrWithChekedMenu = [];
@@ -89,14 +102,17 @@ function showSumProducts() {
         }
     });
     arrWithCheckedObj = arrWithChekedMenu.map(item => { //преобразуем массив с менюшками, которые checked
-        return arrWithRenderingMenu.find((menu) => { //ищем во всех отображенных менюшках на странице менюшки с checked по id и name
+        return arrWithObjRenderingMenu.find((menu) => { //ищем во всех отображенных менюшках на странице менюшки с checked по id и name
             return item.dataset.id == menu.id && item.dataset.name == menu.name;
         });
     });
     if(arrWithChekedMenu.length > 0) {
-        console.log(sumObjectsByKey(arrWithCheckedObj)); //выводим в консоль объект с уже посчитанными продуктами
+        const parent = document.querySelector('.sum-menu-list');
+        new DayMenu(sumObjectsByKey(arrWithCheckedObj)).renderTotalCounts(parent); //выводим в консоль объект с уже посчитанными продуктами
+        return true;
     } else {
         alert('Выберите хотябы одно меню');
+        return false;
     }
 
     function sumObjectsByKey(objs) { //функция для подсчета суммы продуктов из разных меню
@@ -118,10 +134,21 @@ function showSumProducts() {
 }
 
 
-//Работа с кнопка контента
+//Работа с кнопками контента через делегирование событий
 const content = document.querySelector('.content');
 content.addEventListener('click', (e) => {
-    // Открытие/закрытие описания каждого дня меню
+    
+    openDescriptionMenu(e);
+    toChangeDayMenu(e);
+    deleteDayMenu(e);        
+});
+function toChangeDayMenu(e) {
+    if(e.target && e.target.classList.contains('content-list-item-description')) {
+        let check = e.target.querySelector('.check').checked;
+        check ? check = false : check = true;
+    }
+}
+function openDescriptionMenu(e) {
     if(e.target && e.target.classList.contains('open-btn')) {
         let i = e.target.dataset.id;
         let j = e.target.dataset.more;
@@ -134,7 +161,8 @@ content.addEventListener('click', (e) => {
             }
         });
     }
-
+}
+function deleteDayMenu(e) { //удаление отрендеренного дневного меню с бд
     if(e.target && e.target.classList.contains('delete-btn')) {
         let answer = confirm('Вы действиетльно хотите удалить этот рецепт?');
         if(answer) {
@@ -143,25 +171,27 @@ content.addEventListener('click', (e) => {
             });
         }
     }
-        
-});
-
+}
 //при запуске скрипта мы отстраиваем наши меню взятую с баззы данных
 fetch('http://localhost:3000/menus')
     .then(res => res.json())
     .then(menus => {
         menus.forEach(item => {
+            let contentLists = document.querySelectorAll('.content-list');
+                contentLists.forEach(contentList => {
+                    clearInnerHTML(contentList);
+                });
+
             let arrWithMenu = [];
             fetch(`http://localhost:3000/${item.name}`)
             .then(menu => menu.json())
             .then(res => {                
                     res.forEach( item => {
-                        arrWithMenu.push(new DayMenu(item));
-                        
+                        arrWithMenu.push(new DayMenu(item));                        
                     });
                 }   
             )
-            .then(() => {                
+            .then(() => {
                 arrWithMenu.forEach(item => {
                     item.render();
                     });
@@ -273,9 +303,9 @@ function addMenu(e) {
 }
 
 // 
-checkMenus.addEventListener('click', (e) => {
+checkMenus.addEventListener('click', (e) => { //функция, которая подгружает массив со списком продуктов
     if(e.target.classList.contains('checkedNewMenu')) {        
-        newMenu.removeEventListener('click', addMenu);
+        newMenu.removeEventListener('click', addMenu); //удаляем ранее навешенный обработчик события
         console.log(e.target);
         fetch(`http://localhost:3000/products_${menuName('.checkedNewMenu')}`)
             .then(res => res.json())
@@ -283,7 +313,7 @@ checkMenus.addEventListener('click', (e) => {
                 arrayWithProducts = res;
             }).then(() => {
                 console.log(arrayWithProducts);                
-                newMenu.addEventListener('click', addMenu);                 
+                newMenu.addEventListener('click', addMenu);  //навешиваем обработчик события на новое меню            
             });          
         }
 });
@@ -389,3 +419,39 @@ document.querySelectorAll('.checkedNewMenu').forEach(item => {
     });
 });
 
+function toFilterObj(arr, inputClass) { //функция, которая фильтрует массив с объектами меню и рендерит на страницу
+    const input = document.querySelector(inputClass).value;
+    let filteredObjs = arr;
+    if(input) {
+        let arrWithProducts = turnStringIntoArray(input);
+        arrWithProducts = arrWithProducts.map(productName => productName[0].toUpperCase() + productName.slice(1).toLowerCase()); //приобразуем к требуемому виду
+        arrWithProducts.forEach(product => {    
+            filteredObjs = filteredObjs.filter(item => {            
+                for(let key in item) {
+                    if(typeof(item[key]) == 'object' && item[key].name === product) {
+                        return true;
+                    }
+                }
+            });
+        });
+        let contentLists = document.querySelectorAll('.content-list');
+        contentLists.forEach(contentList => {
+            clearInnerHTML(contentList);
+        });
+        filteredObjs.forEach(dayMenuObj => {
+            new DayMenu(dayMenuObj).render(false); //передаем false, чтобы в массив с объектами всех отображенных меню не пушились меню повторно
+        });
+    } else {
+        alert('Введите продукты');
+    }    
+}
+
+function clearInnerHTML(elem) {
+    elem.innerHTML = '';
+}
+
+document.querySelector('.filter_block button').addEventListener('click', () => {toFilterObj(arrWithObjRenderingMenu, '.input-filter');});
+
+function turnStringIntoArray(str) {
+    return str.split(', ');
+}

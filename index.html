@@ -13,25 +13,39 @@
     <title>Menu</title>
 </head>
 <body>
+    <div class='main'>
+        <div class='sum-menu'>
+            <div class='sum-menu-block'>
+                <button class='sum-menu-close-btn'>ЗАкрыть</button>
+                <h3>Количество всех продуктов в выбранных меню:</h3>
+                <ul class='sum-menu-list'>
 
-    <div class="content">
-        <h2>Весенний ГУРМАН</h2>
-        <ul class='content-list content-list-gurman'>
+                </ul>
+            </div>
+        </div>
+        <div class="content">
+            <div class="filter_block">
+                <span>Введите название продуктов через запятую, чтобы отфильтровать менюшки</span>
+                <button type='button'>Отфильтровать</button>
+                <input class='input-filter' type="text">
+            </div>
+            <h2>Весенний ГУРМАН 1500ккал</h2>
+            <ul class='content-list content-list-gurman'>
 
-        </ul>
-        <h2>Торопыжка бюджет</h2>
-        <ul class='content-list content-list-torop'>
-        </ul>
-        <h2>Осеннее меню</h2>
-        <ul class='content-list content-list-autumn'>
-        </ul>
-        <h2>Вкусный бюджет</h2>
-        <ul class='content-list content-list-tasty'>
-        </ul>
-    <button type='button' class='open-form'>Добавить день в любое меню</button>
-    <button type='button' class='total-count'>Посчитать сумму продуктов выбранных меню</button>
+            </ul>
+            <h2>Торопыжка бюджет 1500ккал</h2>
+            <ul class='content-list content-list-torop'>
+            </ul>
+            <h2>Осеннее меню 1500ккал</h2>
+            <ul class='content-list content-list-autumn'>
+            </ul>
+            <h2>Вкусный бюджет 1500ккал</h2>
+            <ul class='content-list content-list-tasty'>
+            </ul>
+        <button type='button' class='open-form'>Добавить день в любое меню</button>
+        <button type='button' class='total-count'>Посчитать сумму продуктов выбранных меню</button>
+        </div>
     </div>
-
     <div class='new-menu'>
         <form class='new-menu-form'>
             <div class='closeBtn'>
@@ -114,7 +128,6 @@
             </div>
         </form>
     </div>
-
 <script src="js.js"></script>
 </body>
 </html>
