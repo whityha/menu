@@ -179,8 +179,8 @@ function deleteDayMenu(e) { //удаление отрендеренного дн
                 method: 'DELETE'
             }).then(res => { 
                 if(res.status == 200) {
-                    e.target.parentElement.remove();
-                    alert('Меню удалено');
+                    new Promise(() => {e.target.parentElement.parentElement.remove();})
+                    .then(() => { alert('Меню удалено');});                   
                 } else {
                     alert('Какая-то ошибка');
                 }
