@@ -1,7 +1,7 @@
 'use strict';
 const localURL = 'http://localhost:3000';
 const githubURL = 'https://menu-db.herokuapp.com';
-const currentURL = githubURL;
+const currentURL = localURL;
 let arrWithObjRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
 
 //создаем класс меню
@@ -10,36 +10,20 @@ class DayMenu {
         this.products = props;
         this.bgColor = props.name;            
     }    
-
-    // метод, чтобы запостить все продукты, что есть в конструкторе в bd
-    post() {
-        let products = [];
-        let arrrrr = [];
-        for( let key in this) {
-            if(key !== 'day') {
-            let obj = {};
-            arrrrr.push(this[key]);
-            obj.eng = key;
-            obj.rus = this[key].name;
-            products.push(obj);
-            }
-        }
-        console.log(arrrrr);
-        console.log(products);
-        products = JSON.stringify(products);
-    }
-
+    
     renderTotalCounts(parent) {
         clearInnerHTML(parent);
         for(let product in this.products) {
+            if(this.products[product].count) {
             parent.innerHTML += `         
             <li class='sum-menu-list-item'>${this.products[product].name} - ${this.products[product].count}${this.products[product].sizes}</li>
-        `;
+            `;
+            }
         }  
         
     }
 
-    //метод для отображения нового класса на странице
+    //метод для отображения нового объекта на странице
     render(filter = true) {        
         let currentMenu = {};
         function renderCurrentMenu(dayMenu,menu,bgColor) {
@@ -84,7 +68,7 @@ class DayMenu {
         if(filter) {arrWithObjRenderingMenu.push(this.products);} // в filter передаем false, чтобы в массив со всеми объектами меню не пушились повторно
     }
 }
-//навешиваем обработчик события на кнопку для инициации счета продуктов
+//навешиваем обработчик события на кнопку для инициации счета продуктов и отображения блока
 document.querySelector('.total-count').addEventListener('click', () => { toAddActiveClass(showSumProducts());});
 
 function toAddActiveClass(a = true) {
@@ -117,7 +101,7 @@ function showSumProducts() {
     });
     if(arrWithChekedMenu.length > 0) {
         const parent = document.querySelector('.sum-menu-list');
-        new DayMenu(sumObjectsByKey(arrWithCheckedObj)).renderTotalCounts(parent); //выводим в консоль объект с уже посчитанными продуктами
+        new DayMenu(sumObjectsByKey(arrWithCheckedObj)).renderTotalCounts(parent); //рендерим объект с уже посчитанными продуктами
         return true;
     } else {
         alert('Выберите хотябы одно меню');
@@ -145,18 +129,33 @@ function showSumProducts() {
 
 //Работа с кнопками контента через делегирование событий
 const content = document.querySelector('.content');
-content.addEventListener('click', (e) => {
-    
+content.addEventListener('click', (e) => {    
     openDescriptionMenu(e);
-    toChangeDayMenu(e);
+    toSelectDayMenu(e);
     deleteDayMenu(e);        
 });
-function toChangeDayMenu(e) {
+
+function toSelectDayMenu(e) {
+
     if(e.target && e.target.classList.contains('content-list-item-description')) {
         let check = e.target.querySelector('.check').checked;
-        check ? check = false : check = true;
+        if(check) {
+            e.target.querySelector('.check').checked = false;
+        } else {
+            e.target.querySelector('.check').checked = true;
+        }
+    }
+
+    if (e.target.classList.contains('num-day')) {
+        let check = e.target.parentElement.querySelector('.check').checked;
+        if(check) {
+            e.target.parentElement.querySelector('.check').checked = false;
+        } else {
+            e.target.parentElement.querySelector('.check').checked = true;
+        }
     }
 }
+
 function openDescriptionMenu(e) {
     if(e.target && e.target.classList.contains('open-btn')) {
         let i = e.target.dataset.id;
@@ -179,12 +178,10 @@ function deleteDayMenu(e) { //удаление отрендеренного дн
                 method: 'DELETE'
             }).then(res => { 
                 if(res.status == 200) {
-                    new Promise(() => {e.target.parentElement.parentElement.remove();})
-                    .then(() => { alert('Меню удалено');});                   
+                    e.target.parentElement.parentElement.remove();
                 } else {
                     alert('Какая-то ошибка');
-                }
-            
+                }            
             });
         }
     }
@@ -223,13 +220,13 @@ fetch(`${currentURL}/menus`)
 // Делегирование событий на кнопки списка нового меню
 function menuName(className) { //функция возвращает имя выбранного меню по списку
     const checkedMenus = document.querySelectorAll(className);
-    let num;
+    let name;
         checkedMenus.forEach(item => {
             if(item.checked) {
-                num = item.dataset.name;
+                name = item.dataset.name;
             }
         });
-    return num;   
+    return name;   
 }
 let arrayWithProducts = [];
 const checkMenus = document.querySelector('.new-menu-form-menus');
@@ -240,7 +237,7 @@ function addMenu(e) {
     }
     //если мы нажимаем на кнопку открытия списка и она не активна (список не активен)
     if (e.target && e.target.tagName === 'I' && !e.target.classList.contains('active')) { 
-        console.log(e.target);       
+        console.log(e.target);
         const j = e.target.dataset.id;
         const btns = newMenu.querySelectorAll('.fas');  
         const list = document.querySelectorAll('.new-menu-box-list');
@@ -298,7 +295,7 @@ function addMenu(e) {
                     btns[i].classList.toggle('fa-angle-up');
                 });
             });
-        }
+        } else {alert('Проверьте подключение к интернету');}
         
 // иначе если уже активная кнопка со стрелочкой, мы закрываем список и очищаем поле
     } else if (e.target && e.target.tagName === 'I' && e.target.classList.contains('active')) {
@@ -321,29 +318,48 @@ function addMenu(e) {
         list[i].innerHTML = `<li class='new-menu-box-list-item'></li>`;
     }
 }
-
-// 
 checkMenus.addEventListener('click', (e) => { //функция, которая подгружает массив со списком продуктов при клике на одно из меню
-    if(e.target.classList.contains('checkNewMenu')) {        
-        newMenu.removeEventListener('click', addMenu); //удаляем ранее навешенный обработчик события
-        console.log(e.target);
-        fetch(`${currentURL}/products_${menuName('.checkNewMenu')}`)
-            .then(res => res.json())
-            .then(res => {
-                arrayWithProducts = res;
-            }).then(() => {
-                console.log(arrayWithProducts);                
-                newMenu.addEventListener('click', addMenu);  //навешиваем обработчик события на новое меню            
-            });          
-        }
+                     
+            if(e.target.classList.contains('checkNewMenu')) {           
+                clearNewMenuList();        
+                newMenu.removeEventListener('click', addMenu); //удаляем ранее навешенный обработчик события
+            
+                fetch(`${currentURL}/products_${menuName('.checkNewMenu')}`)
+                    .then(res => res.json())
+                    .then(res => {
+                        arrayWithProducts = res;
+                    }).then(() => {               
+                        newMenu.addEventListener('click', addMenu);//навешиваем обработчик события на новое меню                  
+                    });        
+            }   
+                  
+         
+        // else if(e.target.classList.contains('xxx')) {
+        //         newMenu.removeEventListener('click', addMenu); //удаляем ранее навешенный обработчик события
+            
+        //         fetch(`${currentURL}/products_${menuName('.checkNewMenu')}`)
+        //             .then(res => res.json())
+        //             .then(res => {
+        //                 arrayWithProducts = res;
+        //             }).then(() => {               
+        //                 newMenu.addEventListener('click', addMenu);//навешиваем обработчик события на новое меню                  
+        //                 // document.querySelectorAll('.checkNewMenu').forEach(item => {
+        //                 //     item.classList.remove('xxx');
+        //                 //     item.classList.add('eee');
+        //                 // });
+                        
+        //             });        
+        // }
+            
 });
 
 // Создаем функционал для того, чтобы добавлять на кнопку "+" новый продукт из меню
-let counter = 2; // каунтер нужен для того, чтобы кнопке повесить уникальный id.
+let counter = 1; // каунтер нужен для того, чтобы кнопке повесить уникальный id.
 let plus = document.querySelector('.new-menu-add-item');
 plus.addEventListener('click', () => {
     const newItem = document.createElement('li');
     newItem.classList.add('new-menu-list-item');
+    newItem.setAttribute('new', '');
     newItem.innerHTML = `
         <div class='new-menu-box'>
             <ul class='new-menu-box-list'>
@@ -367,18 +383,17 @@ plus.addEventListener('click', () => {
 
 
 //добавляем новое меню в базу
-
 const btnForAddMenu = document.querySelector('.new-menu-add-menu');
-btnForAddMenu.addEventListener('click', () => {
-    let newDayMenu = {};
-    const countItems = newMenu.querySelectorAll('.new-menu-list-input'); // колическтво продуктов
-    const products = newMenu.querySelectorAll('.new-menu-box-list-item'); // отсюда берем английское название
-    const sizes = newMenu.querySelectorAll('.new-menu-list-select'); // размерность продукта
-    const checkNewMenu = document.querySelectorAll('.checkNewMenu');
-    const numberDay = newMenu.querySelector('.dayName');
-    let currentMenu;
+btnForAddMenu.addEventListener('click', (e) => {
+    let newDayMenu = {},
+        currentMenu;
+    const countItems = newMenu.querySelectorAll('.new-menu-list-input'), // колическтво продуктов
+            products = newMenu.querySelectorAll('.new-menu-box-list-item'), // отсюда берем английское название
+            sizes = newMenu.querySelectorAll('.new-menu-list-select'), // размерность продукта
+            checkNewMenu = document.querySelectorAll('.checkNewMenu'), //все меню с возможным check
+            numberDay = newMenu.querySelector('.dayName');  //выбирает объект select с днями
 
-    checkNewMenu.forEach(item => {
+    checkNewMenu.forEach(item => { //по имени меню назначаем его в переменную currentMenu
         if(item.checked) {
             newDayMenu[item.dataset.name] = true;
             currentMenu = item.dataset.name;
@@ -398,31 +413,33 @@ btnForAddMenu.addEventListener('click', () => {
         newDayMenu[item.dataset.name].sizes = sizes[i].value;
     });
     
+    e.target.setAttribute('disabled', '');
     
-    fetch(`${currentURL}/${currentMenu}/${newDayMenu.id}`)
+    fetch(`${currentURL}/${currentMenu}/${newDayMenu.id}`) //проверяем id и постим, если такого id нет
         .then(res => {
             if(res.status == 404) {
-                newDayMenu = JSON.stringify(newDayMenu);
+                let newDayMenuJSON = JSON.stringify(newDayMenu);
                 fetch(`${currentURL}/${currentMenu}`, {
                     method: 'POST',
-                    body: newDayMenu,
+                    body: newDayMenuJSON,
                     headers: {
                         'Content-type':'application/json'
                     }
+                }).then(res => {
+                    if(res.status == 201) {
+                        document.querySelector(`.content-list-${currentMenu}`).innerHTML += `
+                        <div>Только что добавленные меню:</div>
+                        `;
+                        new DayMenu(newDayMenu).render();
+                    }
+                    clearNewMenuList();
+                    e.target.removeAttribute('disabled');
                 });  
             } else if (res.status == 200) {
+                e.target.removeAttribute('disabled');
                 alert('Такой день недели уже существует. Сперва удалите старый');
             }
-        });
-
-    // newDayMenu = JSON.stringify(newDayMenu);
-    // fetch(`${currentURL}/${currentMenu}`, {
-    //     method: 'POST',
-    //     body: newDayMenu,
-    //     headers: {
-    //         'Content-type':'application/json'
-    //     }
-    // });  
+        }); 
 });
 
 //открываем меню с формой с помощью делегирования событий
@@ -446,6 +463,7 @@ document.querySelectorAll('.checkNewMenu').forEach(item => {
 function toFilterObj(arr, inputClass) { //функция, которая фильтрует массив с объектами меню и рендерит на страницу
     const input = document.querySelector(inputClass).value;
     let filteredObjs = arr;
+    let contentLists = document.querySelectorAll('.content-list');
     if(input) {
         let arrWithProducts = turnStringIntoArray(input);
         arrWithProducts = arrWithProducts.map(productName => productName[0].toUpperCase() + productName.slice(1).toLowerCase()); //приобразуем к требуемому виду
@@ -458,7 +476,7 @@ function toFilterObj(arr, inputClass) { //функция, которая фил�
                 }
             });
         });
-        let contentLists = document.querySelectorAll('.content-list');
+        
         contentLists.forEach(contentList => {
             clearInnerHTML(contentList);
         });
@@ -466,6 +484,10 @@ function toFilterObj(arr, inputClass) { //функция, которая фил�
             new DayMenu(dayMenuObj).render(false); //передаем false, чтобы в массив с объектами всех отображенных меню не пушились меню повторно
         });
     } else {
+        contentLists.forEach(contentList => {
+            clearInnerHTML(contentList);
+        });
+        arrWithObjRenderingMenu.forEach(menu => new DayMenu(menu).render(false));
         alert('Введите продукты');
     }    
 }
@@ -478,4 +500,14 @@ document.querySelector('.filter_block button').addEventListener('click', () => {
 
 function turnStringIntoArray(str) {
     return str.split(', ');
+}
+
+
+function clearNewMenuList() { //очищаем форму нового меню
+    document.querySelectorAll('.new-menu [new]').forEach(item => item.remove());
+    document.querySelector('.new-menu-list-recept').value = '';
+    document.querySelector('.new-menu .dayName').firstElementChild.selected = true;
+    document.querySelector('.new-menu-list-weak .weak').firstElementChild.selected = true;
+    document.querySelector('.new-menu-box-list').innerHTML = `<li  class='new-menu-box-list-item'></li>`;
+    document.querySelector('.new-menu .new-menu-list-input').value = '';
 }

@@ -20,19 +20,37 @@
   "gurman": [
     {
       "gurman": true,
-      "dayName": "Суббота",
+      "dayName": "Понедельник",
       "weak": "1",
       "recept": "",
       "name": "gurman",
-      "id": "16",
-      "balsamic": {
-        "count": "1",
-        "name": "Бальзамический уксус",
+      "id": "11",
+      "orange": {
+        "count": "5",
+        "name": "Апельсин",
         "sizes": "грамм"
       },
-      "undefined": {
+      "brokkoli": {
+        "count": "20",
+        "name": "Брокколи",
+        "sizes": "грамм"
+      },
+      "balsamic": {
+        "count": "20",
+        "name": "Бальзамический уксус",
+        "sizes": "грамм"
+      }
+    },
+    {
+      "gurman": true,
+      "dayName": "Вторник",
+      "weak": "1",
+      "recept": "7879",
+      "name": "gurman",
+      "id": "12",
+      "balsamic": {
         "count": "",
-        "name": "",
+        "name": "Бальзамический уксус",
         "sizes": "грамм"
       }
     }
@@ -42,39 +60,32 @@
       "torop": true,
       "dayName": "Понедельник",
       "weak": "1",
-      "recept": "Всё перемешать и захавать",
+      "recept": "",
       "name": "torop",
-      "orange": {
-        "count": "1",
-        "name": "Апельсин",
-        "sizes": "шт"
-      },
-      "butter": {
-        "count": "10",
-        "name": "Масло сливочное",
+      "id": "11",
+      "undefined": {
+        "count": "",
+        "name": "",
         "sizes": "грамм"
-      },
+      }
+    },
+    {
+      "torop": true,
+      "dayName": "Вторник",
+      "weak": "1",
+      "recept": "8989090",
+      "name": "torop",
+      "id": "12",
       "bulgur": {
-        "count": "1000",
+        "count": "10",
         "name": "Булгур",
         "sizes": "грамм"
       },
-      "olives": {
-        "count": "1000",
-        "name": "Оливки",
+      "balsamic": {
+        "count": "10",
+        "name": "Бальзамический уксус",
         "sizes": "грамм"
-      },
-      "fishKeta": {
-        "count": "20",
-        "name": "Филе кеты",
-        "sizes": "грамм"
-      },
-      "cheese": {
-        "count": "200",
-        "name": "Сыр российский",
-        "sizes": "грамм"
-      },
-      "id": 1
+      }
     }
   ],
   "autumn": [
@@ -84,52 +95,12 @@
       "weak": "1",
       "recept": "",
       "name": "autumn",
-      "orange": {
-        "count": "100",
-        "name": "Апельсин",
+      "id": "11",
+      "undefined": {
+        "count": "",
+        "name": "",
         "sizes": "грамм"
-      },
-      "butter": {
-        "count": "500",
-        "name": "Масло сливочное",
-        "sizes": "грамм"
-      },
-      "mozarella": {
-        "count": "50",
-        "name": "Моцарелла",
-        "sizes": "грамм"
-      },
-      "limon": {
-        "count": "1",
-        "name": "Лимон",
-        "sizes": "шт"
-      },
-      "mindal": {
-        "count": "500",
-        "name": "Миндаль",
-        "sizes": "шт"
-      },
-      "milk": {
-        "count": "500",
-        "name": "Молоко 1,5%",
-        "sizes": "грамм"
-      },
-      "carrot": {
-        "count": "500",
-        "name": "Морковь",
-        "sizes": "грамм"
-      },
-      "tomato": {
-        "count": "5",
-        "name": "Помидоры",
-        "sizes": "шт"
-      },
-      "lavash": {
-        "count": "500",
-        "name": "Лаваш",
-        "sizes": "грамм"
-      },
-      "id": 1
+      }
     }
   ],
   "tasty": [
@@ -139,37 +110,12 @@
       "weak": "1",
       "recept": "",
       "name": "tasty",
-      "cottageСheese": {
-        "count": "60",
-        "name": "Творог 5%",
+      "id": "11",
+      "balsamic": {
+        "count": "3",
+        "name": "Бальзамический уксус",
         "sizes": "грамм"
-      },
-      "champignon": {
-        "count": "200",
-        "name": "Шампиньоны",
-        "sizes": "грамм"
-      },
-      "milk": {
-        "count": "100",
-        "name": "Молоко 1,5%",
-        "sizes": "грамм"
-      },
-      "carrot": {
-        "count": "500",
-        "name": "Морковь",
-        "sizes": "грамм"
-      },
-      "honey": {
-        "count": "200",
-        "name": "Мед",
-        "sizes": "грамм"
-      },
-      "sorrel": {
-        "count": "100",
-        "name": "Щавель",
-        "sizes": "грамм"
-      },
-      "id": 1
+      }
     }
   ],
   "products_gurman": [
