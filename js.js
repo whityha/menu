@@ -1,6 +1,9 @@
 'use strict';
-
+const localURL = 'http://localhost:3000';
+const githubURL = 'https://menu-db.herokuapp.com';
+const currentURL = localURL;
 let arrWithObjRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
+
 //создаем класс меню
 class DayMenu {
     constructor(props) {
@@ -91,6 +94,12 @@ function toAddActiveClass(a = true) {
     }
 }
 
+const btnCloseSumArea = document.querySelector('.sum-menu-close-btn');
+btnCloseSumArea.addEventListener('click', () => {
+    document.querySelector('.sum-menu').classList.remove('active');
+    document.querySelector('.sum-menu-block').classList.remove('active');
+});
+
 // Создаем функцию для подсчета продуктов в выбранных меню 
 function showSumProducts() {
     let allCheckMenu = document.querySelectorAll('.content .check'); //выбираем все инпуты с чеком
@@ -166,14 +175,22 @@ function deleteDayMenu(e) { //удаление отрендеренного дн
     if(e.target && e.target.classList.contains('delete-btn')) {
         let answer = confirm('Вы действиетльно хотите удалить этот рецепт?');
         if(answer) {
-            fetch(`https://menu-db.herokuapp.com/${e.target.dataset.name}/${e.target.dataset.id}`, {
+            fetch(`${currentURL}/${e.target.dataset.name}/${e.target.dataset.id}`, {
                 method: 'DELETE'
+            }).then(res => { 
+                if(res.status == 200) {
+                    e.target.parentElement.remove();
+                    alert('Меню удалено');
+                } else {
+                    alert('Какая-то ошибка');
+                }
+            
             });
         }
     }
 }
 //при запуске скрипта мы отстраиваем наши меню взятую с баззы данных
-fetch('https://menu-db.herokuapp.com/menus')
+fetch(`${currentURL}/menus`)
     .then(res => res.json())
     .then(answ => {
         console.log(answ);
@@ -184,20 +201,22 @@ fetch('https://menu-db.herokuapp.com/menus')
                 });
 
             let arrWithMenu = [];
-            fetch(`https://menu-db.herokuapp.com/${item.name}`)
+            let arrWithMenuId = [];
+            fetch(`${currentURL}/${item.name}`)
             .then(menu => menu.json())
             .then(res => {               
                     res.forEach(item => {
+                        console.log(item.id);
+                        arrWithMenuId.push(item.id);
                         arrWithMenu.push(new DayMenu(item));                        
                     });
                 }   
             )
             .then(() => {
-                arrWithMenu.forEach(item => {
-                    item.render();
-                    });
-                }
-            );
+                arrWithMenuId.sort((a, b) => a - b).forEach(id => {
+                    arrWithMenu.find(dayMenu => dayMenu.products.id == id).render();//решение для того, чтобы рендерилось по порядку
+                });                
+            });
         });
 });
 
@@ -304,11 +323,11 @@ function addMenu(e) {
 }
 
 // 
-checkMenus.addEventListener('click', (e) => { //функция, которая подгружает массив со списком продуктов
-    if(e.target.classList.contains('checkedNewMenu')) {        
+checkMenus.addEventListener('click', (e) => { //функция, которая подгружает массив со списком продуктов при клике на одно из меню
+    if(e.target.classList.contains('checkNewMenu')) {        
         newMenu.removeEventListener('click', addMenu); //удаляем ранее навешенный обработчик события
         console.log(e.target);
-        fetch(`https://menu-db.herokuapp.com/products_${menuName('.checkedNewMenu')}`)
+        fetch(`${currentURL}/products_${menuName('.checkNewMenu')}`)
             .then(res => res.json())
             .then(res => {
                 arrayWithProducts = res;
@@ -353,12 +372,13 @@ const btnForAddMenu = document.querySelector('.new-menu-add-menu');
 btnForAddMenu.addEventListener('click', () => {
     let newDayMenu = {};
     const countItems = newMenu.querySelectorAll('.new-menu-list-input'); // колическтво продуктов
-    const products = newMenu.querySelectorAll('.new-menu-box-list-item'); // английское название
+    const products = newMenu.querySelectorAll('.new-menu-box-list-item'); // отсюда берем английское название
     const sizes = newMenu.querySelectorAll('.new-menu-list-select'); // размерность продукта
-    const checkedNewMenu = document.querySelectorAll('.checkedNewMenu');
+    const checkNewMenu = document.querySelectorAll('.checkNewMenu');
+    const numberDay = newMenu.querySelector('.dayName');
     let currentMenu;
 
-    checkedNewMenu.forEach(item => {
+    checkNewMenu.forEach(item => {
         if(item.checked) {
             newDayMenu[item.dataset.name] = true;
             currentMenu = item.dataset.name;
@@ -369,6 +389,7 @@ btnForAddMenu.addEventListener('click', () => {
     newDayMenu.weak = newMenu.querySelector('.weak').value;
     newDayMenu.recept = document.querySelector('.new-menu-list-recept').value;
     newDayMenu.name = currentMenu;
+    newDayMenu.id = `${newDayMenu.weak}${numberDay.selectedIndex + 1}`; 
     
     products.forEach((item, i) => {
         newDayMenu[item.dataset.name] = {};
@@ -376,30 +397,32 @@ btnForAddMenu.addEventListener('click', () => {
         newDayMenu[item.dataset.name].name = products[i].innerText;
         newDayMenu[item.dataset.name].sizes = sizes[i].value;
     });
-
-    let lastId;
-    new Promise(() => {fetch(`https://menu-db.herokuapp.com/${currentMenu}`)
-        .then(menu => menu.json())
+    
+    
+    fetch(`${currentURL}/${currentMenu}/${newDayMenu.id}`)
         .then(res => {
-            if(res.length) {
-            lastId = res[res.length-1].id;
-            } else { 
-                lastId = 0;
+            if(res.status == 404) {
+                newDayMenu = JSON.stringify(newDayMenu);
+                fetch(`${currentURL}/${currentMenu}`, {
+                    method: 'POST',
+                    body: newDayMenu,
+                    headers: {
+                        'Content-type':'application/json'
+                    }
+                });  
+            } else if (res.status == 200) {
+                alert('Такой день недели уже существует. Сперва удалите старый');
             }
-            console.log(lastId);
-        })
-        .then(() => {
-            newDayMenu.id = lastId + 1;
-            newDayMenu = JSON.stringify(newDayMenu);
-            fetch(`https://menu-db.herokuapp.com/${currentMenu}`, {
-                method: 'POST',
-                body: newDayMenu,
-                headers: {
-                    'Content-type':'application/json'
-                }
-            });
         });
-    });
+
+    // newDayMenu = JSON.stringify(newDayMenu);
+    // fetch(`${currentURL}/${currentMenu}`, {
+    //     method: 'POST',
+    //     body: newDayMenu,
+    //     headers: {
+    //         'Content-type':'application/json'
+    //     }
+    // });  
 });
 
 //открываем меню с формой с помощью делегирования событий
@@ -414,7 +437,7 @@ document.querySelector('.closeBtn .fas').addEventListener('click', ()=>{
 });
 
 //при выборе активного меню при добавлении, выезжает форма, которую нужно заполнять
-document.querySelectorAll('.checkedNewMenu').forEach(item => {
+document.querySelectorAll('.checkNewMenu').forEach(item => {
     item.addEventListener('click',()=> {
         document.querySelector('.new-menu-block').classList.add('select');
     });
