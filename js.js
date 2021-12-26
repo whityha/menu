@@ -1,7 +1,7 @@
 'use strict';
 const localURL = 'http://localhost:3000';
 const githubURL = 'https://menu-db.herokuapp.com';
-const currentURL = localURL;
+const currentURL = githubURL;
 let arrWithObjRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
 
 //создаем класс меню
@@ -47,7 +47,7 @@ class DayMenu {
                     <input data-name=${menu} data-id=${dayMenu.id} class='check' type='checkbox'/>
                 </div>
                 <div data-name=${menu} data-id=${dayMenu.id} class='content-list-item-more'>
-                    <div class='menu-img'><img src='' alt='Меню'/>
+                    <div class='menu-img'><img src='./images/${menu}/${dayMenu.weak}_${dayMenu.dayName}.JPG' alt='Меню'/>
                     </div>
                     <ul class='menu-list menu_day_list_${menu}${dayMenu.id}'>
                     <b>СПИСОК ПРОДУКТОВ:</b>
@@ -214,8 +214,6 @@ fetch(`${currentURL}/menus`)
                 arrWithMenuId.sort((a, b) => a - b).forEach(id => {
                     arrWithMenu.find(dayMenu => dayMenu.products.id == id).render();//решение для того, чтобы рендерилось по порядку
                 });
-                let height = document.querySelector('.content-list-gurman').offsetHeight;
-                document.querySelector('.content-list-gurman').style.maxHeight = height + 'px';
             });
         });
 });

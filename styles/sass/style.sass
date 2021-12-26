@@ -56,18 +56,38 @@ html
 
     .content
         margin: 0 auto
-        padding: 0 70px        
+        padding: 0 5vw        
         width: 80%
         display: flex
         flex-wrap: wrap
         justify-content: space-between
         flex-direction: column
+        @media (max-width: $stad-mob)
+            width: 100vw
+            padding: 0 5vw
+        &-menu
+            width: 100%
         .filter_block
+            width: 100%
             display: flex
             justify-content: right
             margin-top: 20px
+            @media (max-width: $stad-mob)
+                font-size: 12px
             span
+                flex-grow: 3
+            button
+                max-height: 30px
+                padding: 5px 5px
                 flex-grow: 1
+                @media (max-width: $stad-mob)
+                    font-size: 12px
+            .input-filter
+                max-height: 30px
+                flex-grow: 1
+                padding-left: 5px
+                @media (max-width: $stad-mob)
+                    width: 50%
         h2
             margin-top: 30px
         .open-form
@@ -121,7 +141,9 @@ html
                     @media (max-width: $stad-1)
                         flex-direction: column
                         overflow: scroll
-                        align-items: center                    
+                        align-items: center
+                    @media (max-width: $stad-mob)
+                        overflow-x: hidden                    
                                     
                     .menu-img
                         flex-grow: 1
@@ -156,7 +178,7 @@ html
 .new-menu
     position: fixed
     height: 100vh
-    width: 30vw
+    width: 50vw
     right: 0
     top: 0
     background-color: pink
@@ -257,6 +279,8 @@ html
                     min-height: 30px
                     text-align: center
                     cursor: pointer
+                    @media ( max-width: $stad-mob )
+                        font-size: 14px                        
                     &:hover
                         background-color: #acabab
             .overflow

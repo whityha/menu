@@ -70,6 +70,19 @@
         "name": "Бананы",
         "sizes": "грамм"
       }
+    },
+    {
+      "autumn": true,
+      "dayName": "Понедельник",
+      "weak": "3",
+      "recept": "",
+      "name": "autumn",
+      "id": "31",
+      "balsamic": {
+        "count": "5",
+        "name": "Бальзамический уксус",
+        "sizes": "грамм"
+      }
     }
   ],
   "tasty": [
