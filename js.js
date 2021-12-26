@@ -16,7 +16,7 @@ class DayMenu {
         for(let product in this.products) {
             if(this.products[product].count) {
             parent.innerHTML += `         
-            <li class='sum-menu-list-item'>${this.products[product].name} - ${this.products[product].count}${this.products[product].sizes}</li>
+            <li class='sum-menu-list-item'>${this.products[product].name} - ${this.products[product].count} ${this.products[product].sizes}</li>
             `;
             }
         }  
@@ -47,7 +47,7 @@ class DayMenu {
                     <input data-name=${menu} data-id=${dayMenu.id} class='check' type='checkbox'/>
                 </div>
                 <div data-name=${menu} data-id=${dayMenu.id} class='content-list-item-more'>
-                    <div class='menu-img'><img src='./images/${menu}/${dayMenu.weak}_${dayMenu.dayName}.JPG' alt='Меню'/>
+                    <div class='menu-img'><img src='./images/${menu}/${dayMenu.id}.JPG' alt='Меню'/>
                     </div>
                     <ul class='menu-list menu_day_list_${menu}${dayMenu.id}'>
                     <b>СПИСОК ПРОДУКТОВ:</b>
