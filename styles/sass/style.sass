@@ -192,24 +192,25 @@ header
                         overflow-x: hidden                    
                                     
                     .menu-img
-                        flex-grow: 1
                         img
                             height: 400px
                             display: block
                         margin: 20px 0px
                     .menu-list
+                        padding-left: 10px
                         position: sticky
                         top: 0
-                        flex-grow: 2
+                        flex-grow: 1
                         margin-top: 20px
-                        width: 20vw
                         @media (max-width: $stad-1)
                             position: static
                         @media (max-width: $stad-mob)
                             position: static
                     .recept
-                        flex-grow: 1
                         margin-top: 20px
+                        width: 35%
+                        @media (max-width: $stad-1)
+                            width: 100%
                 .open
                       
                     max-height: 440px         
