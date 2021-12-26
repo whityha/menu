@@ -167,7 +167,8 @@ function openDescriptionMenu(e) {
             if(item.dataset.id == i && item.dataset.name == j) {                           
                 item.classList.toggle('open');
             }
-        });        
+        });
+        
     }
 }
 function deleteDayMenu(e) { //удаление отрендеренного дневного меню с бд
@@ -213,6 +214,8 @@ fetch(`${currentURL}/menus`)
                 arrWithMenuId.sort((a, b) => a - b).forEach(id => {
                     arrWithMenu.find(dayMenu => dayMenu.products.id == id).render();//решение для того, чтобы рендерилось по порядку
                 });
+                let height = document.querySelector('.content-list-gurman').offsetHeight;
+                document.querySelector('.content-list-gurman').style.maxHeight = height + 'px';
             });
         });
 });
