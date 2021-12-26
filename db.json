@@ -40,19 +40,6 @@
         "name": "Бальзамический уксус",
         "sizes": "грамм"
       }
-    },
-    {
-      "gurman": true,
-      "dayName": "Вторник",
-      "weak": "1",
-      "recept": "7879",
-      "name": "gurman",
-      "id": "12",
-      "balsamic": {
-        "count": "",
-        "name": "Бальзамический уксус",
-        "sizes": "грамм"
-      }
     }
   ],
   "torop": [
@@ -63,42 +50,24 @@
       "recept": "",
       "name": "torop",
       "id": "11",
-      "undefined": {
-        "count": "",
-        "name": "",
-        "sizes": "грамм"
-      }
-    },
-    {
-      "torop": true,
-      "dayName": "Вторник",
-      "weak": "1",
-      "recept": "8989090",
-      "name": "torop",
-      "id": "12",
-      "bulgur": {
-        "count": "10",
-        "name": "Булгур",
-        "sizes": "грамм"
-      },
-      "balsamic": {
-        "count": "10",
-        "name": "Бальзамический уксус",
-        "sizes": "грамм"
+      "orange": {
+        "count": "5",
+        "name": "Апельсин",
+        "sizes": "шт"
       }
     }
   ],
   "autumn": [
     {
       "autumn": true,
-      "dayName": "Понедельник",
+      "dayName": "Среда",
       "weak": "1",
       "recept": "",
       "name": "autumn",
-      "id": "11",
-      "undefined": {
-        "count": "",
-        "name": "",
+      "id": "13",
+      "banan": {
+        "count": "1",
+        "name": "Бананы",
         "sizes": "грамм"
       }
     }

@@ -4,12 +4,24 @@
     margin: 0
     list-style: none
 
+$stad-1: 944px
+$stad-mob: 600px
+
+=calibri
+    font-family: 'Calibri'
+    font-style: italic
+html
+    width: 100vw
+    overflow-x: hidden
+
+
 .relative
     position: relative
 .activeForm
     transform: translateX(0%) !important
 
 .main
+    +calibri
     display: flex
     .sum-menu
         display: flex
@@ -17,7 +29,7 @@
         justify-content: center
         width: 0%
         transition: .5s
-        overflow: hidden       
+        overflow: hidden             
         &-block            
             position: fixed
             top: 100px
@@ -30,13 +42,17 @@
                 width: 20vw
             .sum-menu-list
                 padding-left: 3vw
-                display: flex;
+                display: flex
                 flex-direction: column
                 &-item
                     width: 20vw
             
     .active
         width: 20vw
+        @media ( max-width: $stad-1 )
+           width: 70vw        
+        @media (max-width: $stad-mob)
+           width: 100vw 
 
     .content
         margin: 0 auto
@@ -94,29 +110,34 @@
                 &-more
                     // transform: translateY(-100%)
                     display: flex
-                    overflow-y: scroll
-                    height: 0px
+                    overflow: hidden
+                    max-height: 0px
                     padding: 0px 15px 0px 15px
                     background-color: #e2f3c1
                     border-left: 1px solid black
                     border-bottom: 1px solid black
                     border-right: 1px solid black
                     transition: 0.5s
+                    @media (max-width: $stad-1)
+                        flex-direction: column
+                        overflow: scroll
+                        align-items: center                    
+                                    
                     .menu-img
                         flex-grow: 1
                         img
-                            height: 500px
+                            height: 400px
+                            display: block
+                        margin: 20px 0px
                     .menu-list
-                        flex-grow: 1
-                        position: sticky
-                        top: 0
+                        flex-grow: 2
+                        margin-top: 20px
                     .recept
                         flex-grow: 2
+                        margin-top: 20px
                 .open
-                    padding-top: 20px
-                    // transform: translateY(0%)
-                    // animation: ease 0.5s open forwards  
-                    height: 350px         
+                      
+                    max-height: 440px         
     
         
 
@@ -135,7 +156,7 @@
 .new-menu
     position: fixed
     height: 100vh
-    width: 25vw
+    width: 30vw
     right: 0
     top: 0
     background-color: pink
@@ -145,6 +166,10 @@
     border: 1px solid #801e62
     overflow-x: hidden
     overflow-y: scroll
+    @media ( max-width: $stad-1 )
+        width: 70vw        
+    @media (max-width: $stad-mob)
+        width: 100vw
     &-form
         width: 70%
         margin: 50px auto 0 auto

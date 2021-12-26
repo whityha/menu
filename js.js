@@ -47,7 +47,7 @@ class DayMenu {
                     <input data-name=${menu} data-id=${dayMenu.id} class='check' type='checkbox'/>
                 </div>
                 <div data-name=${menu} data-id=${dayMenu.id} class='content-list-item-more'>
-                    <div class='menu-img'><img src='./images/${menu}/${dayMenu.weak}_${dayMenu.dayName}.JPG' alt='Меню'/>
+                    <div class='menu-img'><img src='' alt='Меню'/>
                     </div>
                     <ul class='menu-list menu_day_list_${menu}${dayMenu.id}'>
                     <b>СПИСОК ПРОДУКТОВ:</b>
@@ -167,7 +167,7 @@ function openDescriptionMenu(e) {
             if(item.dataset.id == i && item.dataset.name == j) {                           
                 item.classList.toggle('open');
             }
-        });
+        });        
     }
 }
 function deleteDayMenu(e) { //удаление отрендеренного дневного меню с бд
@@ -212,7 +212,7 @@ fetch(`${currentURL}/menus`)
             .then(() => {
                 arrWithMenuId.sort((a, b) => a - b).forEach(id => {
                     arrWithMenu.find(dayMenu => dayMenu.products.id == id).render();//решение для того, чтобы рендерилось по порядку
-                });                
+                });
             });
         });
 });
@@ -331,30 +331,11 @@ checkMenus.addEventListener('click', (e) => { //функция, которая �
                     }).then(() => {               
                         newMenu.addEventListener('click', addMenu);//навешиваем обработчик события на новое меню                  
                     });        
-            }   
-                  
-         
-        // else if(e.target.classList.contains('xxx')) {
-        //         newMenu.removeEventListener('click', addMenu); //удаляем ранее навешенный обработчик события
-            
-        //         fetch(`${currentURL}/products_${menuName('.checkNewMenu')}`)
-        //             .then(res => res.json())
-        //             .then(res => {
-        //                 arrayWithProducts = res;
-        //             }).then(() => {               
-        //                 newMenu.addEventListener('click', addMenu);//навешиваем обработчик события на новое меню                  
-        //                 // document.querySelectorAll('.checkNewMenu').forEach(item => {
-        //                 //     item.classList.remove('xxx');
-        //                 //     item.classList.add('eee');
-        //                 // });
-                        
-        //             });        
-        // }
-            
+            }               
 });
 
 // Создаем функционал для того, чтобы добавлять на кнопку "+" новый продукт из меню
-let counter = 1; // каунтер нужен для того, чтобы кнопке повесить уникальный id.
+let counter = 2; // каунтер нужен для того, чтобы кнопке повесить уникальный id.
 let plus = document.querySelector('.new-menu-add-item');
 plus.addEventListener('click', () => {
     const newItem = document.createElement('li');
@@ -412,34 +393,44 @@ btnForAddMenu.addEventListener('click', (e) => {
         newDayMenu[item.dataset.name].name = products[i].innerText;
         newDayMenu[item.dataset.name].sizes = sizes[i].value;
     });
-    
-    e.target.setAttribute('disabled', '');
-    
-    fetch(`${currentURL}/${currentMenu}/${newDayMenu.id}`) //проверяем id и постим, если такого id нет
-        .then(res => {
-            if(res.status == 404) {
-                let newDayMenuJSON = JSON.stringify(newDayMenu);
-                fetch(`${currentURL}/${currentMenu}`, {
-                    method: 'POST',
-                    body: newDayMenuJSON,
-                    headers: {
-                        'Content-type':'application/json'
-                    }
-                }).then(res => {
-                    if(res.status == 201) {
-                        document.querySelector(`.content-list-${currentMenu}`).innerHTML += `
-                        <div>Только что добавленные меню:</div>
-                        `;
-                        new DayMenu(newDayMenu).render();
-                    }
-                    clearNewMenuList();
+    //условия для валидации ввода данных
+    let arrProducts = [];
+    let arrValueProducts = [];
+    countItems.forEach(item => arrValueProducts.push(item.value));
+    products.forEach(item => arrProducts.push(item.innerText));
+
+    if(arrProducts.some(item => item == false) || arrProducts.length == 0) {
+        alert('введите название продукта, либо удалите поле с пустым значением');
+    } else if(arrValueProducts.some(item => item == false)) {
+        alert('введите количество продуктов, либо удалите поле с пустым значением');
+    } else {
+        e.target.setAttribute('disabled', '');    
+        fetch(`${currentURL}/${currentMenu}/${newDayMenu.id}`) //проверяем id и постим, если такого id нет
+            .then(res => {
+                if(res.status == 404) {
+                    let newDayMenuJSON = JSON.stringify(newDayMenu);
+                    fetch(`${currentURL}/${currentMenu}`, {
+                        method: 'POST',
+                        body: newDayMenuJSON,
+                        headers: {
+                            'Content-type':'application/json'
+                        }
+                    }).then(res => {
+                        if(res.status == 201) {
+                            document.querySelector(`.content-list-${currentMenu}`).innerHTML += `
+                            <div>Только что добавленные меню:</div>
+                            `;
+                            new DayMenu(newDayMenu).render();
+                        }
+                        clearNewMenuList();
+                        e.target.removeAttribute('disabled');
+                    });  
+                } else if (res.status == 200) {
                     e.target.removeAttribute('disabled');
-                });  
-            } else if (res.status == 200) {
-                e.target.removeAttribute('disabled');
-                alert('Такой день недели уже существует. Сперва удалите старый');
-            }
-        }); 
+                    alert('Такой день недели уже существует. Сперва удалите старый');
+                }
+            }); 
+    }
 });
 
 //открываем меню с формой с помощью делегирования событий
