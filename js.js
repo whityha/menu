@@ -1,7 +1,7 @@
 'use strict';
 const localURL = 'http://localhost:3000';
 const githubURL = 'https://menu-db.herokuapp.com';
-const currentURL = localURL;
+const currentURL = githubURL;
 let arrWithObjRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
 
 //создаем класс меню
@@ -133,7 +133,7 @@ function showSumProducts() {
 const content = document.querySelector('.content');
 content.addEventListener('click', (e) => {   
     openDescriptionMenu(e);
-    toSelectDayMenu(e);
+    toCheckDayMenu(e);
     deleteDayMenu(e);
     openListMenu(e);
     closeListMenu(e);        
@@ -143,7 +143,7 @@ content.addEventListener('click', (e) => {
 //     if(e.target.)
 // }
 
-function toSelectDayMenu(e) {
+function toCheckDayMenu(e) {
 
     if(e.target && e.target.classList.contains('content-list-item-description')) {
         let check = e.target.querySelector('.check').checked;
@@ -541,14 +541,13 @@ function closeListMenu(e) {
     }    
 }
 
-function openListMenu(e) {
-    
-    if(e.target.classList.contains('content-show-menu-list')) {
-        e.target.setAttribute('disabled', '');
+function openListMenu(e) {    
+    if(e.target.classList.contains('content-show-menu-list')) {        
         let menuName = e.target.dataset.name;
         let height = document.querySelector(`.content-wrapper-${menuName}`).offsetHeight;
         const list = document.querySelector(`.content-list-${menuName}`);
-        if(height==0) {
+        if(height == 0) {
+            e.target.setAttribute('disabled', '');
             let int = setInterval(() => {
                 document.querySelector(`.content-wrapper-${menuName}`).style.height =  height + 'px';        
                 height = height + 3;
