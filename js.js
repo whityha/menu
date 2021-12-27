@@ -1,7 +1,7 @@
 'use strict';
 const localURL = 'http://localhost:3000';
 const githubURL = 'https://menu-db.herokuapp.com';
-const currentURL = githubURL;
+const currentURL = localURL;
 let arrWithObjRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
 
 //создаем класс меню
@@ -26,41 +26,41 @@ class DayMenu {
     //метод для отображения нового объекта на странице
     render(filter = true) {        
         let currentMenu = {};
-        function renderCurrentMenu(dayMenu,menu,bgColor) {
+        function renderCurrentMenu(dayMenuProducts,menu,bgColor) {
             function toDoCurrentMenu() {
-                for (let key in dayMenu) {
-                    if(dayMenu[key].count) {
-                        currentMenu[key] = dayMenu[key];
+                for (let key in dayMenuProducts) {
+                    if(dayMenuProducts[key].count) {
+                        currentMenu[key] = dayMenuProducts[key];
                     }
                 }
             }
-            toDoCurrentMenu(dayMenu);            
-            const parent = document.querySelector(`.content-list-${menu}`);
+            toDoCurrentMenu(dayMenuProducts);            
+            const parent = document.querySelector(`.content-list-${menu}`);            
             parent.innerHTML += `
             <li class='content-list-item'>
                 <div class='content-list-item-description bg_${bgColor}'>
-                    <div class='num-day'>Неделя ${dayMenu.weak}. ${dayMenu.dayName}.</div>
-                    <button data-name=${menu} data-id=${dayMenu.id} type='button' class='delete-btn'>Delete</button>
+                    <div class='num-day'>Неделя ${dayMenuProducts.weak}. ${dayMenuProducts.dayName}.</div>
+                    <button data-name=${menu} data-id=${dayMenuProducts.id} type='button' class='delete-btn'>Delete</button>
                     <button type='button'>
-                        <i data-more=${menu} data-id=${dayMenu.id} class='fas fa-angle-down open-btn'></i>
+                        <i data-more=${menu} data-id=${dayMenuProducts.id} class='fas fa-angle-down open-btn'></i>
                     </button>
-                    <input data-name=${menu} data-id=${dayMenu.id} class='check' type='checkbox'/>
+                    <input data-name=${menu} data-id=${dayMenuProducts.id} class='check' type='checkbox'/>
                 </div>
-                <div data-name=${menu} data-id=${dayMenu.id} class='content-list-item-more'>
-                    <div class='menu-img'><img src='./images/${menu}/${dayMenu.id}.JPG' alt='Меню'/>
+                <div data-name=${menu} data-id=${dayMenuProducts.id} class='content-list-item-more'>
+                    <div class='menu-img'><img src='' alt='Меню'/>
                     </div>
-                    <ul class='menu-list menu_day_list_${menu}${dayMenu.id}'>
+                    <ul class='menu-list menu_day_list_${menu}${dayMenuProducts.id}'>
                     <b>СПИСОК ПРОДУКТОВ:</b>
                         
                     </ul>
-                    <div class='recept recept-${menu}${dayMenu.id}'>
+                    <div class='recept recept-${menu}${dayMenuProducts.id}'>
                         
                     </div>
                 </div>
             </li>`;
-            parent.querySelector(`.recept-${menu}${dayMenu.id}`).innerText = dayMenu.recept;
+            parent.querySelector(`.recept-${menu}${dayMenuProducts.id}`).innerText = dayMenuProducts.recept;
             for(let k in currentMenu) {    
-                document.querySelector(`.menu_day_list_${menu}${dayMenu.id}`).innerHTML += `<li class='menu-item'>${currentMenu[k].name} - ${currentMenu[k].count} ${currentMenu[k].sizes}</li>`;
+                document.querySelector(`.menu_day_list_${menu}${dayMenuProducts.id}`).innerHTML += `<li class='menu-item'>${currentMenu[k].name} - ${currentMenu[k].count} ${currentMenu[k].sizes}</li>`;
             }
         }
 
@@ -72,10 +72,12 @@ class DayMenu {
 document.querySelector('.total-count').addEventListener('click', () => { toAddActiveClass(showSumProducts());});
 
 function toAddActiveClass(a = true) {
+    let parentBlock = document.querySelector('.sum-menu');
+    let childBlock = document.querySelector('.sum-menu-block');    
     if(a) {
-    document.querySelector('.sum-menu').classList.add('active');
-    document.querySelector('.sum-menu-block').classList.add('active');
-    }
+    parentBlock.classList.add('active');
+    childBlock.classList.add('active');
+    }   
 }
 
 const btnCloseSumArea = document.querySelector('.sum-menu-close-btn');
@@ -129,11 +131,17 @@ function showSumProducts() {
 
 //Работа с кнопками контента через делегирование событий
 const content = document.querySelector('.content');
-content.addEventListener('click', (e) => {    
+content.addEventListener('click', (e) => {   
     openDescriptionMenu(e);
     toSelectDayMenu(e);
-    deleteDayMenu(e);        
+    deleteDayMenu(e);
+    openListMenu(e);
+    closeListMenu(e);        
 });
+
+// function sd(e) {
+//     if(e.target.)
+// }
 
 function toSelectDayMenu(e) {
 
@@ -156,19 +164,15 @@ function toSelectDayMenu(e) {
     }
 }
 
-function openDescriptionMenu(e) {
+function openDescriptionMenu(e) { //открывает описание конкретного дня + подгружает фотографию
     if(e.target && e.target.classList.contains('open-btn')) {
-        let i = e.target.dataset.id;
-        let j = e.target.dataset.more;
-        let contents = content.querySelectorAll('.content-list-item-more');
+        let id = e.target.dataset.id;
+        let nameMenu = e.target.dataset.more;
         e.target.classList.toggle('fa-angle-down');
         e.target.classList.toggle('fa-angle-up');
-        contents.forEach(item => {
-            if(item.dataset.id == i && item.dataset.name == j) {                           
-                item.classList.toggle('open');
-            }
-        });
-        
+        let discription = e.target.parentElement.parentElement.nextElementSibling;
+        discription.classList.toggle('open');
+        discription.querySelector('.menu-img img').src = `./images/${nameMenu}/${id}.JPG`;        
     }
 }
 function deleteDayMenu(e) { //удаление отрендеренного дневного меню с бд
@@ -502,4 +506,58 @@ function clearNewMenuList() { //очищаем форму нового меню
     document.querySelector('.new-menu-list-weak .weak').firstElementChild.selected = true;
     document.querySelector('.new-menu-box-list').innerHTML = `<li  class='new-menu-box-list-item'></li>`;
     document.querySelector('.new-menu .new-menu-list-input').value = '';
+}
+
+
+
+function currentHeightBlock(name) {
+    const list = document.querySelector(`.content-list-${name}`);
+    return list.offsetHeight;
+}
+
+
+function closeListMenu(e) {    
+    if(e.target.classList.contains('content-unshow-menu-list')) {        
+        let menuName = e.target.dataset.name;
+        let height = currentHeightBlock(`${menuName}`);
+        const heightWrapper = document.querySelector(`.content-wrapper-${menuName}`).offsetHeight;
+        if(heightWrapper) {
+            e.target.setAttribute('disabled', '');
+            let int = setInterval(() => {
+                document.querySelector(`.content-wrapper-${menuName}`).style.height =  height + 'px';
+                height = height - 5;
+                if(height <= 0) {
+                    document.querySelector(`.content-wrapper-${menuName}`).style.height =  0 + 'px';
+                    clearInterval(int);
+                    e.target.removeAttribute('disabled');
+                }
+            }, 4); 
+        }
+               
+    }
+    function currentHeightBlock(name) {
+        const list = document.querySelector(`.content-list-${name}`);
+        return list.offsetHeight;
+    }    
+}
+
+function openListMenu(e) {
+    
+    if(e.target.classList.contains('content-show-menu-list')) {
+        e.target.setAttribute('disabled', '');
+        let menuName = e.target.dataset.name;
+        let height = document.querySelector(`.content-wrapper-${menuName}`).offsetHeight;
+        const list = document.querySelector(`.content-list-${menuName}`);
+        if(height==0) {
+            let int = setInterval(() => {
+                document.querySelector(`.content-wrapper-${menuName}`).style.height =  height + 'px';        
+                height = height + 3;
+                if(height >= list.offsetHeight) {
+                    clearInterval(int);
+                    document.querySelector(`.content-wrapper-${menuName}`).style.height = 'auto';
+                    e.target.removeAttribute('disabled');
+                }
+            }, 4);
+        }        
+    }
 }

@@ -479,7 +479,26 @@
       }
     }
   ],
-  "classic": [],
+  "classic": [
+    {
+      "classic": true,
+      "dayName": "Понедельник",
+      "weak": "1",
+      "recept": "4\n\n4\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n4\n4\n4\n4\n4\n\n4\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n4\n4\n4\n4\n4\n",
+      "name": "classic",
+      "id": "11",
+      "brinz": {
+        "count": "3",
+        "name": "Брынза сербская",
+        "sizes": "грамм"
+      },
+      "balsamic": {
+        "count": "20",
+        "name": "Бальзамический уксус",
+        "sizes": "шт"
+      }
+    }
+  ],
   "autumn": [],
   "fish": [],
   "products_gurman": [
