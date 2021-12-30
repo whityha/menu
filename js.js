@@ -1,7 +1,7 @@
 'use strict';
 const localURL = 'http://localhost:3000';
 const githubURL = 'https://menu-db.herokuapp.com';
-const currentURL = githubURL;
+const currentURL = localURL;
 let arrWithObjRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
 
 //создаем класс меню
@@ -323,21 +323,28 @@ function addMenu(e) {
         list[i].innerHTML = `<li class='new-menu-box-list-item'></li>`;
     }
 }
-checkMenus.addEventListener('click', (e) => { //функция, которая подгружает массив со списком продуктов при клике на одно из меню
-                     
-            if(e.target.classList.contains('checkNewMenu')) {           
-                clearNewMenuList();        
-                newMenu.removeEventListener('click', addMenu); //удаляем ранее навешенный обработчик события
-            
-                fetch(`${currentURL}/products_${menuName('.checkNewMenu')}`)
-                    .then(res => res.json())
-                    .then(res => {
-                        arrayWithProducts = res;
-                    }).then(() => {               
-                        newMenu.addEventListener('click', addMenu);//навешиваем обработчик события на новое меню                  
-                    });        
-            }               
-});
+checkMenus.addEventListener('change', () => { //функция, которая подгружает массив со списком продуктов при клике на одно из меню
+    checkMenus.addEventListener('click', (e) => {             
+            if(e.target.classList.contains('checkNewMenu')) {
+                console.dir(e.target);
+                let answ = confirm('Вы действительно хотите выбрать другое меню?');
+                if(answ) {
+                    clearNewMenuList();        
+                    newMenu.removeEventListener('click', addMenu); //удаляем ранее навешенный обработчик события
+                
+                    fetch(`${currentURL}/products_${menuName('.checkNewMenu')}`)
+                        .then(res => res.json())
+                        .then(res => {
+                            arrayWithProducts = res;
+                        }).then(() => {               
+                            newMenu.addEventListener('click', addMenu);//навешиваем обработчик события на новое меню                  
+                        });  
+                } else {
+                    e.preventDefault();
+                }                                
+            }
+        });              
+},{once:true});
 
 // Создаем функционал для того, чтобы добавлять на кнопку "+" новый продукт из меню
 let counter = 2; // каунтер нужен для того, чтобы кнопке повесить уникальный id.
@@ -559,4 +566,62 @@ function openListMenu(e) {
             }, 4);
         }        
     }
+}
+
+
+document.querySelector('.filter-new').addEventListener('click', (e) => {
+    if(e.target.classList.contains('filter-new-box-head-btn') && !e.target.classList.contains('open')) {
+        openFilterBlock(e, 0.2);
+    } else if (e.target.classList.contains('filter-new-box-head-btn') && e.target.classList.contains('open')) {
+        closeFilterBlock(e, 0.2);
+    }
+});
+
+
+function openFilterBlock(e, sec) {
+    e.target.classList.add('open');
+    e.target.innerHTML = '-';
+        const wrapper = e.target.parentElement.nextElementSibling;
+        const heightList = wrapper.lastElementChild;
+        let height = 0;
+        let k = heightList.offsetHeight/100;
+        let i;
+        const int = setInterval(() => {
+            i = (height/heightList.offsetHeight)*100;
+            heightList.style.transform = `translateY(${-100+i}%)`;            
+            wrapper.style.height = height + 'px';
+            height = height + 1*k*(1/sec);
+            if(height >= heightList.offsetHeight) {
+                wrapper.style.height = heightList.offsetHeight + 'px';
+                heightList.style.transform = `translateY(0%)`;
+                clearInterval(int);
+                wrapper.style.height = 'auto';
+            }
+        }, 10);
+}
+
+function closeFilterBlock(e, sec) {
+    e.target.classList.remove('open');
+    e.target.innerHTML = '+';
+        const wrapper = e.target.parentElement.nextElementSibling;
+        const heightList = wrapper.lastElementChild;
+        let height = heightList.offsetHeight;
+        let k = heightList.offsetHeight/100;
+        let i;
+        const int = setInterval(() => {
+            i = (height/heightList.offsetHeight)*100;
+            heightList.style.transform = `translateY(${-100+i}%)`;          
+            wrapper.style.height = height + 'px';
+            height = height - 1*k*(1/sec);
+            if(height <= 0) {
+                heightList.style.transform = `translateY(-100%)`;
+                wrapper.style.height = 0 + 'px';
+                wrapper.querySelectorAll('.filter-new-box-wrapper').forEach(item => {
+                    item.previousElementSibling.lastElementChild.classList.remove('open');
+                    item.previousElementSibling.lastElementChild.innerHTML = '+';
+                    item.style.height = 0;
+                });
+                clearInterval(int);                
+            }
+        }, 10);
 }
