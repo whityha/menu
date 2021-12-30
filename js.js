@@ -324,7 +324,7 @@ function addMenu(e) {
     }
 }
 checkMenus.addEventListener('change', () => { //функция, которая подгружает массив со списком продуктов при клике на одно из меню
-    checkMenus.addEventListener('click', (e) => {             
+    checkMenus.addEventListener('change', (e) => {             
             if(e.target.classList.contains('checkNewMenu')) {
                 console.dir(e.target);
                 let answ = confirm('Вы действительно хотите выбрать другое меню?');
@@ -577,6 +577,14 @@ document.querySelector('.filter-new').addEventListener('click', (e) => {
     }
 });
 
+document.querySelector('.filter-new-button').addEventListener('click', (e) => {
+    document.querySelector('.filter-new').classList.toggle('filter-new-open');
+    if(e.target.innerText == 'ОТКРЫТЬ ФИЛЬТР') {
+        e.target.innerText = 'ЗАКРЫТЬ ФИЛЬТР';
+    } else {
+        e.target.innerText = 'ОТКРЫТЬ ФИЛЬТР';
+    }
+});
 
 function openFilterBlock(e, sec) {
     e.target.classList.add('open');
