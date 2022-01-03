@@ -33,6 +33,7 @@ header
     display: flex
     width: 100vw
     justify-content: right
+    align-items: flex-start
     .sum-menu
         display: flex
         position: relative
@@ -374,7 +375,11 @@ header
 .filter-new-open
     display: block !important
 .filter-new
-    border-top: 1px solid black
+    box-shadow: 0px 0px 10px #777
+    padding: 15px 15px
+    color: #777
+    font-size: 18px
+    margin-top: 40px
     @media ( max-width: $stad-1 )
         display: none
         top: 0
@@ -386,43 +391,120 @@ header
         min-height: 100vh
         overflow-y: scroll
         padding-bottom: 90px
+    &-btns 
+        display: flex
+        justify-content: space-around
+        padding-bottom: 10px
+        @media ( max-width: $stad-1 )
+            display: none
+        &-reset
+            cursor: pointer
+            position: relative
+            &::before
+                content: ''
+                position: absolute
+                bottom: 0
+                width: 100%
+                height: 1px
+                background-color: #777
+                transition: .2s
+                transform: scaleX(0)
+            &:hover::before
+                transform: scaleX(100%)
+        &-done
+            cursor: pointer
+            position: relative
+            &::before
+                content: ''
+                position: absolute
+                bottom: 0
+                width: 100%
+                height: 1px
+                background-color: #777
+                transition: .2s
+                transform: scaleX(0)
+            &:hover::before
+                transform: scaleX(100%)
     &-box        
-        width: 150px
+        width: 100%
         @media ( max-width: $stad-1 )
             width: 95vw
         &-head
             width: 100%
             display: flex
-            min-height: 40px
+            min-height: 50px
+            justify-content: right
+            position: relative           
             @media ( max-width: $stad-1 )
                 width: 95vw
+            &::before
+                content: ''
+                position: absolute
+                bottom: 0
+                width: 90%
+                height: 1px
+                left: 5%
+                background-color: #777
+                box-shadow: 0px 0px 2px #777
             &-name
                 flex-grow: 1
-                min-height: 40px
-                border-left: 1px solid black
-                border-right: 1px solid black
-                border-bottom: 1px solid black
+                min-height: 50px
                 text-align: center
-                max-width: 120px
+                padding-top: 12px
                 @media ( max-width: $stad-1 )
                     max-width: 80vw
             &-btn
-                width: 30px                
-                border-bottom: 1px solid black
-                border-right: 1px solid black
+                width: 30px            
                 text-align: center
                 cursor: pointer
+                position: relative
+                &::before
+                    content: ''
+                    position: absolute
+                    width: 10px
+                    height: 1px
+                    background-color: #777
+                    left: 50%
+                    bottom: 50%
+                    transform: translateX(-45%)
+                    transition: .3s
+                &::after
+                    content: ''
+                    position: absolute
+                    height: 10px
+                    width: 1px
+                    background-color: #777
+                    left: 50%
+                    bottom: 50%
+                    transform: translateY(45%)
+                    transition: .3s                
                 @media ( max-width: $stad-1 )
                     width: 15vw
+            .open
+                &::before
+                    content: ''
+                    position: absolute
+                    width: 10px
+                    height: 1px
+                    background-color: #777
+                    left: 50%
+                    bottom: 50%
+                    transform: translateX(-45%) rotate(45deg)
+                &::after
+                    content: ''
+                    position: absolute
+                    height: 10px
+                    width: 1px
+                    background-color: #777
+                    left: 50%
+                    bottom: 50%
+                    transform: translateY(45%) rotate(45deg)
         &-wrapper
             overflow: hidden
             height: 0
             width: 100%
-            &-list
-                border-right: 1px solid black
-                border-left: 1px solid black
-                border-bottom: 1px solid black
-                background-color: #e6e4e4
+            font-size: 14px
+            &-list          
                 transform: translateY(-100%)
                 &-item
                     min-height: 40px
