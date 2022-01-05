@@ -40,7 +40,7 @@ class DayMenu {
             <li class='content-list-item'>
                 <div class='content-list-item-description bg_${bgColor}'>
                     <div class='num-day'>Неделя ${dayMenuProducts.weak}. ${dayMenuProducts.dayName}.</div>
-                    <button data-name=${menu} data-id=${dayMenuProducts.id} type='button' class='delete-btn'>Delete</button>
+                    <button data-name=${menu} data-id=${dayMenuProducts.id} type='button' class='delete-btn'>Удалить</button>
                     <button type='button'>
                         <i data-more=${menu} data-id=${dayMenuProducts.id} class='fas fa-angle-down open-btn'></i>
                     </button>
@@ -74,11 +74,12 @@ document.querySelector('.total-count').addEventListener('click', (e) => {
     let allCheckMenu = document.querySelectorAll('.content .check');
     allCheckMenu = [...allCheckMenu];
     let a = allCheckMenu.some(item => item.checked);
+    let portions = document.querySelector('.content-input-portion').value;
     if(document.querySelector(wrapperClass).offsetHeight == 0 && a) {
-        showSumProducts();
+        showSumProducts(portions);
         openBlock(0.5, wrapperClass);
     } else {
-        showSumProducts();
+        showSumProducts(portions);
     }    
 });
 const btnCloseSumArea = document.querySelector('.sum-menu-close-btn');
@@ -88,10 +89,11 @@ btnCloseSumArea.addEventListener('click', () => {
 });
 
 // Создаем функцию для подсчета продуктов в выбранных меню 
-function showSumProducts() {
+function showSumProducts(portions) {
     let allCheckMenu = document.querySelectorAll('.content .check'); //выбираем все инпуты с чеком
     let arrWithChekedMenu = [];
     let arrWithCheckedObj = [];
+    
     allCheckMenu.forEach((item, i) => { //находим все элементы, которые были checked
         if(item.checked) { 
             arrWithChekedMenu.push(item);   //пушим сами элеметы с чеком в массив 
@@ -116,9 +118,10 @@ function showSumProducts() {
             for (let k in b) {
                 if(typeof(b[k]) == 'object') {
                     if (c[k]) {
-                        c[k].count = +(c[k].count || 0) + +b[k].count;
+                        c[k].count = (+c[k].count || 0) + (+b[k].count)*portions;
                     } else {
                         c[k] = JSON.parse(JSON.stringify(b[k]));
+                        c[k].count = c[k].count*portions;
                     }
                 }
             }                
@@ -136,7 +139,8 @@ content.addEventListener('click', (e) => {
     openDescriptionMenu(e);
     toCheckDayMenu(e);
     deleteDayMenu(e);
-    toggleListMenu(e);       
+    toggleListMenu(e);
+    clearCheckesInMenuList(e);      
 });
 
 
@@ -698,4 +702,13 @@ function closeBlock(sec, wrapperClass) {
                 clearInterval(int);                
             }
         }, 5);
+}
+
+
+function clearCheckesInMenuList(e) {
+    if(e.target.classList.contains('content-wrapper-clear-btn')) {
+    let list = e.target.previousElementSibling;
+    let checkes = list.querySelectorAll('.check');
+    checkes.forEach(check => check.checked = false);
+    }
 }

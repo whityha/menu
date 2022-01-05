@@ -24,7 +24,7 @@
             ОТКРЫТЬ ФИЛЬТР
         </div> 
         <div class='sum-and-filter'>
-            <div class='sum-menu-wrapper'>
+            <div class='sum-menu-wrapper' id='sum-menu'>
                 <div class='sum-menu-block'>
                     <h3>Количество всех продуктов в выбранных меню:</h3>
                     <ul class='sum-menu-list'>
@@ -195,7 +195,8 @@
                 <div data-name='gurman' class='content-show-menu-btn show'>Скрыть</div>
                 <div class='content-wrapper content-wrapper-gurman'>
                     <ul class='content-list content-list-gurman'>
-                    </ul>
+                    </ul>                    
+                    <div class='content-wrapper-clear-btn'>Очистить</div>
                 </div>
             </div>
             <div class="content-menu content-menu-classic">    
@@ -204,6 +205,7 @@
                 <div class='content-wrapper content-wrapper-classic'>
                     <ul class='content-list content-list-classic'>
                     </ul>
+                    <div class='content-wrapper-clear-btn'>Очистить</div>
                 </div>
             </div>
             <div class="content-menu content-menu-autumn">        
@@ -212,6 +214,7 @@
                 <div class='content-wrapper content-wrapper-autumn'>
                     <ul class='content-list content-list-autumn'>
                     </ul>
+                    <div class='content-wrapper-clear-btn'>Очистить</div>
                 </div>
             </div>
             <div class="content-menu content-menu-fish">
@@ -220,10 +223,12 @@
                 <div class='content-wrapper content-wrapper-fish'>
                     <ul class='content-list content-list-fish'>
                     </ul>
+                    <div class='content-wrapper-clear-btn'>Очистить</div>
                 </div>
             </div>
-        <button type='button' class='open-form'>Добавить день в любое меню</button>
-        <button type='button' class='total-count'>Посчитать сумму продуктов выбранных меню</button>
+            <button type='button' class='open-form'>Добавить день в любое меню</button>
+            <div class='content-portion'>Количество порций<input class='content-input-portion' type='number'></div>
+            <button type='button' class='total-count'>Посчитать сумму продуктов выбранных меню</button>
         </div>
     </div>
     <div class='new-menu'>
