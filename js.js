@@ -1,7 +1,7 @@
 'use strict';
 const localURL = 'http://localhost:3000';
 const githubURL = 'https://menu-db.herokuapp.com';
-const currentURL = githubURL;
+const currentURL = localURL;
 let arrWithObjRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
 
 //создаем класс меню

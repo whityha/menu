@@ -13,6 +13,9 @@ $stad-mob: 600px
 html
     width: 100vw
     overflow-x: hidden
+    @media (max-width: $stad-1)
+        overflow-x: visible
+        width: 100vw
 
 
 .relative
@@ -350,12 +353,14 @@ header
         position: absolute
         top: 0
         left: 0
+        margin: 0
+        width: 95vw
     .sum-menu
         &-wrapper            
             overflow: hidden
             height: 0
             @media ( max-width: $stad-1 )
-                width: 100vw
+                width: 100%
                 background-color: #fff           
         &-block    
             display: flex
@@ -368,7 +373,7 @@ header
                 display: block
                 width: 100%
                 @media (max-width: $stad-1)
-                    width: 100vw
+                    width: 100%
                     padding: 20px 50px
             .sum-menu-list
                 display: flex
@@ -377,7 +382,7 @@ header
                 margin: 0 15px
                 @media (max-width: $stad-1)
                     align-items: center
-                    width: 100vw
+                    width: 100%
                 &-item
                     width: 100%
                     @media (max-width: $stad-1)
