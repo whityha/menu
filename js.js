@@ -69,21 +69,22 @@ class DayMenu {
     }
 }
 //навешиваем обработчик события на кнопку для инициации счета продуктов и отображения блока
-document.querySelector('.total-count').addEventListener('click', () => { toAddActiveClass(showSumProducts());});
-
-function toAddActiveClass(a = true) {
-    let parentBlock = document.querySelector('.sum-menu');
-    let childBlock = document.querySelector('.sum-menu-block');    
-    if(a) {
-    parentBlock.classList.add('active');
-    childBlock.classList.add('active');
-    }   
-}
-
+document.querySelector('.total-count').addEventListener('click', (e) => {
+    const wrapperClass = '.sum-menu-wrapper';
+    let allCheckMenu = document.querySelectorAll('.content .check');
+    allCheckMenu = [...allCheckMenu];
+    let a = allCheckMenu.some(item => item.checked);
+    if(document.querySelector(wrapperClass).offsetHeight == 0 && a) {
+        showSumProducts();
+        openBlock(0.5, wrapperClass);
+    } else {
+        showSumProducts();
+    }    
+});
 const btnCloseSumArea = document.querySelector('.sum-menu-close-btn');
+
 btnCloseSumArea.addEventListener('click', () => {
-    document.querySelector('.sum-menu').classList.remove('active');
-    document.querySelector('.sum-menu-block').classList.remove('active');
+    closeBlock(0.5, '.sum-menu-wrapper');
 });
 
 // Создаем функцию для подсчета продуктов в выбранных меню 
@@ -469,49 +470,9 @@ document.querySelectorAll('.checkNewMenu').forEach(item => {
         document.querySelector('.new-menu-block').classList.add('select');
     });
 });
-
-function toFilterObj(arr, inputClass) { //функция, которая фильтрует массив с объектами меню и рендерит на страницу
-    const input = document.querySelector(inputClass).value;
-    let filteredObjs = arr;
-    let contentLists = document.querySelectorAll('.content-list');
-    if(input) {
-        let arrWithProducts = turnStringIntoArray(input);
-        arrWithProducts = arrWithProducts.map(productName => productName[0].toUpperCase() + productName.slice(1).toLowerCase()); //приобразуем к требуемому виду
-        arrWithProducts.forEach(product => {    
-            filteredObjs = filteredObjs.filter(item => {            
-                for(let key in item) {
-                    if(typeof(item[key]) == 'object' && item[key].name === product) {
-                        return true;
-                    }
-                }
-            });
-        });
-        
-        contentLists.forEach(contentList => {
-            clearInnerHTML(contentList);
-        });
-        filteredObjs.forEach(dayMenuObj => {
-            new DayMenu(dayMenuObj).render(false); //передаем false, чтобы в массив с объектами всех отображенных меню не пушились меню повторно
-        });
-    } else {
-        contentLists.forEach(contentList => {
-            clearInnerHTML(contentList);
-        });
-        arrWithObjRenderingMenu.forEach(menu => new DayMenu(menu).render(false));
-        alert('Введите продукты');
-    }    
-}
-
 function clearInnerHTML(elem) {
     elem.innerHTML = '';
 }
-
-// document.querySelector('.filter_block button').addEventListener('click', () => {toFilterObj(arrWithObjRenderingMenu, '.input-filter');});
-
-function turnStringIntoArray(str) {
-    return str.split(', ');
-}
-
 
 function clearNewMenuList() { //очищаем форму нового меню
     document.querySelectorAll('.new-menu [new]').forEach(item => item.remove());
@@ -528,8 +489,6 @@ function currentHeightBlock(name) {
     const list = document.querySelector(`.content-list-${name}`);
     return list.offsetHeight;
 }
-
-
 function closeListMenu(e) {    
           
         e.target.innerText = 'Показать';
@@ -579,9 +538,9 @@ function openListMenu(e) {
 }
 
 function toggleListMenu(e) {
-    if(e.target.classList.contains('show') && e.target.classList.contains('content-show-menu-list')) {
+    if(e.target.classList.contains('show') && e.target.classList.contains('content-show-menu-btn')) {
         closeListMenu(e);
-    } else if(!e.target.classList.contains('show') && e.target.classList.contains('content-show-menu-list')){
+    } else if(!e.target.classList.contains('show') && e.target.classList.contains('content-show-menu-btn')){
         openListMenu(e);
     }
 }
@@ -700,3 +659,43 @@ function clearNewFilter() {
 document.querySelector('.filter-new .filter-new-btns-done').addEventListener('click', () => {
     toNewFilterObj(arrWithObjRenderingMenu);
 });
+
+
+function openBlock(sec, wrapperClass) {
+    const wrapper = document.querySelector(wrapperClass);
+    const heightList = wrapper.lastElementChild;
+    let height = 0;
+    let k = heightList.offsetHeight/100;
+    let i;
+    const int = setInterval(() => {
+        i = (height/heightList.offsetHeight)*100;
+        heightList.style.transform = `translateY(${-100+i}%)`;            
+        wrapper.style.height = height + 'px';
+        height = height + 1*k*(1/sec);
+        if(height >= heightList.offsetHeight) {
+            wrapper.style.height = heightList.offsetHeight + 'px';
+            heightList.style.transform = `translateY(0%)`;
+            clearInterval(int);
+            wrapper.style.height = 'auto';
+        }
+    }, 5);
+}
+
+function closeBlock(sec, wrapperClass) {
+        const wrapper = document.querySelector(wrapperClass);
+        const heightList = wrapper.lastElementChild;
+        let height = heightList.offsetHeight;
+        let k = heightList.offsetHeight/100;
+        let i;
+        const int = setInterval(() => {
+            i = (height/heightList.offsetHeight)*100;
+            heightList.style.transform = `translateY(${-100+i}%)`;          
+            wrapper.style.height = height + 'px';
+            height = height - 1*k*(1/sec);
+            if(height <= 0) {
+                heightList.style.transform = `translateY(-100%)`;
+                wrapper.style.height = 0 + 'px';
+                clearInterval(int);                
+            }
+        }, 5);
+}
