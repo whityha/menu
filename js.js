@@ -75,7 +75,7 @@ document.querySelector('.total-count').addEventListener('click', (e) => {
     allCheckMenu = [...allCheckMenu];
     let a = allCheckMenu.some(item => item.checked);
     let portions = document.querySelector('.content-input-portion').value;
-    if(document.querySelector(wrapperClass).offsetHeight == 0 && a) {
+    if(document.querySelector(wrapperClass).offsetHeight == 0 && a && +portions) {
         showSumProducts(portions);
         openBlock(0.5, wrapperClass);
     } else {
@@ -105,9 +105,13 @@ function showSumProducts(portions) {
         });
     });
     if(arrWithChekedMenu.length > 0) {
-        const parent = document.querySelector('.sum-menu-list');
-        new DayMenu(sumObjectsByKey(arrWithCheckedObj)).renderTotalCounts(parent); //рендерим объект с уже посчитанными продуктами
-        return true;
+        if(portions) {
+            const parent = document.querySelector('.sum-menu-list');
+            new DayMenu(sumObjectsByKey(arrWithCheckedObj)).renderTotalCounts(parent); //рендерим объект с уже посчитанными продуктами
+            return true;
+        } else {
+            alert('Введите количество порций');
+        }
     } else {
         alert('Выберите хотябы одно меню');
         return false;
