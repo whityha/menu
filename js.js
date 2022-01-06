@@ -634,7 +634,7 @@ function toNewFilterObj(arr) { //функция, которая фильтруе
             }
         });
         console.log(arrWithProducts);
-        if(arrWithProducts.length) {
+    if(arrWithProducts.length) {
         arrWithProducts.forEach(product => {    
             arr = arr.filter(item => {            
                 for(let key in item) {
@@ -666,6 +666,12 @@ function clearNewFilter() {
 
 document.querySelector('.filter-new .filter-new-btns-done').addEventListener('click', () => {
     toNewFilterObj(arrWithObjRenderingMenu);
+    let checkes = document.querySelectorAll('.filter-new input');
+    checkes = [...checkes];
+    if(window.innerWidth <= 944 && checkes.some(i => i.checked == true)) {
+        document.querySelector('.filter-new').classList.remove('filter-new-open');
+        document.querySelector('.filter-new-button').innerText = 'ОТКРЫТЬ ФИЛЬТР';
+    }
 });
 
 
