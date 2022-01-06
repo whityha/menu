@@ -171,15 +171,26 @@ function toCheckDayMenu(e) {
 
 function openDescriptionMenu(e) { //открывает описание конкретного дня + подгружает фотографию
     if(e.target && e.target.classList.contains('open-btn')) {
+        let discription = e.target.parentElement.parentElement.nextElementSibling;
+        let image = discription.querySelector('.menu-img img');
         let id = e.target.dataset.id;
-        let nameMenu = e.target.dataset.more;
+        let nameMenu = e.target.dataset.more;  
+        if(image.classList.contains('load')) {
+            open(e);
+        } else {   
+            open(e);     
+            image.classList.add('load');
+            image.src = `./images/${nameMenu}/${id}.JPG`;
+        }    
+    }
+    function open(e) { 
+        let discription = e.target.parentElement.parentElement.nextElementSibling;         
         e.target.classList.toggle('fa-angle-down');
         e.target.classList.toggle('fa-angle-up');
-        let discription = e.target.parentElement.parentElement.nextElementSibling;
         discription.classList.toggle('open');
-        discription.querySelector('.menu-img img').src = `./images/${nameMenu}/${id}.JPG`;        
     }
 }
+
 function deleteDayMenu(e) { //удаление отрендеренного дневного меню с бд
     if(e.target && e.target.classList.contains('delete-btn')) {
         let answer = confirm('Вы действиетльно хотите удалить этот рецепт?');

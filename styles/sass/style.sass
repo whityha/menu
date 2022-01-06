@@ -24,17 +24,18 @@ html
 header
     display: flex
     justify-content: space-around
-    padding: 20px 0px
+    padding: 20px 10px
     h1
     @media (max-width: $stad-1)
-        font-size: 15px
+        font-size: 12px
+
     .open-form
         margin: 15px
         display: block
         padding: 1rem 5rem
         cursor: pointer   
         @media (max-width: $stad-1)
-            padding: 10px 10px 
+            padding: 5px
 
 .main
     +calibri
@@ -49,7 +50,13 @@ header
         display: flex
         flex-wrap: wrap
         justify-content: space-between
-        flex-direction: column        
+        flex-direction: column
+        &-portion
+            display: flex
+            justify-content: space-between
+            input
+                width: 10%
+                text-align: right        
         &-show-menu-btn
             position: relative
             display: inline-block
@@ -84,6 +91,8 @@ header
             &-clear-btn
                 align-self: flex-end
                 cursor: pointer
+                font-style: normal
+                font-size: 15px
         
         .total-count
             margin: 15px 15px 60px 15px
@@ -117,6 +126,8 @@ header
                     background-color: #b4bb8d
                     padding: 5px 15px 5px 15px
                     border: 1px solid #3b3b20
+                    @media (max-width: $stad-1)
+                        padding: 10px 15px
                     .num-day
                         flex-grow: 1
                     .check

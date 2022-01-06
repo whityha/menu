@@ -351,7 +351,7 @@
       },
       "strawberry": {
         "count": "100",
-        "name": "Замороженная клубника",
+        "name": "Клубника замороженная",
         "sizes": "грамм"
       },
       "limon": {
@@ -434,7 +434,7 @@
       },
       "strawberry": {
         "count": "50",
-        "name": "Замороженная клубника",
+        "name": "Клубника замороженная",
         "sizes": "грамм"
       },
       "cream": {
@@ -517,7 +517,7 @@
       },
       "strawberry": {
         "count": "50",
-        "name": "Замороженная клубника",
+        "name": "Клубника замороженная",
         "sizes": "грамм"
       },
       "grapefruit": {
@@ -635,7 +635,7 @@
       },
       "strawberry": {
         "count": "50",
-        "name": "Замороженная клубника",
+        "name": "Клубника замороженная",
         "sizes": "грамм"
       },
       "apple": {
@@ -816,7 +816,7 @@
     },
     {
       "eng": "strawberry",
-      "rus": "Замороженная клубника"
+      "rus": "Клубника замороженная"
     },
     {
       "eng": "salat",
@@ -828,7 +828,7 @@
     },
     {
       "eng": "squid",
-      "rus": "Кальмар"
+      "rus": "Кальмар тушка"
     },
     {
       "eng": "zucchini",
@@ -1114,7 +1114,7 @@
     },
     {
       "eng": "strawberry",
-      "rus": "Замороженная клубника"
+      "rus": "Клубника замороженная"
     },
     {
       "eng": "salat",
@@ -1134,7 +1134,11 @@
     },
     {
       "eng": "squid",
-      "rus": "Кальмар"
+      "rus": "Кальмар тушка"
+    },
+    {
+      "eng": "squidCons",
+      "rus": "Кальмар консервированный"
     },
     {
       "eng": "zucchini",
@@ -1247,10 +1251,6 @@
     {
       "eng": "cucumber",
       "rus": "Огурцы"
-    },
-    {
-      "eng": "olives",
-      "rus": "Оливки"
     },
     {
       "eng": "olive",
@@ -1416,11 +1416,19 @@
   "products_autumn": [
     {
       "eng": "avacado",
-      "rus": "Авагадро"
+      "rus": "Авокадо"
+    },
+    {
+      "eng": "penapple",
+      "rus": "Ананас"
     },
     {
       "eng": "orange",
       "rus": "Апельсин"
+    },
+    {
+      "eng": "nutButter",
+      "rus": "Арахисовая паста"
     },
     {
       "eng": "banan",
@@ -1431,8 +1439,20 @@
       "rus": "Бальзамический уксус"
     },
     {
+      "eng": "baklan",
+      "rus": "Баклажаны"
+    },
+    {
       "eng": "brokkoli",
       "rus": "Брокколи"
+    },
+    {
+      "eng": "cowberry",
+      "rus": "Брусника"
+    },
+    {
+      "eng": "brinz",
+      "rus": "Брынза сербская"
     },
     {
       "eng": "bulgur",
@@ -1443,8 +1463,12 @@
       "rus": "Ванилин"
     },
     {
-      "eng": "beefLiver",
-      "rus": "Говяжья печень"
+      "eng": "cherry",
+      "rus": "Вишня"
+    },
+    {
+      "eng": "vuster",
+      "rus": "Вустерский соус"
     },
     {
       "eng": "beef",
@@ -1459,16 +1483,36 @@
       "rus": "Гречка"
     },
     {
+      "eng": "blueblueberry",
+      "rus": "Голубика"
+    },
+    {
       "eng": "mustard",
       "rus": "Горчица"
+    },
+    {
+      "eng": "peas",
+      "rus": "Горох"
+    },
+    {
+      "eng": "peasCons",
+      "rus": "Горошек консервированный"
+    },
+    {
+      "eng": "peasFreezy",
+      "rus": "Горох замороженный"
     },
     {
       "eng": "pear",
       "rus": "Груши"
     },
     {
+      "eng": "gelatin",
+      "rus": "Желатин"
+    },
+    {
       "eng": "strawberry",
-      "rus": "Замороженная клубника"
+      "rus": "Клубника замороженная"
     },
     {
       "eng": "salat",
@@ -1479,8 +1523,20 @@
       "rus": "Йогурт 4%"
     },
     {
+      "eng": "imbir",
+      "rus": "Имбирь"
+    },
+    {
+      "eng": "caviar",
+      "rus": "Икра красная"
+    },
+    {
       "eng": "squid",
-      "rus": "Кальмар"
+      "rus": "Кальмар тушка"
+    },
+    {
+      "eng": "squidCons",
+      "rus": "Кальмар консервированный"
     },
     {
       "eng": "zucchini",
@@ -1491,8 +1547,8 @@
       "rus": "Какао-порошок"
     },
     {
-      "eng": "cambala",
-      "rus": "Камбала"
+      "eng": "cabbage",
+      "rus": "Капуста"
     },
     {
       "eng": "potato",
@@ -1500,19 +1556,43 @@
     },
     {
       "eng": "kefir",
-      "rus": "Кефир"
+      "rus": "Кефир 1%"
     },
     {
       "eng": "shrimps",
       "rus": "Креветки"
     },
     {
+      "eng": "ciwi",
+      "rus": "Киви"
+    },
+    {
+      "eng": "Korica",
+      "rus": "Корица"
+    },
+    {
+      "eng": "RedFasol",
+      "rus": "Красная фасоль"
+    },
+    {
+      "eng": "Cunjut",
+      "rus": "Кунжут"
+    },
+    {
       "eng": "chickenHeart",
       "rus": "Куринные сердечки"
     },
     {
+      "eng": "KusKus",
+      "rus": "Кус-кус"
+    },
+    {
       "eng": "lavash",
       "rus": "Лаваш"
+    },
+    {
+      "eng": "lavr",
+      "rus": "Лавровый лист"
     },
     {
       "eng": "limon",
@@ -1521,6 +1601,10 @@
     {
       "eng": "onion",
       "rus": "Лук репчатый"
+    },
+    {
+      "eng": "maslines",
+      "rus": "Маслины"
     },
     {
       "eng": "butter",
@@ -1543,12 +1627,20 @@
       "rus": "Морковь"
     },
     {
+      "eng": "SeaCocktail",
+      "rus": "Морской коктейль"
+    },
+    {
       "eng": "mozarella",
       "rus": "Моцарелла"
     },
     {
       "eng": "easeCheese",
       "rus": "Мягкий творожок 5%"
+    },
+    {
+      "eng": "CrilMeat",
+      "rus": "Мясо криля"
     },
     {
       "eng": "oatFlakes",
@@ -1559,36 +1651,44 @@
       "rus": "Огурцы"
     },
     {
-      "eng": "olives",
-      "rus": "Оливки"
-    },
-    {
       "eng": "olive",
       "rus": "Оливковое масло"
     },
     {
-      "eng": "сhineseСabbage",
-      "rus": "Пекинская капуста"
+      "eng": "nuts",
+      "rus": "Орехи"
+    },
+    {
+      "eng": "peppercorns",
+      "rus": "Перец горошком"
+    },
+    {
+      "eng": "chickenLiver",
+      "rus": "Печень куринная"
     },
     {
       "eng": "tomato",
       "rus": "Помидоры"
     },
     {
+      "eng": "millet",
+      "rus": "Пшено"
+    },
+    {
       "eng": "bakingPowder",
       "rus": "Разрыхлитель"
     },
     {
-      "eng": "redis",
-      "rus": "Редис"
-    },
-    {
-      "eng": "rise",
-      "rus": "Рис"
+      "eng": "riseBur",
+      "rus": "Рис бурый"
     },
     {
       "eng": "riseCow",
       "rus": "Рисовая мука"
+    },
+    {
+      "eng": "Rukkola",
+      "rus": "Руккола"
     },
     {
       "eng": "sweetener",
@@ -1599,8 +1699,12 @@
       "rus": "Свежая зелень"
     },
     {
-      "eng": "semga",
-      "rus": "Семга"
+      "eng": "semgaLowSold",
+      "rus": "Семга слабосоленая"
+    },
+    {
+      "eng": "Sibas",
+      "rus": "Сибас"
     },
     {
       "eng": "sweetPepper",
@@ -1612,7 +1716,7 @@
     },
     {
       "eng": "sourCream",
-      "rus": "Сметана "
+      "rus": "Сметана 10%"
     },
     {
       "eng": "sous",
@@ -1623,20 +1727,32 @@
       "rus": "Специи"
     },
     {
-      "eng": "sudak",
-      "rus": "Судак"
+      "eng": "cheeseLowSolid",
+      "rus": "Сыр полутвердый"
     },
     {
-      "eng": "cheese",
-      "rus": "Сыр российский"
+      "eng": "cheesecollageChease",
+      "rus": "Сыр твороженный"
     },
     {
       "eng": "cottageСheese",
       "rus": "Творог 5%"
     },
     {
-      "eng": "fetax",
-      "rus": "Фетакса"
+      "eng": "tunec",
+      "rus": "Тунец"
+    },
+    {
+      "eng": "pumpkin",
+      "rus": "Тыква"
+    },
+    {
+      "eng": "FarshBeef",
+      "rus": "Фарш из постной говядины"
+    },
+    {
+      "eng": "beans",
+      "rus": "Фасоль стручковая"
     },
     {
       "eng": "chickenLeg",
@@ -1659,12 +1775,24 @@
       "rus": "Филе трески"
     },
     {
-      "eng": "breadBuckwheat",
-      "rus": "Хлебцы гречневые"
+      "eng": "forel",
+      "rus": "Форель речная"
+    },
+    {
+      "eng": "breadRj",
+      "rus": "Хлеб ржаной"
     },
     {
       "eng": "makarone",
       "rus": "Цельнозерновые макароны"
+    },
+    {
+      "eng": "coloCabbage",
+      "rus": "Цветная капуста"
+    },
+    {
+      "eng": "blueberry",
+      "rus": "Черника"
     },
     {
       "eng": "garlic",
@@ -1673,14 +1801,6 @@
     {
       "eng": "champignon",
       "rus": "Шампиньоны"
-    },
-    {
-      "eng": "spinach",
-      "rus": "Шпинат"
-    },
-    {
-      "eng": "sorrel",
-      "rus": "Щавель"
     },
     {
       "eng": "apple",
@@ -1746,7 +1866,7 @@
     },
     {
       "eng": "strawberry",
-      "rus": "Замороженная клубника"
+      "rus": "Клубника замороженная"
     },
     {
       "eng": "salat",
@@ -1758,7 +1878,7 @@
     },
     {
       "eng": "squid",
-      "rus": "Кальмар"
+      "rus": "Кальмар тушка"
     },
     {
       "eng": "zucchini",
