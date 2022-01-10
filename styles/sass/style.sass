@@ -102,6 +102,9 @@ header
             overflow: hidden
             display: flex
             flex-direction: column
+            max-height: 80px
+            @media (max-width: $stad-1)
+                max-height: 100px
         &-clear-btn
             align-self: flex-end
             cursor: pointer
