@@ -71,17 +71,10 @@ class DayMenu {
 //навешиваем обработчик события на кнопку для инициации счета продуктов и отображения блока
 document.querySelector('.total-count').addEventListener('click', (e) => {
     const wrapperClass = '.sum-menu-wrapper';
-    let allCheckMenu = document.querySelectorAll('.content .check');
-    allCheckMenu = [...allCheckMenu];
-    let a = allCheckMenu.some(item => item.checked);
-    let portions = document.querySelector('.content-input-portion').value;
-    if(document.querySelector(wrapperClass).offsetHeight == 0 && a && +portions) {
-        showSumProducts(portions);
-        openBlock(0.5, wrapperClass);
-    } else {
-        showSumProducts(portions);
-    }    
+    let portions = Math.abs(document.querySelector('.content-input-portion').value);
+    openBlock(0.5, wrapperClass, showSumProducts(portions));      
 });
+
 const btnCloseSumArea = document.querySelector('.sum-menu-close-btn');
 
 btnCloseSumArea.addEventListener('click', () => {
@@ -111,6 +104,7 @@ function showSumProducts(portions) {
             return true;
         } else {
             alert('Введите количество порций');
+            return false;
         }
     } else {
         alert('Выберите хотябы одно меню');
@@ -566,9 +560,9 @@ function toggleListMenu(e) {
 
 document.querySelector('.filter-new').addEventListener('click', (e) => {
     if(e.target.classList.contains('filter-new-box-head-btn') && !e.target.classList.contains('open')) {
-        openFilterBlock(e, 0.4);
+        openFilBlock(e, 1);
     } else if (e.target.classList.contains('filter-new-box-head-btn') && e.target.classList.contains('open')) {
-        closeFilterBlock(e, 0.4);
+        closeFilBlock(e, 1);
     }
 });
 
@@ -601,7 +595,6 @@ function openFilterBlock(e, sec) {
             }
         }, 5);
 }
-
 function closeFilterBlock(e, sec) {
     e.target.classList.remove('open');
         const wrapper = e.target.parentElement.nextElementSibling;
@@ -625,6 +618,44 @@ function closeFilterBlock(e, sec) {
                 clearInterval(int);                
             }
         }, 5);
+}
+
+function openFilBlock(e, sec) {
+    e.target.classList.add('open');
+    const wrapper = e.target.parentElement.nextElementSibling;
+    const list = wrapper.lastElementChild;
+    const height = list.offsetHeight;
+    const parentWrapper = e.target.parentElement.parentElement.parentElement.parentElement.parentElement; 
+    let transition = `${sec}s ease`;
+    wrapper.style.maxHeight = `${height}px`; 
+    wrapper.style.transition = transition;
+    list.style.transition = transition;
+    list.style.transform = `translateY(0%)`;
+    parentWrapper.style.maxHeight = 'none';
+       
+}
+
+function closeFilBlock(e, sec) {
+    e.target.classList.remove('open');
+    const wrapper = e.target.parentElement.nextElementSibling;
+    const list = wrapper.lastElementChild;
+    const height = list.offsetHeight;
+    const parentWrapper = e.target.parentElement.parentElement.parentElement.parentElement.parentElement; 
+    let transition = `${sec}s ease`;    
+    wrapper.style.transition = transition;
+    list.style.transition = transition;
+    list.style.transform = `translateY(-100%)`; 
+    parentWrapper.style.maxHeight = 'none';    
+    let prom = new Promise((resolve) => {
+        wrapper.style.maxHeight = `${wrapper.offsetHeight}px`;
+        resolve(wrapper);
+    }).then((va) => {
+        setTimeout(() => {
+            va.style.maxHeight = `0px`;            
+        });
+    });
+    
+      
 }
 //Очищаем фильтр при нажатии на кнопку Очистить
 document.querySelector('.filter-new-btns-reset').addEventListener('click', () => {
@@ -686,43 +717,24 @@ document.querySelector('.filter-new .filter-new-btns-done').addEventListener('cl
 });
 
 
-function openBlock(sec, wrapperClass) {
-    const wrapper = document.querySelector(wrapperClass);
-    const heightList = wrapper.lastElementChild;
-    let height = 0;
-    let k = heightList.offsetHeight/100;
-    let i;
-    const int = setInterval(() => {
-        i = (height/heightList.offsetHeight)*100;
-        heightList.style.transform = `translateY(${-100+i}%)`;            
-        wrapper.style.height = height + 'px';
-        height = height + 1*k*(1/sec);
-        if(height >= heightList.offsetHeight) {
-            wrapper.style.height = heightList.offsetHeight + 'px';
-            heightList.style.transform = `translateY(0%)`;
-            clearInterval(int);
-            wrapper.style.height = 'auto';
-        }
-    }, 5);
+function openBlock(sec, wrapperClass, ex) {
+    if(ex) {
+        const wrapper = document.querySelector(wrapperClass);
+        const list = wrapper.lastElementChild;
+        let height = list.offsetHeight;
+        wrapper.style.transition = `${sec}s ease`;
+        list.style.transition = `${sec}s ease`;
+        wrapper.style.maxHeight = `${height}px`;
+        list.style.transform = 'translateY(0%)';  
+    }             
 }
 
 function closeBlock(sec, wrapperClass) {
-        const wrapper = document.querySelector(wrapperClass);
-        const heightList = wrapper.lastElementChild;
-        let height = heightList.offsetHeight;
-        let k = heightList.offsetHeight/100;
-        let i;
-        const int = setInterval(() => {
-            i = (height/heightList.offsetHeight)*100;
-            heightList.style.transform = `translateY(${-100+i}%)`;          
-            wrapper.style.height = height + 'px';
-            height = height - 1*k*(1/sec);
-            if(height <= 0) {
-                heightList.style.transform = `translateY(-100%)`;
-                wrapper.style.height = 0 + 'px';
-                clearInterval(int);                
-            }
-        }, 5);
+    const wrapper = document.querySelector(wrapperClass);
+    const list = wrapper.lastElementChild;
+    let height = list.offsetHeight;    
+    wrapper.style.transition = `all ${sec} ease`;
+    wrapper.style.maxHeight = `0px`;           
 }
 
 
