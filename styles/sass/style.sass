@@ -6,6 +6,12 @@
 
 $stad-1: 944px
 $stad-mob: 600px
+$color-blue: #003049
+$color-red: #D62828
+$color-orange: #F77F00
+$color-yellowred: #FCBF49
+$color-lemon: #EAE2B7
+$color-white: #fff
 
 =calibri
     font-family: 'Calibri'
@@ -13,9 +19,14 @@ $stad-mob: 600px
 html
     width: 100vw
     overflow-x: hidden
+    color: $color-blue
     
-
-
+body 
+    background-color: $color-lemon
+button
+    background-color: $color-blue
+    color: $color-lemon
+    border: none
 .relative
     position: relative
 .activeForm
@@ -61,7 +72,8 @@ header
             position: relative
             display: inline-block
             cursor: pointer   
-            z-index: 0         
+            z-index: 0
+            align-self: flex-start         
             &::before
                 content: ''
                 position: absolute
@@ -82,17 +94,19 @@ header
             padding: 0 5vw
         &-menu
             width: 100%
-            padding-bottom: 30px            
+            padding-bottom: 30px
+            display: flex   
+            flex-direction: column        
         &-wrapper
             margin-top: 10px
             overflow: hidden
             display: flex
             flex-direction: column
-            &-clear-btn
-                align-self: flex-end
-                cursor: pointer
-                font-style: normal
-                font-size: 15px
+        &-clear-btn
+            align-self: flex-end
+            cursor: pointer
+            font-style: normal
+            font-size: 15px
         
         .total-count
             margin: 15px 15px 60px 15px
@@ -111,13 +125,13 @@ header
                 overflow: hidden
                 cursor: pointer
                 .bg_gurman
-                    background-color: #84d6a4
+                    background-color: $color-yellowred
                 .bg_classic
-                    background-color: #f5a9ff
+                    background-color: $color-yellowred
                 .bg_autumn
-                    background-color: #d0d4a4
+                    background-color: $color-yellowred
                 .bg_fish
-                    background-color: #9ebbf0
+                    background-color: $color-red
                 &-description
                     width: 100%
                     display: flex
@@ -125,7 +139,7 @@ header
                     align-items: center
                     background-color: #b4bb8d
                     padding: 5px 15px 5px 15px
-                    border: 1px solid #3b3b20
+                    border: 1px solid $color-blue
                     @media (max-width: $stad-1)
                         padding: 10px 15px
                     .num-day
@@ -137,13 +151,19 @@ header
                         width: 25px
                         height: 100%
                         cursor: pointer
+                    .delete-btn
+                        display: block
+                        margin-right: 5px
+                        width: 25px
+                        height: 100%
+                        background-color: inherit
                 &-more
                     display: flex
                     overflow: hidden
                     overflow-y: scroll
                     max-height: 0px
                     padding: 0px 15px 0px 15px
-                    background-color: #e2f3c1
+                    background-color: #F3D180
                     border-left: 1px solid black
                     border-bottom: 1px solid black
                     border-right: 1px solid black
@@ -203,11 +223,10 @@ header
     width: 50vw
     right: 0
     top: 0
-    background-color: pink
+    background-color: $color-yellowred
     transform: translateX(100%)
     transition: 0.5s
     transition-timing-function: ease
-    border: 1px solid #801e62
     overflow-x: hidden
     overflow-y: scroll
     @media ( max-width: $stad-1 )
@@ -325,7 +344,7 @@ header
     height: 6vh
     min-height: 50px
     bottom: 0
-    background-color: #4e4080
+    background-color: $color-orange
     text-align: center
     padding-top: 2vw
     color: white
@@ -359,7 +378,7 @@ header
                 width: 100%
                 background-color: #fff
                 position: fixed
-                max-height: 95vh
+                max-height: 0
                 overflow-y: scroll                
         &-block    
             display: flex
@@ -399,12 +418,14 @@ header
         box-shadow: 0px 0px 10px #777
         margin: 0px 15px
         padding: 15px 15px
-        color: #777
+        color: $color-blue
         font-size: 18px
         margin-top: 40px
         min-width: 240px
         transition: .4s
         transition-timing-function: ease
+        background-color: $color-yellowred
+        border-radius: 5px
         @media ( max-width: $stad-1 )
             transform: translateY(-110%)
             display: block
@@ -435,7 +456,7 @@ header
                     bottom: 0
                     width: 100%
                     height: 1px
-                    background-color: #777
+                    background-color: $color-blue
                     transition: .2s
                     transform: scaleX(0)
                 &:hover::before

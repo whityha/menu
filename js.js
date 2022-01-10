@@ -40,12 +40,12 @@ class DayMenu {
             <li class='content-list-item'>
                 <div class='content-list-item-description bg_${bgColor}'>
                     <div class='num-day'>Неделя ${dayMenuProducts.weak}. ${dayMenuProducts.dayName}.</div>
-                    <button data-name=${menu} data-id=${dayMenuProducts.id} type='button' class='delete-btn'>Удалить</button>
+                    <button data-name=${menu} data-id=${dayMenuProducts.id} type='button' class='delete-btn'></button>
                     <button type='button'>
                         <i data-more=${menu} data-id=${dayMenuProducts.id} class='fas fa-angle-down open-btn'></i>
                     </button>
                     <input data-name=${menu} data-id=${dayMenuProducts.id} class='check' type='checkbox'/>
-                </div>
+                </div>                
                 <div data-name=${menu} data-id=${dayMenuProducts.id} class='content-list-item-more'>
                     <div class='menu-img'><img src='' alt='Меню'/>
                     </div>
@@ -56,7 +56,7 @@ class DayMenu {
                     <div class='recept recept-${menu}${dayMenuProducts.id}'>
                         
                     </div>
-                </div>
+                </div>               
             </li>`;
             parent.querySelector(`.recept-${menu}${dayMenuProducts.id}`).innerText = dayMenuProducts.recept;
             for(let k in currentMenu) {    
@@ -72,13 +72,13 @@ class DayMenu {
 document.querySelector('.total-count').addEventListener('click', (e) => {
     const wrapperClass = '.sum-menu-wrapper';
     let portions = Math.abs(document.querySelector('.content-input-portion').value);
-    openBlock(0.5, wrapperClass, showSumProducts(portions));      
+    openBlock(e, 0.5, wrapperClass, showSumProducts(portions));    
 });
 
 const btnCloseSumArea = document.querySelector('.sum-menu-close-btn');
 
-btnCloseSumArea.addEventListener('click', () => {
-    closeBlock(0.5, '.sum-menu-wrapper');
+btnCloseSumArea.addEventListener('click', (e) => {
+    closeBlock(e, 0.5, '.sum-menu-wrapper');
 });
 
 // Создаем функцию для подсчета продуктов в выбранных меню 
@@ -178,10 +178,12 @@ function openDescriptionMenu(e) { //открывает описание конк
         }    
     }
     function open(e) { 
-        let discription = e.target.parentElement.parentElement.nextElementSibling;         
+        let discription = e.target.parentElement.parentElement.nextElementSibling;
+        let currentMenuListWrapper = e.target.parentElement.parentElement.parentElement.parentElement.parentElement;        
         e.target.classList.toggle('fa-angle-down');
         e.target.classList.toggle('fa-angle-up');
         discription.classList.toggle('open');
+        currentMenuListWrapper.style.maxHeight = 'none';
     }
 }
 
@@ -498,58 +500,19 @@ function clearNewMenuList() { //очищаем форму нового меню
 
 
 
-function currentHeightBlock(name) {
-    const list = document.querySelector(`.content-list-${name}`);
-    return list.offsetHeight;
-}
-function closeListMenu(e) {    
-          
-        e.target.innerText = 'Показать';
-        let menuName = e.target.dataset.name;
-        let height = currentHeightBlock(`${menuName}`);
-        const heightWrapper = document.querySelector(`.content-wrapper-${menuName}`).offsetHeight;
-        if(heightWrapper) {
-            e.target.setAttribute('disabled', '');
-            let int = setInterval(() => {
-                document.querySelector(`.content-wrapper-${menuName}`).style.height =  height + 'px';
-                height = height - 5;
-                if(height <= 0) {
-                    document.querySelector(`.content-wrapper-${menuName}`).style.height =  0 + 'px';
-                    clearInterval(int);
-                    e.target.removeAttribute('disabled');
-                }
-            }, 4); 
-        }
-        e.target.classList.remove('show');     
-    
-    function currentHeightBlock(name) {
-        const list = document.querySelector(`.content-list-${name}`);
-        return list.offsetHeight;
-    }    
-}
 
-function openListMenu(e) {   
-    
+function closeListMenu(e) {              
+        e.target.innerText = 'Показать';
+        let menuName = e.target.dataset.name;        
+        closeBlock(e, 0.5, `.content-wrapper-${menuName}`);
+        e.target.classList.remove('show');           
+}
+function openListMenu(e) {       
         e.target.innerText = 'Скрыть';        
         let menuName = e.target.dataset.name;
-        let height = document.querySelector(`.content-wrapper-${menuName}`).offsetHeight;
-        const list = document.querySelector(`.content-list-${menuName}`);
-        if(height == 0) {
-            e.target.setAttribute('disabled', '');
-            let int = setInterval(() => {
-                document.querySelector(`.content-wrapper-${menuName}`).style.height =  height + 'px';        
-                height = height + 3;
-                if(height >= list.offsetHeight) {
-                    clearInterval(int);
-                    document.querySelector(`.content-wrapper-${menuName}`).style.height = 'auto';
-                    e.target.removeAttribute('disabled');
-                }
-            }, 4);
-        }        
-        e.target.classList.add('show');        
-    
+        openBlock(e, 0.5, `.content-wrapper-${menuName}`);
+        e.target.classList.add('show');  
 }
-
 function toggleListMenu(e) {
     if(e.target.classList.contains('show') && e.target.classList.contains('content-show-menu-btn')) {
         closeListMenu(e);
@@ -558,11 +521,12 @@ function toggleListMenu(e) {
     }
 }
 
+
 document.querySelector('.filter-new').addEventListener('click', (e) => {
     if(e.target.classList.contains('filter-new-box-head-btn') && !e.target.classList.contains('open')) {
-        openFilBlock(e, 1);
+        openFilBlock(e, 0.3);
     } else if (e.target.classList.contains('filter-new-box-head-btn') && e.target.classList.contains('open')) {
-        closeFilBlock(e, 1);
+        closeFilBlock(e, 0.3);
     }
 });
 
@@ -639,14 +603,13 @@ function closeFilBlock(e, sec) {
     e.target.classList.remove('open');
     const wrapper = e.target.parentElement.nextElementSibling;
     const list = wrapper.lastElementChild;
-    const height = list.offsetHeight;
     const parentWrapper = e.target.parentElement.parentElement.parentElement.parentElement.parentElement; 
     let transition = `${sec}s ease`;    
     wrapper.style.transition = transition;
     list.style.transition = transition;
     list.style.transform = `translateY(-100%)`; 
     parentWrapper.style.maxHeight = 'none';    
-    let prom = new Promise((resolve) => {
+    new Promise((resolve) => {
         wrapper.style.maxHeight = `${wrapper.offsetHeight}px`;
         resolve(wrapper);
     }).then((va) => {
@@ -717,29 +680,41 @@ document.querySelector('.filter-new .filter-new-btns-done').addEventListener('cl
 });
 
 
-function openBlock(sec, wrapperClass, ex) {
+function openBlock(e, sec, wrapperClass, ex = true) {
     if(ex) {
         const wrapper = document.querySelector(wrapperClass);
-        const list = wrapper.lastElementChild;
+        const list = wrapper.firstElementChild;
         let height = list.offsetHeight;
         wrapper.style.transition = `${sec}s ease`;
         list.style.transition = `${sec}s ease`;
         wrapper.style.maxHeight = `${height}px`;
-        list.style.transform = 'translateY(0%)';  
+        list.style.transform = 'translateY(0%)';
+        if(window.innerWidth <= 944 && e.target.classList.contains('total-count')) {
+            wrapper.style.maxHeight = `95vh`;
+        }
     }             
 }
 
-function closeBlock(sec, wrapperClass) {
+function closeBlock(e, sec, wrapperClass) {
     const wrapper = document.querySelector(wrapperClass);
-    const list = wrapper.lastElementChild;
-    let height = list.offsetHeight;    
-    wrapper.style.transition = `all ${sec} ease`;
-    wrapper.style.maxHeight = `0px`;           
+    const list = wrapper.firstElementChild;   
+    let transition = `${sec}s ease`;    
+    wrapper.style.transition = transition;
+    list.style.transition = transition;
+    list.style.transform = 'translateY(-100%)';
+    new Promise(resolve => {
+        wrapper.style.maxHeight = `${wrapper.offsetHeight}px`;
+        resolve(wrapper);
+    }).then((wrap) => {
+        setTimeout(() => {
+            wrap.style.maxHeight = `0px`;
+            });
+    });
 }
 
 
 function clearCheckesInMenuList(e) {
-    if(e.target.classList.contains('content-wrapper-clear-btn')) {
+    if(e.target.classList.contains('content-clear-btn')) {
     let list = e.target.previousElementSibling;
     let checkes = list.querySelectorAll('.check');
     checkes.forEach(check => check.checked = false);
