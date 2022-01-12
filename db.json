@@ -1079,8 +1079,300 @@
       }
     }
   ],
-  "autumn": [],
-  "fish": [],
+  "autumn": [
+    {
+      "autumn": true,
+      "dayName": "Понедельник",
+      "weak": "1",
+      "recept": "",
+      "name": "autumn",
+      "id": "11",
+      "nutButter": {
+        "count": "3",
+        "name": "Арахисовая паста",
+        "sizes": "грамм"
+      }
+    }
+  ],
+  "fish": [
+    {
+      "fish": true,
+      "dayName": "Понедельник",
+      "weak": "1",
+      "recept": "",
+      "name": "fish",
+      "id": "11",
+      "egg": {
+        "count": "1",
+        "name": "Яйца",
+        "sizes": "шт"
+      },
+      "chicken": {
+        "count": "300",
+        "name": "Филе курицы",
+        "sizes": "грамм"
+      },
+      "tomato": {
+        "count": "100",
+        "name": "Помидоры",
+        "sizes": "грамм"
+      },
+      "cucumber": {
+        "count": "100",
+        "name": "Огурцы",
+        "sizes": "грамм"
+      },
+      "onion": {
+        "count": "50",
+        "name": "Лук репчатый",
+        "sizes": "грамм"
+      },
+      "sweetPepper": {
+        "count": "100",
+        "name": "Сладкий перец",
+        "sizes": "грамм"
+      },
+      "freshGreen": {
+        "count": "10",
+        "name": "Свежая зелень",
+        "sizes": "грамм"
+      },
+      "strawberry": {
+        "count": "50",
+        "name": "Клубника замороженная",
+        "sizes": "грамм"
+      },
+      "cottageСheese": {
+        "count": "50",
+        "name": "Творог 5%",
+        "sizes": "грамм"
+      },
+      "yogurt": {
+        "count": "200",
+        "name": "Йогурт 4%",
+        "sizes": "грамм"
+      },
+      "bulgur": {
+        "count": "30",
+        "name": "Булгур",
+        "sizes": "грамм"
+      },
+      "riseCow": {
+        "count": "15",
+        "name": "Рисовая мука",
+        "sizes": "грамм"
+      },
+      "cacao": {
+        "count": "5",
+        "name": "Какао-порошок",
+        "sizes": "грамм"
+      },
+      "mindal": {
+        "count": "13",
+        "name": "Миндаль",
+        "sizes": "грамм"
+      }
+    },
+    {
+      "fish": true,
+      "dayName": "Вторник",
+      "weak": "1",
+      "recept": "",
+      "name": "fish",
+      "id": "12",
+      "chicken": {
+        "count": "250",
+        "name": "Филе курицы",
+        "sizes": "грамм"
+      },
+      "semga": {
+        "count": "50",
+        "name": "Семга",
+        "sizes": "грамм"
+      },
+      "tomato": {
+        "count": "150",
+        "name": "Помидоры",
+        "sizes": "грамм"
+      },
+      "cucumber": {
+        "count": "100",
+        "name": "Огурцы",
+        "sizes": "грамм"
+      },
+      "salat": {
+        "count": "30",
+        "name": "Зеленый салат",
+        "sizes": "грамм"
+      },
+      "freshGreen": {
+        "count": "10",
+        "name": "Свежая зелень",
+        "sizes": "грамм"
+      },
+      "strawberry": {
+        "count": "200",
+        "name": "Клубника замороженная",
+        "sizes": "грамм"
+      },
+      "cheese": {
+        "count": "10",
+        "name": "Сыр российский",
+        "sizes": "грамм"
+      },
+      "yogurt": {
+        "count": "200",
+        "name": "Йогурт 4%",
+        "sizes": "грамм"
+      },
+      "olive": {
+        "count": "5",
+        "name": "Оливковое масло",
+        "sizes": "грамм"
+      },
+      "mustard": {
+        "count": "5",
+        "name": "Горчица",
+        "sizes": "грамм"
+      }
+    },
+    {
+      "fish": true,
+      "dayName": "Среда",
+      "weak": "1",
+      "recept": "",
+      "name": "fish",
+      "id": "13",
+      "fishTreska": {
+        "count": "170",
+        "name": "Филе трески",
+        "sizes": "грамм"
+      },
+      "shrimps": {
+        "count": "150",
+        "name": "Креветки",
+        "sizes": "грамм"
+      },
+      "tomato": {
+        "count": "200",
+        "name": "Помидоры",
+        "sizes": "грамм"
+      },
+      "zucchini": {
+        "count": "100",
+        "name": "Кабачок",
+        "sizes": "грамм"
+      },
+      "freshGreen": {
+        "count": "10",
+        "name": "Свежая зелень",
+        "sizes": "грамм"
+      },
+      "strawberry": {
+        "count": "200",
+        "name": "Клубника замороженная",
+        "sizes": "грамм"
+      },
+      "mozarella": {
+        "count": "100",
+        "name": "Моцарелла",
+        "sizes": "грамм"
+      },
+      "yogurt": {
+        "count": "150",
+        "name": "Йогурт 4%",
+        "sizes": "грамм"
+      },
+      "makarone": {
+        "count": "55",
+        "name": "Цельнозерновые макароны",
+        "sizes": "грамм"
+      },
+      "olive": {
+        "count": "5",
+        "name": "Оливковое масло",
+        "sizes": "грамм"
+      },
+      "balsamic": {
+        "count": "5",
+        "name": "Бальзамический уксус",
+        "sizes": "грамм"
+      }
+    },
+    {
+      "fish": true,
+      "dayName": "Пятница",
+      "weak": "1",
+      "recept": "",
+      "name": "fish",
+      "id": "15",
+      "indeika": {
+        "count": "300",
+        "name": "Филе индейки",
+        "sizes": "грамм"
+      },
+      "tomato": {
+        "count": "100",
+        "name": "Помидоры",
+        "sizes": "грамм"
+      },
+      "freshGreen": {
+        "count": "10",
+        "name": "Свежая зелень",
+        "sizes": "грамм"
+      },
+      "strawberry": {
+        "count": "100",
+        "name": "Клубника замороженная",
+        "sizes": "грамм"
+      },
+      "orange": {
+        "count": "150",
+        "name": "Апельсин",
+        "sizes": "грамм"
+      },
+      "yogurt": {
+        "count": "150",
+        "name": "Йогурт 4%",
+        "sizes": "грамм"
+      },
+      "cottageСheese": {
+        "count": "50",
+        "name": "Творог 5%",
+        "sizes": "грамм"
+      },
+      "buckwheat": {
+        "count": "60",
+        "name": "Гречка",
+        "sizes": "грамм"
+      },
+      "cacao": {
+        "count": "5",
+        "name": "Какао-порошок",
+        "sizes": "грамм"
+      },
+      "olive": {
+        "count": "15",
+        "name": "Оливковое масло",
+        "sizes": "грамм"
+      },
+      "mustard": {
+        "count": "5",
+        "name": "Горчица",
+        "sizes": "грамм"
+      },
+      "mindal": {
+        "count": "10",
+        "name": "Миндаль",
+        "sizes": "грамм"
+      },
+      "sous": {
+        "count": "5",
+        "name": "Соевый соус",
+        "sizes": "грамм"
+      }
+    }
+  ],
   "products_gurman": [
     {
       "eng": "avacado",

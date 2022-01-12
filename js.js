@@ -1,7 +1,7 @@
 'use strict';
 const localURL = 'http://localhost:3000';
 const githubURL = 'https://menu-db.herokuapp.com';
-const currentURL = githubURL;
+const currentURL = localURL;
 let arrWithObjRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
 
 //создаем класс меню
@@ -22,6 +22,8 @@ class DayMenu {
         }  
         
     }
+
+
 
     //метод для отображения нового объекта на странице
     render(filter = true) {        
@@ -135,32 +137,43 @@ function showSumProducts(portions) {
 const content = document.querySelector('.content');
 content.addEventListener('click', (e) => {   
     openDescriptionMenu(e);
-    toCheckDayMenu(e);
     deleteDayMenu(e);
     toggleListMenu(e);
-    clearCheckesInMenuList(e);      
+    clearCheckesInMenuList(e);    
+   showClearCheckBtn(e); //внутри данной функции находится функция toCheckDayMenu для того,
+                          // чтобы при клике не только на чекбокс, но и на само меню оно выбиралось.
+    
+    unshowClearCheckBtn(e);
+});
+content.addEventListener('change', (e) => {
+    //showClearCheckBtn(e);
+    unshowClearCheckBtn(e);
 });
 
 
 function toCheckDayMenu(e) {
 
     if(e.target && e.target.classList.contains('content-list-item-description')) {
-        let check = e.target.querySelector('.check').checked;
-        if(check) {
+        let checkbox = e.target.querySelector('.check');
+        if(checkbox.checked) {
             e.target.querySelector('.check').checked = false;
         } else {
             e.target.querySelector('.check').checked = true;
         }
+        return checkbox.dataset.name;
     }
 
     if (e.target.classList.contains('num-day')) {
-        let check = e.target.parentElement.querySelector('.check').checked;
-        if(check) {
+        let checkbox = e.target.parentElement.querySelector('.check');
+        if(checkbox.checked) {
             e.target.parentElement.querySelector('.check').checked = false;
         } else {
             e.target.parentElement.querySelector('.check').checked = true;
         }
+        return checkbox.dataset.name;
     }
+
+    return false;
 }
 
 function openDescriptionMenu(e) { //открывает описание конкретного дня + подгружает фотографию
@@ -720,3 +733,20 @@ function clearCheckesInMenuList(e) {
     checkes.forEach(check => check.checked = false);
     }
 }
+
+function showClearCheckBtn(e) {  
+    const ex = toCheckDayMenu(e); 
+    if(ex) {
+        document.querySelector(`.content-menu-${ex} .content-clear-btn`).classList.add('content-clear-btn-active');
+    } else if (e.target.classList.contains('check')) {
+        document.querySelector(`.content-menu-${e.target.dataset.name} .content-clear-btn`).classList.add('content-clear-btn-active');
+    }               
+}
+function unshowClearCheckBtn(e) {
+    let checkes = document.querySelectorAll(`.content-menu-gurman .check`);
+    checkes = [...checkes];
+    if(!checkes.some(item => item.checked)) {
+        document.querySelector('.content-clear-btn').classList.remove('content-clear-btn-active');
+    }
+}
+
