@@ -42,7 +42,7 @@ class DayMenu {
             <li class='content-list-item' data-id=${dayMenuProducts.id}>
                 <div data-name=${menu} class='content-list-item-description bg_${bgColor}'>
                     <div data-name=${menu} class='num-day'>Неделя ${dayMenuProducts.weak}. ${dayMenuProducts.dayName}.</div>
-                    <button data-name=${menu} data-id=${dayMenuProducts.id} type='button' class='delete-btn'></button>
+                    
                     <button type='button'>
                         <i data-more=${menu} data-id=${dayMenuProducts.id} class='fas fa-angle-down open-btn'></i>
                     </button>
@@ -140,10 +140,10 @@ content.addEventListener('click', (e) => {
     deleteDayMenu(e);
     toggleListMenu(e);
     clearCheckesInMenuList(e);    
-   showClearCheckBtn(e); //внутри данной функции находится функция toCheckDayMenu для того,
+   showCheckBtns(e); //внутри данной функции находится функция toCheckDayMenu для того,
                           // чтобы при клике не только на чекбокс, но и на само меню оно выбиралось.
     
-    unshowClearCheckBtn(e);
+    unshowCheckBtns(e);
 });
 content.addEventListener('change', (e) => {
     //showClearCheckBtn(e);
@@ -218,7 +218,8 @@ function deleteDayMenu(e) { //удаление отрендеренного дн
                         alert('Какая-то ошибка');
                     }            
                 });
-            });            
+            });
+            e.target.classList.remove('content-delete-btn-active');            
         }
     }
 }
@@ -557,52 +558,6 @@ document.querySelector('.filter-new-button').addEventListener('click', (e) => {
         e.target.innerText = 'ОТКРЫТЬ ФИЛЬТР';
     }
 });
-
-function openFilterBlock(e, sec) {
-    e.target.classList.add('open');
-        const wrapper = e.target.parentElement.nextElementSibling;
-        const heightList = wrapper.lastElementChild;
-        let height = 0;
-        let k = heightList.offsetHeight/100;
-        let i;
-        const int = setInterval(() => {
-            i = (height/heightList.offsetHeight)*100;
-            heightList.style.transform = `translateY(${-100+i}%)`;            
-            wrapper.style.height = height + 'px';
-            height = height + 1*k*(1/sec);
-            if(height >= heightList.offsetHeight) {
-                wrapper.style.height = heightList.offsetHeight + 'px';
-                heightList.style.transform = `translateY(0%)`;
-                clearInterval(int);
-                wrapper.style.height = 'auto';
-            }
-        }, 5);
-}
-function closeFilterBlock(e, sec) {
-    e.target.classList.remove('open');
-        const wrapper = e.target.parentElement.nextElementSibling;
-        const heightList = wrapper.lastElementChild;
-        let height = heightList.offsetHeight;
-        let k = heightList.offsetHeight/100;
-        let i;
-        const int = setInterval(() => {
-            i = (height/heightList.offsetHeight)*100;
-            heightList.style.transform = `translateY(${-100+i}%)`;          
-            wrapper.style.height = height + 'px';
-            height = height - 1*k*(1/sec);
-            if(height <= 0) {
-                heightList.style.transform = `translateY(-100%)`;
-                wrapper.style.height = 0 + 'px';
-                wrapper.querySelectorAll('.filter-new-box-wrapper').forEach(item => {
-                    item.previousElementSibling.lastElementChild.classList.remove('open');
-                    
-                    item.style.height = 0;
-                });
-                clearInterval(int);                
-            }
-        }, 5);
-}
-
 function openFilBlock(e, sec) {
     e.target.classList.add('open');
     const wrapper = e.target.parentElement.nextElementSibling;
@@ -614,10 +569,8 @@ function openFilBlock(e, sec) {
     wrapper.style.transition = transition;
     list.style.transition = transition;
     list.style.transform = `translateY(0%)`;
-    parentWrapper.style.maxHeight = 'none';
-       
+    parentWrapper.style.maxHeight = 'none';       
 }
-
 function closeFilBlock(e, sec) {
     e.target.classList.remove('open');
     const wrapper = e.target.parentElement.nextElementSibling;
@@ -635,20 +588,17 @@ function closeFilBlock(e, sec) {
         setTimeout(() => {
             va.style.maxHeight = `0px`;            
         });
-    });
-    
-      
+    });      
 }
 //Очищаем фильтр при нажатии на кнопку Очистить
 document.querySelector('.filter-new-btns-reset').addEventListener('click', () => {
     document.querySelectorAll('.filter-new input').forEach(item => 
-        item.checked = false);
-    
+        item.checked = false);    
         clearNewFilter();
 });
 
 //
-function toNewFilterObj(arr) { //функция, которая фильтрует массив с объектами меню и рендерит на страницу
+function toNewFilterObj(arr) { //функция, которая фильтрует массив с объектами дней и рендерит на страницу
     const input = document.querySelectorAll('.filter-new input');
     let contentLists = document.querySelectorAll('.content-list');    
         let arrWithProducts = [];
@@ -740,7 +690,7 @@ function clearCheckesInMenuList(e) {
     }
 }
 
-function showClearCheckBtn(e) {  
+function showCheckBtns(e) {  
     const ex = toCheckDayMenu(e); 
     if(ex) {
         document.querySelector(`.content-menu-${ex} .content-btns-clear`).classList.add('content-clear-btn-active');
@@ -750,7 +700,7 @@ function showClearCheckBtn(e) {
         document.querySelector(`.content-menu-${e.target.dataset.name} .content-btns-delete`).classList.add('content-delete-btn-active');
     }               
 }
-function unshowClearCheckBtn(e) {
+function unshowCheckBtns(e) {
     if(e.target.dataset.name) {
         let menu = e.target.dataset.name;
         let checkes = document.querySelectorAll(`.content-menu-${menu} .check`);

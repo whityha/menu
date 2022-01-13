@@ -92,7 +92,15 @@ header
         @media (max-width: $stad-mob)
             width: 100vw
             padding: 0 5vw
-        &-menu
+        &-item
+            &-header
+                display: flex
+                justify-content: space-between
+                &-main
+                    width: 20%
+                &-description
+                    width: 70%
+        &-menu            
             width: 100%
             padding-bottom: 30px
             display: flex   
@@ -155,7 +163,7 @@ header
                 .bg_autumn
                     background-color: $color-yellowred
                 .bg_fish
-                    background-color: $color-red
+                    background-color: $color-yellowred
                 &-description
                     width: 100%
                     display: flex
