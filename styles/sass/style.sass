@@ -102,22 +102,33 @@ header
             overflow: hidden
             display: flex
             flex-direction: column
-            @media (max-width: $stad-1)
-                max-height: 100px
-        &-clear-btn
+        &-btns
             align-self: flex-end
-            cursor: pointer
-            font-style: normal
-            font-size: 15px
-            padding: 5px 10px
-            background-color: $color-blue
-            border-radius: 20px
-            color: $color-white
-            transition: 0.3s
-            opacity: 0
-            transform: translateY(-20%)
-            z-index: -1
+            display: flex
+            =btn                
+                cursor: pointer
+                font-style: normal
+                font-size: 15px
+                padding: 5px 10px                
+                border-radius: 20px
+                color: $color-white
+                transition: 0.3s
+                opacity: 0
+                transform: translateY(-20%)
+                z-index: -1
+            &-delete
+                +btn
+                background-color: $color-red
+                margin-right: 5px
+                transition-delay: 0.08s
+            &-clear
+                +btn
+                background-color: $color-blue
         &-clear-btn-active
+            transform: translateY(0%)
+            opacity: 1
+            z-index: 0
+        &-delete-btn-active
             transform: translateY(0%)
             opacity: 1
             z-index: 0
@@ -134,7 +145,7 @@ header
             &-item
                 display: flex
                 flex-direction: column         
-                padding-bottom: 10px
+                margin-bottom: 10px
                 overflow: hidden
                 cursor: pointer
                 .bg_gurman
@@ -168,7 +179,6 @@ header
                         display: block
                         margin-right: 5px
                         width: 25px
-                        height: 100%
                         background-color: inherit
                 &-more
                     display: flex

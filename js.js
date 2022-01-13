@@ -39,9 +39,9 @@ class DayMenu {
             toDoCurrentMenu(dayMenuProducts);            
             const parent = document.querySelector(`.content-list-${menu}`);            
             parent.innerHTML += `
-            <li class='content-list-item'>
-                <div class='content-list-item-description bg_${bgColor}'>
-                    <div class='num-day'>Неделя ${dayMenuProducts.weak}. ${dayMenuProducts.dayName}.</div>
+            <li class='content-list-item' data-id=${dayMenuProducts.id}>
+                <div data-name=${menu} class='content-list-item-description bg_${bgColor}'>
+                    <div data-name=${menu} class='num-day'>Неделя ${dayMenuProducts.weak}. ${dayMenuProducts.dayName}.</div>
                     <button data-name=${menu} data-id=${dayMenuProducts.id} type='button' class='delete-btn'></button>
                     <button type='button'>
                         <i data-more=${menu} data-id=${dayMenuProducts.id} class='fas fa-angle-down open-btn'></i>
@@ -147,7 +147,7 @@ content.addEventListener('click', (e) => {
 });
 content.addEventListener('change', (e) => {
     //showClearCheckBtn(e);
-    unshowClearCheckBtn(e);
+    // unshowClearCheckBtn(e);
 });
 
 
@@ -201,18 +201,24 @@ function openDescriptionMenu(e) { //открывает описание конк
 }
 
 function deleteDayMenu(e) { //удаление отрендеренного дневного меню с бд
-    if(e.target && e.target.classList.contains('delete-btn')) {
-        let answer = confirm('Вы действиетльно хотите удалить этот рецепт?');
+    if(e.target && e.target.classList.contains('content-btns-delete')) {
+        let menuName = e.target.dataset.name;
+        let answer = confirm('Вы действиетльно хотите удалить выбранные рецепты?');
         if(answer) {
-            fetch(`${currentURL}/${e.target.dataset.name}/${e.target.dataset.id}`, {
-                method: 'DELETE'
-            }).then(res => { 
-                if(res.status == 200) {
-                    e.target.parentElement.parentElement.remove();
-                } else {
-                    alert('Какая-то ошибка');
-                }            
-            });
+            let allDays = document.querySelectorAll(`.content-list-${menuName} .content-list-item`);
+            allDays = [...allDays];
+            let activeDays = allDays.filter(item => item.querySelector('.check').checked);
+            activeDays.forEach((item) => {
+                fetch(`${currentURL}/${e.target.dataset.name}/${item.dataset.id}`, {
+                    method: 'DELETE'
+                }).then(res => { 
+                    if(res.status == 200) {
+                        item.remove();
+                    } else {
+                        alert('Какая-то ошибка');
+                    }            
+                });
+            });            
         }
     }
 }
@@ -727,8 +733,8 @@ function closeBlock(e, sec, wrapperClass) {
 
 
 function clearCheckesInMenuList(e) {
-    if(e.target.classList.contains('content-clear-btn')) {
-    let list = e.target.previousElementSibling;
+    if(e.target.classList.contains('content-btns-clear')) {
+    let list = e.target.parentElement.previousElementSibling;
     let checkes = list.querySelectorAll('.check');
     checkes.forEach(check => check.checked = false);
     }
@@ -737,16 +743,22 @@ function clearCheckesInMenuList(e) {
 function showClearCheckBtn(e) {  
     const ex = toCheckDayMenu(e); 
     if(ex) {
-        document.querySelector(`.content-menu-${ex} .content-clear-btn`).classList.add('content-clear-btn-active');
+        document.querySelector(`.content-menu-${ex} .content-btns-clear`).classList.add('content-clear-btn-active');
+        document.querySelector(`.content-menu-${ex} .content-btns-delete`).classList.add('content-delete-btn-active');
     } else if (e.target.classList.contains('check')) {
-        document.querySelector(`.content-menu-${e.target.dataset.name} .content-clear-btn`).classList.add('content-clear-btn-active');
+        document.querySelector(`.content-menu-${e.target.dataset.name} .content-btns-clear`).classList.add('content-clear-btn-active');
+        document.querySelector(`.content-menu-${e.target.dataset.name} .content-btns-delete`).classList.add('content-delete-btn-active');
     }               
 }
 function unshowClearCheckBtn(e) {
-    let checkes = document.querySelectorAll(`.content-menu-gurman .check`);
-    checkes = [...checkes];
-    if(!checkes.some(item => item.checked)) {
-        document.querySelector('.content-clear-btn').classList.remove('content-clear-btn-active');
-    }
+    if(e.target.dataset.name) {
+        let menu = e.target.dataset.name;
+        let checkes = document.querySelectorAll(`.content-menu-${menu} .check`);
+        checkes = [...checkes];
+        if(!checkes.some(item => item.checked)) {
+        document.querySelector(`.content-menu-${menu} .content-btns-clear`).classList.remove('content-clear-btn-active');
+        document.querySelector(`.content-menu-${menu} .content-btns-delete`).classList.remove('content-delete-btn-active');
+        }  
+    }        
 }
 
