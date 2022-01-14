@@ -219,7 +219,8 @@ function deleteDayMenu(e) { //удаление отрендеренного дн
                     }            
                 });
             });
-            e.target.classList.remove('content-delete-btn-active');            
+            e.target.classList.remove('content-delete-btn-active');
+            e.target.nextElementSibling.classList.remove('content-clear-btn-active');          
         }
     }
 }
@@ -358,7 +359,7 @@ function addMenu(e) {    //очен
 }
 checkMenus.addEventListener('change', (e) => { //функция, которая подгружает массив со списком продуктов при клике на одно из меню
     if(e.target.classList.contains('checkNewMenu')) {   
-            fetch(`${currentURL}/products_${menuName('.checkNewMenu')}`)
+            fetch(`${currentURL}/products`)
                 .then(res => res.json())
                 .then(res => {
                     arrayWithProducts = res;
@@ -369,19 +370,9 @@ checkMenus.addEventListener('change', (e) => { //функция, которая 
     checkMenus.addEventListener('click', (e) => {  
         console.log(e.target.checked);           
             if(e.target.classList.contains('checkNewMenu')) {
-                console.dir(e.target);
                 let answ = confirm('Вы действительно хотите выбрать другое меню?');
                 if(answ) {
-                    clearNewMenuList();        
-                    newMenu.removeEventListener('click', addMenu); //удаляем ранее навешенный обработчик события
-                
-                    fetch(`${currentURL}/products_${menuName('.checkNewMenu')}`)
-                        .then(res => res.json())
-                        .then(res => {
-                            arrayWithProducts = res;
-                        }).then(() => {               
-                            newMenu.addEventListener('click', addMenu);//навешиваем обработчик события на новое меню                  
-                        });  
+                    clearNewMenuList();
                 } else {
                     e.preventDefault();
                 }                                
