@@ -93,6 +93,8 @@ header
             width: 100vw
             padding: 0 5vw
         &-item
+            position: relative
+            padding-top: 40px
             &-header
                 display: flex
                 justify-content: space-between                
@@ -102,6 +104,14 @@ header
                         width: 100%
                 &-description
                     width: 70%
+            &::before
+                content: ""
+                position: absolute
+                top: 0
+                left: 5%
+                height: 1px
+                width: 90%
+                background-color: $color-blue
         &-menu            
             width: 100%
             padding-bottom: 30px
@@ -112,9 +122,11 @@ header
             overflow: hidden
             display: flex
             flex-direction: column
-        &-btns
-            align-self: flex-end
+        &-btns            
             display: flex
+            justify-content: center
+            position: relative
+            margin-top: 10px
             =btn                
                 cursor: pointer
                 font-style: normal
@@ -126,14 +138,24 @@ header
                 opacity: 0
                 transform: translateY(-20%)
                 z-index: -1
+                position: absolute
+            &-more
+                .fas
+                    font-size: 25px
+                    cursor: pointer
+                    transition: 0.4s
+                .show 
+                    transform: rotate(180deg)
             &-delete
                 +btn
                 background-color: $color-red
                 margin-right: 5px
                 transition-delay: 0.08s
+                right: 80px
             &-clear
                 +btn
                 background-color: $color-blue
+                right: 0
         &-clear-btn-active
             transform: translateY(0%)
             opacity: 1

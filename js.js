@@ -512,22 +512,32 @@ function clearNewMenuList() { //очищаем форму нового меню
 
 
 
-function closeListMenu(e) {              
-        e.target.innerText = 'Показать';
-        let menuName = e.target.dataset.name;        
+function closeListMenu(e) {  
+        let menuName = e.target.dataset.name; 
+        let btnText = document.querySelector(`.content-menu-${menuName} .content-show-menu-btn`);
+        let btnArrows = document.querySelector(`.content-menu-${menuName} .content-btns-more .fas`);
+        btnText.innerText = 'Показать'; 
+        btnArrows.classList.remove('show');
+        let wrapper = document.querySelector(`.content-wrapper-${menuName}`);       
         closeBlock(e, 0.5, `.content-wrapper-${menuName}`);
-        e.target.classList.remove('show');           
+        wrapper.classList.remove('show');           
 }
-function openListMenu(e) {       
-        e.target.innerText = 'Скрыть';        
+function openListMenu(e) {     
         let menuName = e.target.dataset.name;
+        let btnText = document.querySelector(`.content-menu-${menuName} .content-show-menu-btn`);
+        let btnArrows = document.querySelector(`.content-menu-${menuName} .content-btns-more .fas`);         
+        btnText.innerText = 'Скрыть'; 
+        btnArrows.classList.add('show');       
+        let wrapper = document.querySelector(`.content-wrapper-${menuName}`); 
         openBlock(e, 0.5, `.content-wrapper-${menuName}`);
-        e.target.classList.add('show');  
+        wrapper.classList.add('show');  
 }
 function toggleListMenu(e) {
-    if(e.target.classList.contains('show') && e.target.classList.contains('content-show-menu-btn')) {
+    let menuName = e.target.dataset.name;
+    let wrapper = document.querySelector(`.content-wrapper-${menuName}`);
+    if( (e.target.classList.contains('content-show-menu-btn') || e.target.classList.contains('arrows')) && wrapper.classList.contains('show')) {
         closeListMenu(e);
-    } else if(!e.target.classList.contains('show') && e.target.classList.contains('content-show-menu-btn')){
+    } else if(e.target.classList.contains('content-show-menu-btn') || e.target.classList.contains('arrows') && !wrapper.classList.contains('show')){
         openListMenu(e);
     }
 }
