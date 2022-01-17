@@ -713,21 +713,26 @@ function unshowCheckBtns(e) {
     }        
 }
 
-function ddddd() {
-    let discText = document.querySelector('.content-item-header-description-wrapper-text');
-    let lastText = discText.innerText.slice(150);
-    let firstText = discText.innerText.slice(0, 150);
-    discText.innerHTML = firstText + `...<a class='content-item-header-description-btn'>Показать полностью</a>`;
-    console.log(firstText);
-    console.log(lastText);
+function openFullDescriptionMenu() {
+    let lastText;
+    let firstText;
+    const listDescText = document.querySelectorAll('.content-item-header-description-text');
+        listDescText.forEach(descriptionText => {
+            const menuName = descriptionText.dataset.name;
+            lastText = descriptionText.innerText.slice(450);
+            firstText = descriptionText.innerText.slice(0, 450);
+            descriptionText.innerHTML = firstText + `...<a data-name=${menuName} class='content-item-header-description-btn'>Показать полностью</a>`;
+            descriptionText.parentElement.innerHTML += `<p class='content-item-header-description-text unshow'>${firstText+lastText}</p>`
+        });
     content.addEventListener('click', (e) => {
-        if(e.target.classList.contains('content-item-header-description-btn')) {
-            discText.innerHTML = firstText + lastText;
-        }        
+        showDescriptionEveryMenu(e);
     });
-    
+    function showDescriptionEveryMenu(e) {
+        if(e.target.classList.contains('content-item-header-description-btn')) {
+            e.target.parentElement.nextElementSibling.classList.remove('unshow');
+            e.target.parentElement.remove();
+        }   
+    }
 }
-ddddd();
-function showDescriptionEveryMenu(classMenu) {
 
-}
+openFullDescriptionMenu();

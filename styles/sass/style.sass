@@ -97,12 +97,18 @@ header
             padding-top: 40px
             &-header
                 display: flex
-                justify-content: space-between                
+                justify-content: space-between
+                @media (max-width: $stad-1)
+                    flex-direction: column     
                 &-image
                     margin-right: 20px
                     width: 24%
                     min-width: 250px
-                    min-height: 300px                  
+                    min-height: 350px  
+                    @media (max-width: $stad-1)
+                        align-self: center
+                        min-width: 250px
+                        margin-right: 0px
                 .gurman
                     background: no-repeat top left/100% url('../images/gurman/image-gurman.png') 
                 .classic
@@ -114,6 +120,8 @@ header
                     display: flex
                     flex-direction: column
                     width: 70%
+                    @media (max-width: $stad-1)
+                        width: 100%
                     &-title
                     &-iconsList
                         li 
@@ -125,11 +133,12 @@ header
                             margin-right: 10px
                             font-size: 30px
                             color: $color-blue
-                    &-wrapper
-                        &-text
-                            font-family: serif
-                            text-align: justify
-                            font-size: 1.25rem
+                    &-text
+                        font-family: serif
+                        text-align: justify
+                        font-size: 1.25rem
+                    .unshow
+                        display: none
                     &-btn
                         +calibri
                         color: $color-blue
@@ -231,7 +240,7 @@ header
                 .bg_durdom
                     background-color: $color-yellowred
                 .bg_summer
-                    
+                    background-color: $color-yellowred
                 &-description
                     width: 100%
                     display: flex
