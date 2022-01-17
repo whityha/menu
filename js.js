@@ -140,10 +140,10 @@ content.addEventListener('click', (e) => {
     deleteDayMenu(e);
     toggleListMenu(e);
     clearCheckesInMenuList(e);    
-   showCheckBtns(e); //внутри данной функции находится функция toCheckDayMenu для того,
+   showCheckNDelBtns(e); //внутри данной функции находится функция toCheckDayMenu для того,
                           // чтобы при клике не только на чекбокс, но и на само меню оно выбиралось.
     
-    unshowCheckBtns(e);
+    unshowCheckNDelBtns(e);
 });
 content.addEventListener('change', (e) => {
     //showClearCheckBtn(e);
@@ -228,7 +228,6 @@ function deleteDayMenu(e) { //удаление отрендеренного дн
 fetch(`${currentURL}/menus`)
     .then(res => res.json())
     .then(answ => {
-        console.log(answ);
         answ.forEach(item => {
             let contentLists = document.querySelectorAll('.content-list');
                 contentLists.forEach(contentList => {
@@ -241,7 +240,6 @@ fetch(`${currentURL}/menus`)
             .then(menu => menu.json())
             .then(res => {               
                     res.forEach(item => {
-                        console.log(item.id);
                         arrWithMenuId.push(item.id);
                         arrWithMenu.push(new DayMenu(item));                        
                     });
@@ -691,7 +689,7 @@ function clearCheckesInMenuList(e) {
     }
 }
 
-function showCheckBtns(e) {  
+function showCheckNDelBtns(e) {  
     const ex = toCheckDayMenu(e); 
     if(ex) {
         document.querySelector(`.content-menu-${ex} .content-btns-clear`).classList.add('content-clear-btn-active');
@@ -701,7 +699,7 @@ function showCheckBtns(e) {
         document.querySelector(`.content-menu-${e.target.dataset.name} .content-btns-delete`).classList.add('content-delete-btn-active');
     }               
 }
-function unshowCheckBtns(e) {
+function unshowCheckNDelBtns(e) {
     if(e.target.dataset.name) {
         let menu = e.target.dataset.name;
         let checkes = document.querySelectorAll(`.content-menu-${menu} .check`);
@@ -721,8 +719,8 @@ function openFullDescriptionMenu() {
             const menuName = descriptionText.dataset.name;
             lastText = descriptionText.innerText.slice(450);
             firstText = descriptionText.innerText.slice(0, 450);
-            descriptionText.innerHTML = firstText + `...<a data-name=${menuName} class='content-item-header-description-btn'>Показать полностью</a>`;
-            descriptionText.parentElement.innerHTML += `<p class='content-item-header-description-text unshow'>${firstText+lastText}</p>`
+            descriptionText.innerHTML = firstText + `...<a class='content-item-header-description-btn'>Показать полностью</a>`;
+            descriptionText.parentElement.innerHTML += `<p class='content-item-header-description-text unshow'>${firstText+lastText}</p>`;
         });
     content.addEventListener('click', (e) => {
         showDescriptionEveryMenu(e);
