@@ -109,13 +109,24 @@ header
                         align-self: center
                         min-width: 250px
                         margin-right: 0px
+                        min-height: 300px
                 .gurman
                     background: no-repeat top left/100% url('../images/gurman/image-gurman.png') 
                 .classic
                     background: no-repeat top left/80% url('../images/classic/classic.png') 
                 .summer
                     background: no-repeat top left/105% url('../images/summer/summer.png') 
-
+                .autumn
+                    background: no-repeat top left/70% url('../images/autumn/autumn.png') 
+                .fish
+                    background: no-repeat top left/100% url('../images/fish/fish.png') 
+                .torop
+                    background: no-repeat top left/100% url('../../images/torop/torop.png') 
+                .narod
+                    background: no-repeat top left/100% url('../../images/narod/narod.png') 
+                .durdom
+                    background: no-repeat top left/100% url('../../images/durdom/durdom.png')
+                    min-height: 250px
                 &-description
                     display: flex
                     flex-direction: column
@@ -163,6 +174,7 @@ header
             display: flex   
             flex-direction: column        
         &-wrapper
+            max-height: 80px
             margin-top: 10px
             overflow: hidden
             display: flex
@@ -185,10 +197,14 @@ header
                 z-index: -1
                 position: absolute
             &-more
+                
                 .fas
                     font-size: 25px
                     cursor: pointer
-                    transition: 0.4s
+                    transition: 0.3s
+                    opacity: .5
+                    &:hover
+                        opacity: 1
                 .show 
                     transform: rotate(180deg)
             &-delete
@@ -217,6 +233,14 @@ header
         &-list
             width: 100%
             transition: .5s
+            .animLoad
+                width: 30px
+                height: 30px
+                border: 2px solid $color-blue
+                border-radius: 50%
+                border-top: 2px dotted $color-red
+                margin: 0 auto
+                animation: linear round 1s infinite 
             &-active
                 overflow: hidden
             &-item
@@ -683,3 +707,10 @@ header
                         input
                             @media ( max-width: $stad-1 )
                                 margin-right: 20px
+
+@keyframes round
+    0%
+        transform: rotate(0deg)        
+    100%
+        transform: rotate(360deg)
+        
