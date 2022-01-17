@@ -1,7 +1,7 @@
 'use strict';
 const localURL = 'http://localhost:3000';
 const githubURL = 'https://menu-db.herokuapp.com';
-const currentURL = githubURL;
+const currentURL = localURL;
 let arrWithObjRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
 
 //создаем класс меню
@@ -55,9 +55,9 @@ class DayMenu {
                     <b>СПИСОК ПРОДУКТОВ:</b>
                         
                     </ul>
-                    <div class='recept recept-${menu}${dayMenuProducts.id}'>
+                    <p class='recept recept-${menu}${dayMenuProducts.id}'>
                         
-                    </div>
+                    </p>
                 </div>               
             </li>`;
             parent.querySelector(`.recept-${menu}${dayMenuProducts.id}`).innerText = dayMenuProducts.recept;
@@ -713,3 +713,21 @@ function unshowCheckBtns(e) {
     }        
 }
 
+function ddddd() {
+    let discText = document.querySelector('.content-item-header-description-wrapper-text');
+    let lastText = discText.innerText.slice(150);
+    let firstText = discText.innerText.slice(0, 150);
+    discText.innerHTML = firstText + `...<a class='content-item-header-description-btn'>Показать полностью</a>`;
+    console.log(firstText);
+    console.log(lastText);
+    content.addEventListener('click', (e) => {
+        if(e.target.classList.contains('content-item-header-description-btn')) {
+            discText.innerHTML = firstText + lastText;
+        }        
+    });
+    
+}
+ddddd();
+function showDescriptionEveryMenu(classMenu) {
+
+}
