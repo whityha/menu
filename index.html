@@ -12,12 +12,26 @@
 
     <title>Menu</title>
 </head>
-<body>
-    <header>
-        <h1>Избавиться от лишних килограмм быстро, комфортно и без вреда для здоровья?</h1>
-        <button type='button' class='open-form'>Добавить день в любое меню</button>
+<body>    
+    <header class='header'>        
+        <div>
+            <h1>Избавиться от лишних килограмм быстро, комфортно и без вреда для здоровья?</h1>
+              
+        </div>
+        <nav>
+            <ul>
+                <li><a href='#gurman'>Весенний гурман</a></li>
+                <li><a href='#autumn'>Осеннее меню</a></li>
+                <li><a href='#classic'>Новая классика</a></li>
+                <li><a href='#fish'>Рыба моя</a></li>
+                <li><a href='#torop'>Торопыжка делюкс</a></li>
+                <li><a href='#narod'>Народный гурман</a></li>
+                <li><a href='#summer'>Летнее меню</a></li>
+                <li><a href='#durdom'>Дурдом как вкусно</a></li>
+            </ul>
+        </nav>
     </header>
-    <div class='main'>
+    <main class='main'>
                 
 
         <div class='filter-new-button'>
@@ -321,7 +335,7 @@
         </div>        
                 
         <div class="content">            
-            <div class="content-item">
+            <article id='gurman' class="content-item">
                 <div class="content-item-header">                    
                     <div class="content-item-header-image gurman">                       
                     </div>    
@@ -363,8 +377,8 @@
                         <div data-name='gurman' class='content-btns-clear'>Сбросить</div>
                     </div>
                 </div>                
-            </div>
-            <div class='content-item'>
+            </article>
+            <article id='classic' class='content-item'>
                 <div class="content-item-header">                    
                     <div class="content-item-header-image classic">                       
                     </div>    
@@ -400,8 +414,8 @@
                         <div data-name='classic' class='content-btns-clear'>Сбросить</div>
                     </div>
                 </div>
-            </div>
-            <div class='content-item'>
+            </article>
+            <article id='autumn' class='content-item'>
                 <div class="content-item-header">                    
                     <div class="content-item-header-image autumn">                       
                     </div>    
@@ -447,8 +461,8 @@
                         <div data-name='autumn' class='content-btns-clear'>Сбросить</div>
                     </div>            
                 </div>
-            </div>
-            <div class='content-item'>                   
+            </article>
+            <article id='fish' class='content-item'>                   
                 <div class="content-item-header">                    
                     <div class="content-item-header-image fish">                       
                     </div>    
@@ -489,8 +503,8 @@
                         <div data-name='fish' class='content-btns-clear'>Сбросить</div>
                     </div>            
                 </div>
-            </div> 
-            <div class='content-item'>
+            </article> 
+            <article id='torop' class='content-item'>
                 <div class="content-item-header">                    
                     <div class="content-item-header-image torop">                       
                     </div>    
@@ -541,8 +555,8 @@
                         <div data-name='torop' class='content-btns-clear'>Сбросить</div>
                     </div>            
                 </div>
-            </div>
-            <div class='content-item'> 
+            </article>
+            <article id='narod' class='content-item'> 
                 <div class="content-item-header">                    
                     <div class="content-item-header-image narod">                       
                     </div>    
@@ -588,8 +602,8 @@
                         <div data-name='narod' class='content-btns-clear'>Сбросить</div>
                     </div>            
                 </div>
-            </div>
-            <div class='content-item'>                  
+            </article>
+            <article id='summer' class='content-item'>                  
                 <div class="content-item-header">                    
                     <div class="content-item-header-image summer">                       
                     </div>    
@@ -630,8 +644,8 @@
                         <div data-name='summer' class='content-btns-clear'>Сбросить</div>
                     </div>            
                 </div>
-            </div> 
-            <div class='content-item'>   
+            </article> 
+            <article id='durdom' class='content-item'>   
                
                 <div class="content-item-header">                    
                     <div class="content-item-header-image durdom">                       
@@ -673,11 +687,11 @@
                         <div data-name='durdom' class='content-btns-clear'>Сбросить</div>
                     </div>            
                 </div>
-            </div>            
+            </article>            
             <div class='content-portion'><span>Количество порций</span><input class='content-input-portion' type='number' value='1'></div>
             <button type='button' class='total-count'>Посчитать сумму продуктов выбранных меню</button>
         </div>
-    </div>
+    </main>
     <div class='new-menu'>
         <form class='new-menu-form'>
             <div class='closeBtn'>
@@ -749,8 +763,8 @@
                     </select></li>                    
                     <li class='new-menu-list-item'>
                         <div class='new-menu-box'>
-                            <ul class='new-menu-box-list'>                                
-                                <li  class='new-menu-box-list-item'></li>
+                            <ul class='new-menu-box-list'>  
+                                    <input type='text'>
                             </ul>
                             <button type='button' data-id='1' class='btn-box-menu'>
                                 <i data-id='1' class="fas fa-angle-down"></i>
@@ -771,7 +785,9 @@
             </div>
         </form>
     </div>
-    
+    <footer>
+        <button type='button' class='open-form'>Добавить день в любое меню</button> 
+    </footer>
     <script src="js.js"></script>
 
 </body>

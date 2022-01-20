@@ -1,7 +1,7 @@
 'use strict';
 const localURL = 'http://localhost:3000';
 const githubURL = 'https://menu-db.herokuapp.com';
-const currentURL = githubURL;
+const currentURL = localURL;
 let arrWithObjRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
 
 //создаем класс меню
@@ -233,7 +233,6 @@ fetch(`${currentURL}/menus`)
                 contentLists.forEach(contentList => {
                     clearInnerHTML(contentList);
                 });
-
             let arrWithMenu = [];
             let arrWithMenuId = [];
             fetch(`${currentURL}/${item.name}`)
@@ -254,16 +253,7 @@ fetch(`${currentURL}/menus`)
 });
 
 // Делегирование событий на кнопки списка нового меню
-function menuName(className) { //функция возвращает имя выбранного меню по списку
-    const checkedMenus = document.querySelectorAll(className);
-    let name;
-        checkedMenus.forEach(item => {
-            if(item.checked) {
-                name = item.dataset.name;
-            }
-        });
-    return name;   
-}
+
 let arrayWithProducts = [];
 const checkMenus = document.querySelector('.new-menu-form-menus');
 const newMenu = document.querySelector('.new-menu-list');
@@ -274,7 +264,7 @@ function addMenu(e) {    //очен
     }
     //если мы нажимаем на кнопку открытия списка и она не активна (список не активен)
     if (e.target && e.target.tagName === 'I' && !e.target.classList.contains('active')) { 
-        console.log(e.target);
+        
         const j = e.target.dataset.id;
         const btns = newMenu.querySelectorAll('.fas');  
         const list = document.querySelectorAll('.new-menu-box-list');
@@ -283,16 +273,16 @@ function addMenu(e) {    //очен
             if(item.dataset.id == j) {
                 i = c;
             }
-        });
-        console.log(i);    
+        });    
         
         if(Object.keys(arrayWithProducts).length) { //проверка, что запрос вернет не пустой объект в случае ошибки
         //Закрываем другой открытый список, если он открыт (активен, но ничего не выбрано)
             list.forEach((item, index) => {
                 if(item.classList.contains('active')) {
-                    item.innerHTML = "<li class='new-menu-box-list-item'></li>";
+                    item.innerHTML = "<input type='text'>";
                     item.classList.toggle('active');
                     item.classList.toggle('relative');
+                    item.classList.toggle('overflow');
                     btns[index].classList.toggle('active');
                     btns[index].classList.toggle('fa-angle-down');
                     btns[index].classList.toggle('fa-angle-up');
@@ -308,7 +298,7 @@ function addMenu(e) {    //очен
             list[i].classList.toggle('overflow');
 
             //формируем сам список из невыбранных продуктов        
-            list[i].innerHTML = 
+            list[i].innerHTML += 
             arrayWithProducts.map((item) => {
                 let added = newMenu.querySelectorAll('.add');
                 let arrayWithProductsNew = [];
@@ -352,7 +342,69 @@ function addMenu(e) {    //очен
         list[i].classList.toggle('relative');        
         list[i].classList.toggle('active');
         list[i].classList.toggle('overflow');
-        list[i].innerHTML = `<li class='new-menu-box-list-item'></li>`;
+        list[i].innerHTML = `<input type='text'>`;
+    }
+}
+function openProductsList(e) {    
+    if(e.target && e.target.tagName === 'INPUT') {
+        const btn = e.target.parentElement.nextElementSibling.firstElementChild;
+        const btnId = btn.dataset.id;
+        const btns = newMenu.querySelectorAll('.fas');
+        const list = document.querySelectorAll('.new-menu-box-list');
+        
+        
+        let i;
+        btns.forEach((item, c) => { // функционал для того, чтобы при удалении поля с новым продуктом не сбивался счет
+            if(item.dataset.id == btnId) {
+                i = c;
+            }
+        });
+        
+        
+        let currentList = arrayWithProducts.map((item) => {
+            let searchText = list[i].firstElementChild.value;
+            let added = newMenu.querySelectorAll('.add');
+            let arrayWithProductsNew = [];
+            added.forEach(product => arrayWithProductsNew.push(product.innerText));
+            if(!arrayWithProductsNew.includes(item.rus) && item.rus.toLowerCase().indexOf(searchText.toLowerCase()) + 1) {
+            return `<li data-name='${item.eng}' class='new-menu-box-list-item'>${item.rus}</li>`;}                 
+        }).join('');
+
+        list[i].querySelectorAll('li').forEach(it => it.remove());
+        list[i].firstElementChild.insertAdjacentHTML('afterend', currentList);
+
+        btn.classList.remove('fa-angle-down');
+        btn.classList.add('active');
+        btn.classList.add('fa-angle-up'); 
+        list[i].classList.add('relative');        
+        list[i].classList.add('active');
+        list[i].classList.add('overflow'); 
+
+        // list.forEach((item, index) => {
+        //     if(item.classList.contains('active')) {
+        //         item.innerHTML = `<input type='text'>`;
+        //         item.classList.toggle('active');
+        //         item.classList.toggle('relative');
+        //         item.classList.toggle('overflow');
+        //         btns[index].classList.toggle('active');
+        //         btns[index].classList.toggle('fa-angle-down');
+        //         btns[index].classList.toggle('fa-angle-up');
+        //     }
+        // });
+
+        const items = list[i].querySelectorAll('.new-menu-box-list-item');
+            items.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.target.classList.add('add');
+                    list[i].innerHTML = e.target.outerHTML;
+                    list[i].classList.toggle('relative');                
+                    list[i].classList.toggle('active');
+                    list[i].classList.toggle('overflow');  
+                    btns[i].classList.toggle('active');            
+                    btns[i].classList.toggle('fa-angle-down');
+                    btns[i].classList.toggle('fa-angle-up');
+                });
+            });
     }
 }
 checkMenus.addEventListener('change', (e) => { //функция, которая подгружает массив со списком продуктов при клике на одно из меню
@@ -362,7 +414,8 @@ checkMenus.addEventListener('change', (e) => { //функция, которая 
                 .then(res => {
                     arrayWithProducts = res;
                 }).then(() => {               
-                    newMenu.addEventListener('click', addMenu);//навешиваем обработчик события на новое меню                  
+                    newMenu.addEventListener('click', addMenu);
+                    newMenu.addEventListener('input', openProductsList); //навешиваем обработчик события на новое меню                  
                 });  
     }
     checkMenus.addEventListener('click', (e) => {  
@@ -388,7 +441,7 @@ plus.addEventListener('click', () => {
     newItem.innerHTML = `
         <div class='new-menu-box'>
             <ul class='new-menu-box-list'>
-                <li  class='new-menu-box-list-item'></li>
+                <input type='text'>
             </ul>
             <button type='button' data-id=${counter} class='btn-box-menu active'>
                 <i data-id=${counter} class="fas fa-angle-down"></i>

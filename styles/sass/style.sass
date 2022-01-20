@@ -16,8 +16,6 @@ $color-white: #fff
 =calibri
     font-family: 'Calibri'
 html
-    width: 100vw
-    overflow-x: hidden
     color: $color-blue
     line-height: 1.3
     
@@ -32,26 +30,49 @@ button
 .activeForm
     transform: translateX(0%) !important
 
-header
+
+        
+    
+.header
     display: flex
     justify-content: space-around
-    padding: 20px 10px
+    background-color: $color-blue
+    flex-direction: column
+    div
+        display: flex
+        padding: 20px 10px
     h1
+    color: $color-white
     @media (max-width: $stad-1)
         font-size: 12px
-
-    .open-form
-        margin: 15px
-        display: block
-        padding: 1rem 5rem
-        cursor: pointer   
+    nav
+        width: 100vw 
+        position: fixed 
+        top: 0
+        left: 0
+        z-index: 2
+        color: $color-red
         @media (max-width: $stad-1)
-            padding: 5px
+            display: none
+        ul
+            display: flex
+            justify-content: space-around
+            align-items: flex-start
+           
+            background-color: $color-lemon         
+            li
+                                      
+            a
+                color: $color-red
+                text-decoration: none
+                &:hover
+                    color: black
 
+    
 .main
     +calibri
     display: flex
-    width: 100vw
+    width: 100%
     justify-content: right
     align-items: flex-start
     
@@ -95,6 +116,17 @@ header
         &-item
             position: relative
             padding-top: 40px
+            &::before
+                content: ""
+                position: absolute
+                top: 0
+                left: 5%
+                height: 1px
+                width: 90%
+                background-color: $color-blue
+            &:first-child::before                
+                height: 0
+                
             &-header
                 display: flex
                 justify-content: space-between
@@ -160,14 +192,7 @@ header
                         cursor: pointer
                         &:hover
                             text-decoration: underline
-            &::before
-                content: ""
-                position: absolute
-                top: 0
-                left: 5%
-                height: 1px
-                width: 90%
-                background-color: $color-blue
+            
         &-menu            
             width: 100%
             padding: 30px 0px
@@ -446,12 +471,12 @@ header
             width: 60%    
             &-list
                 width: 100%
-                max-height: 200px                
-                // position: relative
+                max-height: 200px
+                position: relative            
                 &-item
-                    padding-top: 3px
                     background-color: #FFF
-                    border: 1px solid black
+                    padding-top: 4px
+                    border: 1px solid #767676
                     min-height: 30px
                     text-align: center
                     cursor: pointer
@@ -459,8 +484,13 @@ header
                         font-size: 14px                        
                     &:hover
                         background-color: #acabab
+                input                    
+                    display: block
+                    width: 100%
+                    height: 30px
+                    padding: 0px 5px                     
             .overflow
-                overflow-y: scroll
+                overflow-y: auto            
         .btn-box-menu
             max-height: 30px
             width: 30px
@@ -494,13 +524,11 @@ header
     @media ( max-width: $stad-1 )
         transform: translateY(0%) !important
 .sum-and-filter
-    position: sticky
-    top: 0px
-    overflow: hidden
+    position: static
     padding-bottom: 10px
     margin: 0px 15px
-    min-width: 250px
-    z-index: 1
+    max-width: 260px
+    z-index: 1    
     @media ( max-width: $stad-1 )
         position: absolute
         top: 0
@@ -551,8 +579,7 @@ header
                     cursor: pointer
                 @media (max-width: $stad-1)
                     margin: 20px auto 50px auto      
-    .filter-new
-        box-shadow: 0px 0px 10px #777
+    .filter-new        
         margin: 0px 15px
         padding: 15px 15px
         color: $color-blue
@@ -562,11 +589,12 @@ header
         transition: .4s
         transition-timing-function: ease
         background-color: $color-yellowred
+        border: 1px solid $color-blue
+        border-top: 10px solid $color-blue
         border-radius: 5px
         @media ( max-width: $stad-1 )
             transform: translateY(-110%)
-            display: block
-            box-shadow: none
+            display: block            
             top: 0
             left: 0
             position: fixed
@@ -710,6 +738,18 @@ header
                             @media ( max-width: $stad-1 )
                                 margin-right: 20px
 
+
+
+footer
+    height: 150px
+    background-color: $color-blue
+    .open-form
+        background: $color-red
+        margin: 15px
+        padding: 1rem 5rem
+        cursor: pointer   
+        @media (max-width: $stad-1)
+            padding: 5px
 @keyframes round
     0%
         transform: rotate(0deg)        
