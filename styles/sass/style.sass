@@ -252,11 +252,88 @@ button
             transform: translateY(0%)
             opacity: 1
             z-index: 0
-        .total-count
-            margin: 15px 15px 60px 15px
-            display: block
-            padding: 1rem 5rem
-            cursor: pointer
+        .total-count-block
+            border-radius: 10px
+            background-color: $color-blue
+            width: 300px
+            position: fixed
+            bottom: 50px
+            right: 100px
+            @media (max-width: $stad-1)
+                left: 0
+                right: 0
+                width: 100%                
+            .sum-menu
+                &-wrapper            
+                    overflow: hidden
+                    max-height: 0              
+                &-block    
+                    transform: translateY(-100%)    
+                    .sum-menu-list
+                        padding: 0px 0px 10px 10px                
+                        width: 100%
+                        color: $color-white
+                        max-height: 400px
+                        overflow: auto
+                        &::-webkit-scrollbar
+                            background-color: $color-yellowred
+                            width: 6px
+                        &::-webkit-scrollbar-thumb
+                            background-color: $color-red
+                        @media (max-width: $stad-1)
+                            max-height: 600px
+            &-btn
+                display: block
+                cursor: pointer
+                background-color: $color-red
+                width: 100%
+                border-radius: 0px 0px 10px 10px
+                padding: 10px
+            .content-portion
+                color: $color-yellowred
+                padding: 3px 10px                
+                &-input 
+                    margin-right: 10px
+                    background-color: $color-yellowred
+                    -moz-appearance: textfield
+                    &::-webkit-inner-spin-button
+                        -webkit-appearance: none
+                        margin: 0
+                    &::-webkit-outer-spin-button
+                        -webkit-appearance: none
+                        margin: 0
+                    &::hover,::focus 
+                        -moz-appearance: number-input                
+                i
+                    transition: .3s
+                    cursor: pointer                    
+                    opacity: 0
+                    width: 18px
+                    height: 18px
+                    background-color: $color-white
+                    border-radius: 50%
+                    position: relative
+                    &::before
+                        content: ''
+                        width: 10px
+                        height: 2px
+                        position: absolute
+                        left: 4px
+                        top: 8px
+                        transform: rotate(45deg)
+                        background-color: $color-red
+                    &::after
+                        content: ''
+                        width: 10px
+                        height: 2px
+                        position: absolute
+                        left: 4px
+                        top: 8px
+                        transform: rotate(135deg)
+                        background-color: $color-red
+                .active
+                    display: block
+                    opacity: 1                        
         &-list
             width: 100%
             transition: .5s
@@ -534,51 +611,7 @@ button
         top: 0
         left: 0
         margin: 0
-        width: 100vw
-    .sum-menu
-        &-wrapper            
-            overflow: hidden
-            max-height: 0
-            @media ( max-width: $stad-1 )
-                width: 100%
-                background-color: #fff
-                position: fixed
-                max-height: 0
-                overflow-y: scroll                
-        &-block    
-            display: flex
-            flex-direction: column
-            align-items: center
-            padding: 0 15px
-            transform: translateY(-100%)
-            @media (max-width: $stad-1)
-                min-height: 95vh
-            h3
-                text-align: center
-                display: block
-                width: 100%
-                @media (max-width: $stad-1)
-                    width: 100%
-                    padding: 20px 50px
-            .sum-menu-list
-                display: flex
-                flex-direction: column
-                width: 100%
-                margin: 0 15px
-                @media (max-width: $stad-1)
-                    align-items: center
-                    width: 100%
-                &-item
-                    width: 100%
-                    @media (max-width: $stad-1)
-                        width: auto
-            .sum-menu-close-btn
-                width: 80px
-                height: 3vh
-                &:hover
-                    cursor: pointer
-                @media (max-width: $stad-1)
-                    margin: 20px auto 50px auto      
+        width: 100vw    
     .filter-new        
         margin: 0px 15px
         padding: 15px 15px
@@ -756,3 +789,5 @@ footer
     100%
         transform: rotate(360deg)
         
+
+   

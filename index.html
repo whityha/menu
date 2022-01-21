@@ -37,15 +37,7 @@
         <div class='filter-new-button'>
             ОТКРЫТЬ ФИЛЬТР
         </div> 
-        <div class='sum-and-filter'>
-            <div class='sum-menu-wrapper' id='sum-menu'>
-                <div class='sum-menu-block'>
-                    <h3>Количество всех продуктов в выбранных меню:</h3>
-                    <ul class='sum-menu-list'>
-                    </ul>
-                    <button class='sum-menu-close-btn'>Закрыть</button>
-                </div>
-            </div>
+        <div class='sum-and-filter'>            
             <div class='filter-new'>
                 <div class='filter-new-btns'>
                     <div class='filter-new-btns-reset'>Очистить</div>
@@ -687,9 +679,17 @@
                         <div data-name='durdom' class='content-btns-clear'>Сбросить</div>
                     </div>            
                 </div>
-            </article>            
-            <div class='content-portion'><span>Количество порций</span><input class='content-input-portion' type='number' value='1'></div>
-            <button type='button' class='total-count'>Посчитать сумму продуктов выбранных меню</button>
+            </article>
+            <div class = 'total-count-block'>
+                <div class='content-portion'><span>Количество порций</span><i class='sum-menu-close-btn'></i><input class='content-portion-input' type='number' value='1'></div>
+                <div class='sum-menu-wrapper'>
+                    <div class='sum-menu-block'>
+                        <ul class='sum-menu-list'>
+                        </ul>
+                    </div>
+                </div>
+                <button type='button' class='total-count-block-btn'>Посчитать сумму продуктов выбранных дней</button>    
+            </div>            
         </div>
     </main>
     <div class='new-menu'>

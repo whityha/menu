@@ -71,16 +71,20 @@ class DayMenu {
     }
 }
 //навешиваем обработчик события на кнопку для инициации счета продуктов и отображения блока
-document.querySelector('.total-count').addEventListener('click', (e) => {
+document.querySelector('.total-count-block-btn').addEventListener('click', (e) => {
+    const closeBtn = document.querySelector('.sum-menu-close-btn');
     const wrapperClass = '.sum-menu-wrapper';
-    let portions = Math.abs(document.querySelector('.content-input-portion').value);
-    openBlock(e, 0.5, wrapperClass, showSumProducts(portions));    
+    let portions = Math.abs(document.querySelector('.content-portion-input').value);
+    openBlock(e, 0.5, wrapperClass, showSumProducts(portions));
+    closeBtn.classList.add('active');    
 });
 
 const btnCloseSumArea = document.querySelector('.sum-menu-close-btn');
 
 btnCloseSumArea.addEventListener('click', (e) => {
     closeBlock(e, 0.5, '.sum-menu-wrapper');
+    console.log(this);
+    e.target.classList.remove('active');
 });
 
 // Создаем функцию для подсчета продуктов в выбранных меню 
@@ -378,8 +382,7 @@ function openProductsList(e) {
         btn.classList.add('fa-angle-up'); 
         list[i].classList.add('relative');        
         list[i].classList.add('active');
-        list[i].classList.add('overflow'); 
-
+        list[i].classList.add('overflow');        
         // list.forEach((item, index) => {
         //     if(item.classList.contains('active')) {
         //         item.innerHTML = `<input type='text'>`;
@@ -710,7 +713,7 @@ function openBlock(e, sec, wrapperClass, ex = true) {
         list.style.transition = `${sec}s ease`;
         wrapper.style.maxHeight = `${height}px`;
         list.style.transform = 'translateY(0%)';
-        if(window.innerWidth <= 944 && e.target.classList.contains('total-count')) {
+        if(window.innerWidth <= 944 && e.target.classList.contains('total-count-block-btn')) {
             wrapper.style.maxHeight = `95vh`;
         }
     }             
