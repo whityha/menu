@@ -806,4 +806,3 @@ function toCopyProductsList(e) {
 }
 
 document.querySelector('.sum-menu-block i').addEventListener('click', toCopyProductsList);
-

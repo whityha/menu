@@ -47,7 +47,6 @@ button
     @media (max-width: $stad-1)
         font-size: 12px
     nav        
-        position: static  
         color: $color-red
         @media (max-width: $stad-1)
             display: none
@@ -77,6 +76,8 @@ button
         flex-wrap: wrap
         justify-content: space-between
         flex-direction: column
+        article
+            padding: 0 5vw
         &-portion
             display: flex
             justify-content: space-between
@@ -104,9 +105,10 @@ button
                 transform: scaleX(1)
         @media (max-width: $stad-1)
             width: 100vw
+            padding: 0
         @media (max-width: $stad-mob)
             width: 100vw
-            padding: 0 5vw
+            padding: 0
         &-item
             position: relative
             padding-top: 40px
@@ -254,16 +256,15 @@ button
             position: sticky
             bottom: 50px
             @media (max-width: $stad-1)
-                margin-left: -5vw
-                width: 100vw 
-                border-radius: 0              
+                width: 100vw
+                border-radius: 0  
             .sum-menu
                 &-wrapper            
                     overflow: hidden
                     max-height: 0              
                 &-block    
                     transform: translateY(100%)
-                    position: relative    
+                    position: relative                    
                     .sum-menu-list
                         padding: 0px 0px 10px 10px                
                         width: 100%
@@ -277,10 +278,10 @@ button
                             background-color: $color-red
                         @media (max-width: $stad-1)
                             max-height: 400px
-                    i
+                    .fa-copy
                         position: absolute
-                        bottom: 10px
-                        right: 18px
+                        bottom: 15px
+                        right: 30px
                         font-size: 17px
                         z-index: 1
                         color: $color-white
@@ -293,9 +294,41 @@ button
                             +calibri
                             position: absolute
                             left: -200%
-                            top: -20px
+                            top: -15px
                             font-size: 11px
                             animation: doneCopy 1s linear forwards 
+                    .sum-menu-close-btn
+                        transition: .3s
+                        cursor: pointer                    
+                        opacity: 0
+                        width: 24px
+                        height: 24px
+                        background-color: $color-white
+                        border-radius: 50%
+                        position: absolute
+                        right: 28px
+                        bottom: 50px
+                        &::before
+                            content: ''
+                            width: 12px
+                            height: 2px
+                            position: absolute
+                            left: 6px
+                            top: 11px
+                            transform: rotate(45deg)
+                            background-color: $color-red
+                        &::after
+                            content: ''
+                            width: 12px
+                            height: 2px
+                            position: absolute
+                            left: 6px
+                            top: 11px
+                            transform: rotate(135deg)
+                            background-color: $color-red
+                    .active
+                        display: block
+                        opacity: 1                       
             &-btn
                 display: block
                 cursor: pointer
@@ -320,36 +353,7 @@ button
                         margin: 0
                     &::hover,::focus 
                         -moz-appearance: number-input                
-                i
-                    transition: .3s
-                    cursor: pointer                    
-                    opacity: 0
-                    width: 18px
-                    height: 18px
-                    background-color: $color-white
-                    border-radius: 50%
-                    position: relative
-                    &::before
-                        content: ''
-                        width: 10px
-                        height: 2px
-                        position: absolute
-                        left: 4px
-                        top: 8px
-                        transform: rotate(45deg)
-                        background-color: $color-red
-                    &::after
-                        content: ''
-                        width: 10px
-                        height: 2px
-                        position: absolute
-                        left: 4px
-                        top: 8px
-                        transform: rotate(135deg)
-                        background-color: $color-red
-                .active
-                    display: block
-                    opacity: 1                        
+                                        
         &-list
             width: 100%
             transition: .5s
