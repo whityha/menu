@@ -7,7 +7,7 @@
 $stad-1: 944px
 $stad-mob: 600px
 $color-blue: #003049
-$color-red: #D62828
+$color-red: #d33535
 $color-orange: #F77F00
 $color-yellowred: #FCBF49
 $color-lemon: #EAE2B7
@@ -35,9 +35,10 @@ button
     
 .header
     display: flex
-    justify-content: space-around
     background-color: $color-blue
     flex-direction: column
+    height: 400px
+    justify-content: space-between
     div
         display: flex
         padding: 20px 10px
@@ -45,23 +46,16 @@ button
     color: $color-white
     @media (max-width: $stad-1)
         font-size: 12px
-    nav
-        width: 100vw 
-        position: fixed 
-        top: 0
-        left: 0
-        z-index: 2
+    nav        
+        position: static  
         color: $color-red
         @media (max-width: $stad-1)
             display: none
         ul
             display: flex
             justify-content: space-around
-            align-items: flex-start
-           
-            background-color: $color-lemon         
-            li
-                                      
+            align-items: flex-start           
+            background-color: $color-yellowred    
             a
                 color: $color-red
                 text-decoration: none
@@ -254,21 +248,22 @@ button
             z-index: 0
         .total-count-block
             border-radius: 10px
+            align-self: flex-end
             background-color: $color-blue
             width: 300px
-            position: fixed
+            position: sticky
             bottom: 50px
-            right: 100px
             @media (max-width: $stad-1)
-                left: 0
-                right: 0
-                width: 100%                
+                margin-left: -5vw
+                width: 100vw 
+                border-radius: 0              
             .sum-menu
                 &-wrapper            
                     overflow: hidden
                     max-height: 0              
                 &-block    
-                    transform: translateY(-100%)    
+                    transform: translateY(100%)
+                    position: relative    
                     .sum-menu-list
                         padding: 0px 0px 10px 10px                
                         width: 100%
@@ -281,7 +276,26 @@ button
                         &::-webkit-scrollbar-thumb
                             background-color: $color-red
                         @media (max-width: $stad-1)
-                            max-height: 600px
+                            max-height: 400px
+                    i
+                        position: absolute
+                        bottom: 10px
+                        right: 18px
+                        font-size: 17px
+                        z-index: 1
+                        color: $color-white
+                        cursor: pointer
+                        &:hover
+                            color: $color-lemon
+                    .done                                               
+                        &::after
+                            content: 'Скопировано'
+                            +calibri
+                            position: absolute
+                            left: -200%
+                            top: -20px
+                            font-size: 11px
+                            animation: doneCopy 1s linear forwards 
             &-btn
                 display: block
                 cursor: pointer
@@ -289,9 +303,11 @@ button
                 width: 100%
                 border-radius: 0px 0px 10px 10px
                 padding: 10px
+                @media (max-width: $stad-1)
+                    border-radius: 0
             .content-portion
                 color: $color-yellowred
-                padding: 3px 10px                
+                padding: 3px 10px
                 &-input 
                     margin-right: 10px
                     background-color: $color-yellowred
@@ -583,8 +599,7 @@ button
     display: none
     position: fixed
     width: 100vw
-    height: 6vh
-    min-height: 50px
+    height: 50px
     bottom: 0
     background-color: $color-orange
     text-align: center
@@ -789,5 +804,19 @@ footer
     100%
         transform: rotate(360deg)
         
+@keyframes doneCopy
+    0%
+        transform: translateY(-5px)
+        opacity: 0
+    20%
+        opacity: 1
+        transform: translateY(0)
+    80%
+        opacity: 1
+        transform: translateY(0)
+
+    100%
+        opacity: 0
+        transform: translateY(5px)
 
    

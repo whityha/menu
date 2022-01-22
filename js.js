@@ -75,15 +75,17 @@ document.querySelector('.total-count-block-btn').addEventListener('click', (e) =
     const closeBtn = document.querySelector('.sum-menu-close-btn');
     const wrapperClass = '.sum-menu-wrapper';
     let portions = Math.abs(document.querySelector('.content-portion-input').value);
-    openBlock(e, 0.5, wrapperClass, showSumProducts(portions));
-    closeBtn.classList.add('active');    
+    const bool = showSumProducts(portions);
+    openBlock(e, 0.5, wrapperClass, bool);
+    if(portions && bool) {        
+        closeBtn.classList.add('active');
+    }    
 });
 
 const btnCloseSumArea = document.querySelector('.sum-menu-close-btn');
 
 btnCloseSumArea.addEventListener('click', (e) => {
-    closeBlock(e, 0.5, '.sum-menu-wrapper');
-    console.log(this);
+    closeBlock(e, 0.5, '.sum-menu-wrapper', '0%');
     e.target.classList.remove('active');
 });
 
@@ -704,7 +706,7 @@ document.querySelector('.filter-new .filter-new-btns-done').addEventListener('cl
 });
 
 
-function openBlock(e, sec, wrapperClass, ex = true) {
+function openBlock(e, sec, wrapperClass, ex = true, side = '0%') {
     if(ex) {
         const wrapper = document.querySelector(wrapperClass);
         const list = wrapper.firstElementChild;
@@ -712,20 +714,20 @@ function openBlock(e, sec, wrapperClass, ex = true) {
         wrapper.style.transition = `${sec}s ease`;
         list.style.transition = `${sec}s ease`;
         wrapper.style.maxHeight = `${height}px`;
-        list.style.transform = 'translateY(0%)';
+        list.style.transform = `translateY(${side})`;
         if(window.innerWidth <= 944 && e.target.classList.contains('total-count-block-btn')) {
-            wrapper.style.maxHeight = `95vh`;
+            wrapper.style.maxHeight = `400px`;
         }
     }             
 }
 
-function closeBlock(e, sec, wrapperClass) {
+function closeBlock(e, sec, wrapperClass, side = '-100%') {
     const wrapper = document.querySelector(wrapperClass);
     const list = wrapper.firstElementChild;   
     let transition = `${sec}s ease`;    
     wrapper.style.transition = transition;
     list.style.transition = transition;
-    list.style.transform = 'translateY(-100%)';
+    list.style.transform = `translateY(${side})`;
     new Promise(resolve => {
         wrapper.style.maxHeight = `${wrapper.offsetHeight}px`;
         resolve(wrapper);
@@ -772,7 +774,6 @@ function openFullDescriptionMenu() {
     let firstText;
     const listDescText = document.querySelectorAll('.content-item-header-description-text');
         listDescText.forEach(descriptionText => {
-            const menuName = descriptionText.dataset.name;
             lastText = descriptionText.innerText.slice(450);
             firstText = descriptionText.innerText.slice(0, 450);
             descriptionText.innerHTML = firstText + `...<a class='content-item-header-description-btn'>Показать полностью</a>`;
@@ -790,3 +791,19 @@ function openFullDescriptionMenu() {
 }
 
 openFullDescriptionMenu();
+
+function toCopyProductsList(e) {
+    const listItems = document.querySelectorAll('.sum-menu-list-item');
+    let copyText = '';
+    listItems.forEach(item => copyText += item.innerHTML + '\r\n');    
+    navigator.clipboard.writeText(copyText);    
+    if(!e.target.classList.contains('done')) {
+        e.target.classList.add('done');
+        setTimeout(() => {
+            e.target.classList.remove('done');
+        }, 1000);
+    }    
+}
+
+document.querySelector('.sum-menu-block i').addEventListener('click', toCopyProductsList);
+
