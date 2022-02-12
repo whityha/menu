@@ -17,7 +17,7 @@ $color-yellowred: #FCBF49
 $color-lemon: #EAE2B7
 $color-white: #fff
 $color-green: #8FB950
-
+$max-height-more-open: 440px //let's check maxHeightDescriptionMoreFromCss in js file
 =calibri
     font-family: 'Calibri'
 html
@@ -206,6 +206,7 @@ button
             overflow: hidden
             display: flex
             flex-direction: column
+            transition: .5s
             @media (max-width: $stad-1)
                 max-height: 110px
         &-btns            
@@ -417,6 +418,10 @@ button
                         width: 25px
                         height: 100%
                         cursor: pointer
+                        background-color: rgba(255,255,255,0.3)
+                    .active-btn
+                        opacity: 1
+                        background-color: rgba(255,255,255,0)
                     .delete-btn
                         display: block
                         margin-right: 5px
@@ -433,6 +438,11 @@ button
                     border-bottom: 1px solid black
                     border-right: 1px solid black
                     transition: 0.5s
+                    &::-webkit-scrollbar
+                        background-color: $color-yellowred
+                        width: 6px
+                    &::-webkit-scrollbar-thumb
+                        background-color: $color-red
                     @media (max-width: $stad-1)
                         flex-direction: column
                         overflow-y: scroll
@@ -467,7 +477,7 @@ button
                         @media (max-width: $stad-1)
                             width: 100%
                 .open                      
-                    max-height: 440px         
+                    max-height: $max-height-more-open       
     
         
 

@@ -3,7 +3,7 @@ const localURL = 'http://localhost:3000';
 const githubURL = 'https://menu-db.herokuapp.com';
 const currentURL = githubURL;
 let arrWithObjRenderingMenu = []; // будущий массив с объектами, которые отрендерились на странице
-
+const maxHeightDescriptionMoreFromCss = 440; //check max-height-more-open in sass file
 //создаем класс меню
 class DayMenu {
     constructor(props) {
@@ -44,7 +44,7 @@ class DayMenu {
                     <div data-name=${menu} class='num-day'>Неделя ${dayMenuProducts.weak}. ${dayMenuProducts.dayName}.</div>
                     
                     <button type='button'>
-                        <i data-more=${menu} data-id=${dayMenuProducts.id} class='fas fa-angle-down open-btn'></i>
+                        <i data-more=${menu} data-id=${dayMenuProducts.id} data-status='close' class='fas fa-angle-down open-btn active-btn'></i>
                     </button>
                     <input data-name=${menu} data-id=${dayMenuProducts.id} class='check' type='checkbox'/>
                 </div>                
@@ -142,7 +142,7 @@ function showSumProducts(portions) {
 //Работа с кнопками контента через делегирование событий
 const content = document.querySelector('.content');
 content.addEventListener('click', (e) => {   
-    openDescriptionMenu(e);
+    toggleDescriptionMenu(e);
     deleteDayMenu(e);
     toggleListMenu(e);
     clearCheckesInMenuList(e);    
@@ -182,27 +182,47 @@ function toCheckDayMenu(e) {
     return false;
 }
 
-function openDescriptionMenu(e) { //открывает описание конкретного дня + подгружает фотографию
-    if(e.target && e.target.classList.contains('open-btn')) {
+function toggleDescriptionMenu(e) { //открывает описание конкретного дня + подгружает фотографию
+    if(e.target && e.target.classList.contains('active-btn')) {
         let discription = e.target.parentElement.parentElement.nextElementSibling;
         let image = discription.querySelector('.menu-img img');
         let id = e.target.dataset.id;
-        let nameMenu = e.target.dataset.more;  
+        let nameMenu = e.target.dataset.more; 
         if(image.classList.contains('load')) {
-            open(e);
+            toggle(e);
         } else {   
-            open(e);     
+            toggle(e);     
             image.classList.add('load');
             image.src = `./images/${nameMenu}/${id}.JPG`;
         }    
     }
-    function open(e) { 
+    function toggle(e) { 
         let discription = e.target.parentElement.parentElement.nextElementSibling;
-        let currentMenuListWrapper = e.target.parentElement.parentElement.parentElement.parentElement.parentElement;        
-        e.target.classList.toggle('fa-angle-down');
-        e.target.classList.toggle('fa-angle-up');
-        discription.classList.toggle('open');
-        currentMenuListWrapper.style.maxHeight = 'none';
+        let currentMenuListWrapper = e.target.parentElement.parentElement.parentElement.parentElement.parentElement; 
+        let hightWrapper = currentMenuListWrapper.offsetHeight
+        if(e.target.dataset.status == 'open') {
+            e.target.classList.add('fa-angle-down');
+            e.target.classList.remove('fa-angle-up');
+            discription.classList.remove('open');
+            currentMenuListWrapper.style.maxHeight = hightWrapper - maxHeightDescriptionMoreFromCss + 'px';
+            e.target.dataset.status = 'close';
+            disabled(e);
+        } else if (e.target.dataset.status == 'close') {
+            console.log(hightWrapper);
+            e.target.classList.remove('fa-angle-down');
+            e.target.classList.add('fa-angle-up');
+            discription.classList.add('open');
+            currentMenuListWrapper.style.maxHeight = hightWrapper + maxHeightDescriptionMoreFromCss + 'px';
+            e.target.dataset.status = 'open';
+            disabled(e);
+        }
+        
+    }
+    function disabled(e) {
+        e.target.classList.remove("active-btn")
+        setTimeout(() => {
+            e.target.classList.add('active-btn')
+        }, 500);
     }
 }
 
