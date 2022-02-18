@@ -16,3 +16,5 @@
 В JavaScript были использованы следующие инструменты: классы, промисы, fetch API(POST,GET,DELETE,PUT), работа с массивами(методы forEach,map,filter,some,reduce, rest & spread операторы), делегирование событий, setTimeout, контекст вызова this, работа с DOM деревом и другое.
 
 В данный момент проект находится на стадии разработки.
+
+link - https://whityha.github.io/menu/
